@@ -1,8 +1,8 @@
-import 'package:app_feup/model/app_state.dart';
-import 'package:app_feup/redux/reducers.dart';
-import 'package:app_feup/view/navigation_service.dart';
-import 'package:app_feup/view/Pages/homepage_view.dart';
-import 'package:app_feup/controller/middleware.dart';
+import 'package:communio/model/app_state.dart';
+import 'package:communio/redux/reducers.dart';
+import 'package:communio/view/navigation_service.dart';
+import 'package:communio/view/Pages/homepage_view.dart';
+import 'package:communio/controller/middleware.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';

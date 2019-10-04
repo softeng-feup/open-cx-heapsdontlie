@@ -1,4 +1,4 @@
-import 'package:app_feup/view/theme.dart';
+import 'package:communio/view/theme.dart';
 import 'package:flutter/material.dart';
 
 class NavigationDrawer extends StatefulWidget {

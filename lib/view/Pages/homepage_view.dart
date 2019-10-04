@@ -1,6 +1,6 @@
-import 'package:app_feup/model/app_state.dart';
-import 'package:app_feup/redux/action_creators.dart';
-import 'package:app_feup/view/Widgets/navigation_drawer.dart';
+import 'package:communio/model/app_state.dart';
+import 'package:communio/redux/action_creators.dart';
+import 'package:communio/view/Widgets/navigation_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 

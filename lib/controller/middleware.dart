@@ -1,6 +1,6 @@
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
-import 'package:app_feup/model/app_state.dart';
+import 'package:communio/model/app_state.dart';
 
 void generalMiddleware(
     Store<AppState> store,
