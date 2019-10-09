@@ -19,4 +19,6 @@ The atendees will benefit from maximizing their networking opportunities, as the
 Conferences, on the other hand, will profit from their now enhanced ability to form a densely connected community out of their audience, at a very small cost to themselves.
 
 ## Elevator Pitch
+Ever felt like you lose contact with every awesome person you meet during a conference? Ever felt like
+it is impossible for you to find the people whose interests are shared with you? Commun.io has a solution for you! Have the ability to find those close to you whom you can share your thoughts.
 Commun.io - networking from the comfort of your pocket
