@@ -1,7 +1,8 @@
 # Commun.io
 Passively Networking
 
-## Vision
+## Business Modeling
+### Vision
 Our App aims to:
 
 - provide one to one social media exchange
@@ -18,10 +19,15 @@ The atendees will benefit from maximizing their networking opportunities, as the
 
 Conferences, on the other hand, will profit from their now enhanced ability to form a densely connected community out of their audience, at a very small cost to themselves.
 
-## Elevator Pitch
+### Elevator Pitch
 Ever felt like you lose contact with every awesome person you meet during a conference? Ever felt like
 it is impossible for you to find the people whose interests are shared with you? Commun.io has a solution for you! Have the ability to find those close to you whom you can share your thoughts.
 Commun.io - networking from the comfort of your pocket
 
-## User stories
+
+## Requirements
+### User stories
 To check our current user stories, come to our [Trello](https://trello.com/b/Og2YbLLu/communio)!
+
+### Use Case Diagram
+![Use Case](assets/use-case.png)
