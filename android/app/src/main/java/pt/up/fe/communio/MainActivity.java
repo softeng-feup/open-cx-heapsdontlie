@@ -1,4 +1,4 @@
-package pt.up.fe.ni.appfeup;
+package pt.up.fe.communio;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;

@@ -38,7 +38,7 @@ class MyAppState extends State<MyApp> {
     return StoreProvider(
       store: state,
       child: MaterialApp(
-          title: 'uni',
+          title: 'Communio',
           theme: applicationTheme,
           home: HomePageView(),
           navigatorKey: NavigationService.navigatorKey,
