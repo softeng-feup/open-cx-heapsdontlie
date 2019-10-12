@@ -1,0 +1,9 @@
+services: docker
+
+jobs:
+  include:
+    - stage: lint & test
+      name: "Linter"
+      script: docker build -t communio . && docker run -it communio flutter analyze --no-pub --preamble .
+    - script: docker build -t communio . && docker run -it communio flutter test
+      name: "Unit test"

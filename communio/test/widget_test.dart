@@ -8,7 +8,6 @@ that the values of widget properties
 are correct.
 */
 
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

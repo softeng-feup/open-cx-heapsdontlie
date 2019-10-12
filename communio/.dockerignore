@@ -1,0 +1,6 @@
+.packages
+.flutter-plugins
+.metadata
+*.log
+.vscode
+.idea
