@@ -1,9 +1,13 @@
+import 'package:flutter_blue/flutter_blue.dart';
+
 class AppState {
   Map content = Map<String, dynamic>();
 
   Map getInitialContent() {
     return {
       "counter": 0,
+      "scanning_on": false,
+      "bluetooth_devices": Set<BluetoothDevice>()
     };
   }
 
