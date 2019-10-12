@@ -38,9 +38,9 @@ class HomePageView extends StatelessWidget{
 
   Widget createActionButton(BuildContext context){
     return new FloatingActionButton(
-      onPressed: () => {
-        StoreProvider.of<AppState>(context).dispatch(incrementCounter())  
-      },
+      onPressed: () => 
+        StoreProvider.of<AppState>(context).dispatch(incrementCounter())
+      ,
       tooltip: 'Increment',
       child: new Icon(Icons.add),
     );
