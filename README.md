@@ -31,3 +31,6 @@ To check our current user stories, come to our [Trello](https://trello.com/b/Og2
 
 ### Use Case Diagram
 ![Use Case](assets/use-case.png)
+
+### Domain Model
+![Domain Model](assets/domain-model.png)
