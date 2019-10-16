@@ -1,6 +1,7 @@
 import 'package:communio/model/app_state.dart';
 import 'package:communio/redux/reducers.dart';
 import 'package:communio/view/Pages/people_searching_page.dart';
+import 'package:communio/view/Pages/qrcode_view.dart';
 import 'package:communio/view/navigation_service.dart';
 import 'package:communio/view/Pages/homepage_view.dart';
 import 'package:communio/controller/middleware.dart';
@@ -53,6 +54,9 @@ class MyAppState extends State<MyApp> {
                 return MaterialPageRoute(
                     builder: (context) => PeopleSearchingPage(),
                     settings: settings);
+              case '/QRCode':
+                return MaterialPageRoute(
+                    builder: (context) => QRCodePage(), settings: settings);
             }
           }),
     );

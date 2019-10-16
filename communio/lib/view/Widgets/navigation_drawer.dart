@@ -16,7 +16,7 @@ class NavigationDrawerState extends State<NavigationDrawer> {
 
   NavigationDrawerState({@required this.parentContext}) {}
 
-  static final drawerItems = ["Homepage", "PeopleSearch"];
+  static final drawerItems = ["Homepage", "PeopleSearch", "QRCode"];
 
   getCurrentRoute() => ModalRoute.of(parentContext).settings.name == null
       ? drawerItems[0]
