@@ -30,7 +30,7 @@ Commun.io - networking from the comfort of your pocket
 To check our current user stories, come to our [Trello](https://trello.com/b/Og2YbLLu/communio)!
 
 ### Use Case Diagram
-![Use Case](assets/use-case.png)
+<center><img src="assets/use-case.png"></center>
 
 ### Domain Model
-![Domain Model](assets/domain-model.png)
+<center><img src="assets/domain-model.png"></center>
