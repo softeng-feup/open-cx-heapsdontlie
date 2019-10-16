@@ -1,5 +1,7 @@
 import 'package:flutter_blue/flutter_blue.dart';
 
+import 'friend.dart';
+
 class AppState {
   Map content = Map<String, dynamic>();
 
@@ -7,7 +9,8 @@ class AppState {
     return {
       "counter": 0,
       "scanning_on": false,
-      "bluetooth_devices": Set<BluetoothDevice>()
+      "bluetooth_devices": Set<BluetoothDevice>(),
+      "friends": List<Friend>()
     };
   }
 
