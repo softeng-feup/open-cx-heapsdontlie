@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 
-abstract class SocialMediaBlock {
+class SocialMediaBlock {
 
-  AssetImage logo;
+  String name;
   String url;
+  AssetImage logo;
 
-  AssetImage getLogo() { return logo; }
-
-  String getUrl() { return url; }
+  SocialMediaBlock(String name, String url, String logo) {
+    this.name = name;
+    this.url = url;
+    this.logo = AssetImage(logo);
+  }
 
 }
