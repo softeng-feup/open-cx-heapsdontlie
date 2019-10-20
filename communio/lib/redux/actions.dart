@@ -13,3 +13,10 @@ class FoundPersonAction{
   final PersonFound personFound;
   FoundPersonAction(this.device, this.personFound);
 }
+
+class NewFiltersAction{
+  final Set<String> filters;
+  NewFiltersAction(this.filters);
+}
+
+class ActivateScanning{}

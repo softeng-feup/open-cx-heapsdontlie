@@ -23,7 +23,7 @@ ThunkAction<AppState> scanForDevices() {
       final bluetooth = FlutterBlue.instance;
       Logger().i('Starting to scan for devices...');
       final isAvailable = await bluetooth.isAvailable;
-      if (isAvailable)
+      if (isAvailable){
         bluetooth
             .scan(scanMode: ScanMode.balanced, timeout: Duration(minutes: 30))
             .listen((scanResult) async {
@@ -35,6 +35,18 @@ ThunkAction<AppState> scanForDevices() {
             store.dispatch(FoundPersonAction(device, person));
           }
         });
+        store.dispatch(ActivateScanning());
+      }
     }
   };
 }
+
+ThunkAction<AppState> addNewFilter(String filter){
+  return (Store<AppState> store){
+    final Set<String> filters = store.state.content['current_filters'];
+    if(!filters.contains(filter)){
+      filters.add(filter);
+      store.dispatch(NewFiltersAction(filters));
+    }
+  };
+} 

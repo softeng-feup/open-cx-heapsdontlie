@@ -9,6 +9,7 @@ class AppState {
       "counter": 0,
       "scanning_on": false,
       "bluetooth_devices": Map<BluetoothDevice, PersonFound>(),
+      "current_filters": Set<String>()
     };
   }
 
