@@ -11,7 +11,7 @@ Our App aims to:
 
 It is directed towards:
     
-  - conference attendees seeking to expand their network
+- conference attendees seeking to expand their network
 - recruiters looking for specialized people
 - communities intending to broaden their audience
   
