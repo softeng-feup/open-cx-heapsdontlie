@@ -1,5 +1,6 @@
 import 'package:communio/model/app_state.dart';
 import 'package:communio/redux/reducers.dart';
+import 'package:communio/view/Pages/connected_listing_page.dart';
 import 'package:communio/view/Pages/people_searching_page.dart';
 import 'package:communio/view/navigation_service.dart';
 import 'package:communio/view/Pages/homepage_view.dart';
@@ -48,10 +49,15 @@ class MyAppState extends State<MyApp> {
             switch (settings.name) {
               case '/Homepage':
                 return MaterialPageRoute(
-                    builder: (context) => HomePageView(), settings: settings);
+                    builder: (context) => HomePageView(),
+                    settings: settings);
               case '/PeopleSearch':
                 return MaterialPageRoute(
                     builder: (context) => PeopleSearchingPage(),
+                    settings: settings);
+              case '/ListConnected':
+                return MaterialPageRoute(
+                    builder: (context) => ConnectedListingPage(),
                     settings: settings);
             }
           }),

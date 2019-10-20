@@ -1,7 +1,6 @@
 import 'package:communio/model/person_found.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'package:logger/logger.dart';
-
 import '../model/app_state.dart';
 import 'actions.dart';
 
@@ -30,3 +29,4 @@ AppState incrementCounter(AppState state, IncrementCounterAction action) {
   Logger().i('setting counter to ${action.counter}');
   return state.cloneAndUpdateValue('counter', action.counter);
 }
+

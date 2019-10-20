@@ -11,6 +11,7 @@ class AppState {
       "counter": 0,
       "scanning_on": false,
       "bluetooth_devices": Map<BluetoothDevice, PersonFound>(),
+      "friends": List<Friend>()
     };
   }
 

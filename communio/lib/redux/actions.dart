@@ -1,5 +1,3 @@
-
-
 import 'package:communio/model/person_found.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 
