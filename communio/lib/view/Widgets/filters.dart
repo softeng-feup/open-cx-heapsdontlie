@@ -1,4 +1,5 @@
 import 'package:communio/model/app_state.dart';
+import 'package:communio/view/Widgets/filter_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
@@ -22,8 +23,8 @@ class Filters extends StatelessWidget {
     final List<Widget> currentFilters = List();
     currentFilters.add(this.generateNewFiltersButton(context));
     filters.forEach((filter) => currentFilters.add(
-      Card(
-        child: Text(filter),
+      FilterCard(
+        filter: filter,
       )
     ));
     return currentFilters;

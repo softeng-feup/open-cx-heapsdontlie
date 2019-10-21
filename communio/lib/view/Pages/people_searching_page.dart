@@ -37,8 +37,11 @@ class PeopleSearchingPage extends StatelessWidget {
     final Map<BluetoothDevice, PersonFound> devices =
         storeContent['bluetooth_devices'];
     final Map<BluetoothDevice, PersonFound> filteredDevices = Map.from(devices)
-      ..removeWhere((key, value) => !value.interests
-          .any((value) => filters.contains(value) || filters.length == 0));
+      ..removeWhere((key, value) => !value.interests.any((value) =>
+          filters.toList().indexWhere(
+                  (filter) => filter.toLowerCase() == value.toLowerCase()) !=
+              -1 ||
+          filters.length == 0));
     return filteredDevices;
   }
 
