@@ -11,7 +11,7 @@ Our App aims to:
 
 It is directed towards:
     
-  - conference attendees seeking to expand their network
+- conference attendees seeking to expand their network
 - recruiters looking for specialized people
 - communities intending to broaden their audience
   
@@ -30,4 +30,11 @@ Commun.io - networking from the comfort of your pocket
 To check our current user stories, come to our [Trello](https://trello.com/b/Og2YbLLu/communio)!
 
 ### Use Case Diagram
-![Use Case](assets/use-case.png)
+<div align="center">
+  <img width="865" src="assets/use-case.png">
+</div>
+
+### Domain Model
+<div align="center">
+  <img width="438" src="assets/domain-model.png">
+</div>
