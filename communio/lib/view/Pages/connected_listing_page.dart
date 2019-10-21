@@ -4,6 +4,7 @@ import 'package:communio/redux/action_creators.dart';
 import 'package:communio/view/Pages/general_page_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ConnectedListingPage extends StatelessWidget{
 
@@ -29,6 +30,16 @@ class ConnectedListingPage extends StatelessWidget{
           );
         }
     );
+  }
+
+  List<Widget> childrenSocials(Friend friend) {
+    final List<Widget> children = new List<Widget>();
+    for (var social in friend.socials) {
+      children.add(
+        social.logo
+      );
+    }
+    return children;
   }
 
   generateFriendCard(Friend friend) {
@@ -72,9 +83,7 @@ class ConnectedListingPage extends StatelessWidget{
                 Padding(
                   padding: EdgeInsets.only(top: 10.0),
                   child: Row(
-                    children: <Widget>[
-                      Text('THIS IS WHERE THE SOCIALS WOULD GO')
-                    ],
+                    children: childrenSocials(friend)
                   ),
                 ),
               ]

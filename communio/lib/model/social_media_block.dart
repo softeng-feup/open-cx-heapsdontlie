@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class SocialBlock {
 
@@ -13,7 +13,7 @@ class SocialBlock {
 
   String name;
   String url;
-  AssetImage logo;
+  SvgPicture logo;
 
   SocialBlock(String name, String url) {
     this.name = name;
@@ -25,7 +25,7 @@ class SocialBlock {
     else {
       logo = socialLogo['default'];
     }
-    this.logo = AssetImage(logo);
+    this.logo = SvgPicture.asset(logo);
   }
 
 }
