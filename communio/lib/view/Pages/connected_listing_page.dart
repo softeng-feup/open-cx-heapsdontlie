@@ -31,6 +31,19 @@ class ConnectedListingPage extends StatelessWidget{
     );
   }
 
+  List<Widget> childrenSocials(Friend friend) {
+    final List<Widget> children = new List<Widget>();
+    for (var social in friend.socials) {
+      children.add(
+        new Padding(
+          padding: EdgeInsets.only(left: 8.0, right: 8.0),
+          child: social.logo
+        )
+      );
+    }
+    return children;
+  }
+
   generateFriendCard(Friend friend) {
     return new Card(
         child: Padding(
@@ -72,9 +85,8 @@ class ConnectedListingPage extends StatelessWidget{
                 Padding(
                   padding: EdgeInsets.only(top: 10.0),
                   child: Row(
-                    children: <Widget>[
-                      Text('THIS IS WHERE THE SOCIALS WOULD GO')
-                    ],
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: childrenSocials(friend)
                   ),
                 ),
               ]

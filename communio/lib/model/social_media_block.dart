@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class SocialBlock {
 
@@ -6,14 +6,14 @@ class SocialBlock {
     'facebook':'assets/logo_facebook.png',
     'instagram':'assets/logo_instagram.png',
     'twitter':'assets/logo_twitter.png',
-    'github':'assets/logo_instagram.png',
-    'linkedin':'assets/logo_instagram.png',
+    'github':'assets/logo_github.png',
+    'linkedin':'assets/logo_linkedin.png',
     'default':'assets/logo_default.png'
   };
 
   String name;
   String url;
-  AssetImage logo;
+  SvgPicture logo;
 
   SocialBlock(String name, String url) {
     this.name = name;
@@ -25,7 +25,7 @@ class SocialBlock {
     else {
       logo = socialLogo['default'];
     }
-    this.logo = AssetImage(logo);
+    this.logo = SvgPicture.asset(logo);
   }
 
 }
