@@ -25,89 +25,109 @@ class ConnectedListingPage extends StatelessWidget{
         builder: (context, friends){
           return ListView(
             shrinkWrap: false,
-            padding: EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(20.0),
             children: this.generateFriendsCards(friends),
           );
         }
     );
   }
 
-  List<Widget> childrenSocials(Friend friend) {
-    final List<Widget> children = new List<Widget>();
-    for (var social in friend.socials) {
-      children.add(
-        new Padding(
-          padding: EdgeInsets.only(left: 8.0, right: 8.0),
-          child: social.logo
-        )
-      );
-    }
-    return children;
-  }
-  
-  Widget friendLocation(Friend friend) {
-    return Row(
-        children: <Widget>[
-          Icon(Icons.location_on),
-          Padding(
-              padding: EdgeInsets.only(left: 5.0),
-              child: Text(
-                  friend.location,
-                  style: TextStyle(fontSize: 16)
-              )
-          )
-        ]
-    );
-  }
-  
-  Widget friendPhoto(Friend friend) {
+  Widget generateFriendPhoto(Friend friend) {
     return CircleAvatar(
       backgroundImage: NetworkImage(friend.photo),
       minRadius: 30,
     );
   }
-  
-  Widget friendInfo(Friend friend) {
+
+  Widget generateFriendLocation(Friend friend) {
+    return Row(
+        children: <Widget>[
+          Icon(
+            Icons.location_on,
+            color: Color.fromARGB(255, 70, 0, 0),
+            // will be color of the theme
+          ),
+          Padding(
+              padding: const EdgeInsets.only(left: 2.0),
+              child: Text(
+                  friend.location,
+                  style: TextStyle(fontSize: 14)
+              )
+          )
+        ]
+    );
+  }
+
+  Widget generateFriendInfo(Friend friend) {
     return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(friend.name),
+          Text(
+              friend.name,
+              style: TextStyle(fontSize: 22)
+          ),
           Padding(
-              padding: EdgeInsets.all(5.0),
-              child: friendLocation(friend)
+              padding: const EdgeInsets.only(top: 5.0),
+              child: generateFriendLocation(friend)
           ),
         ]
     );
   }
 
-  Widget friendMainCard(Friend friend) {
-    return Row(
-        children: <Widget>[
-          friendPhoto(friend),
-          Padding(
-              padding: EdgeInsets.only(left: 15.0),
-              child: friendInfo(friend)
-          ),
-        ]
+  Widget generateFriendMainCard(Friend friend) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 20.0),
+      child: Row(
+          children: <Widget>[
+            generateFriendPhoto(friend),
+            Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: generateFriendInfo(friend)
+            ),
+          ]
+
+      ),
+    );
+  }
+  
+  List<Widget> generateFriendSocials(Friend friend) {
+    final List<Widget> children = new List<Widget>();
+    for (var social in friend.socials) {
+      children.add(
+          new Padding(
+              padding: const EdgeInsets.only(left: 12.0, right: 12.0),
+              child: SvgPicture.asset(
+                social.logo,
+                color: Color.fromARGB(255, 70, 0, 0),
+                // will be color of the theme
+              )
+          )
+      );
+    }
+    return children;
+  }
+
+  Widget generateFriendSocialsCard(Friend friend) {
+    return Card(
+      color: Color.fromARGB(200, 255, 230, 200),
+      // will be color of the theme
+      child: Padding(
+        padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
+        child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: generateFriendSocials(friend)
+        ),
+      ),
     );
   }
 
   generateFriendCard(Friend friend) {
     return new Card(
-        child: Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Column(
-              children: <Widget>[
-                friendMainCard(friend),
-                Padding(
-                  padding: EdgeInsets.only(top: 10.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: childrenSocials(friend)
-                  ),
-                ),
-              ]
-            )
+        child: Column(
+            children: <Widget>[
+              generateFriendMainCard(friend),
+              generateFriendSocialsCard(friend)
+            ]
         )
     );
   }

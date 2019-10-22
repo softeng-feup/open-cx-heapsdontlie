@@ -1,5 +1,3 @@
-import 'package:flutter_svg/svg.dart';
-
 class SocialBlock {
 
   static Map<String, String> socialLogo = {
@@ -13,7 +11,7 @@ class SocialBlock {
 
   String name;
   String url;
-  SvgPicture logo;
+  String logo;
 
   SocialBlock(String name, String url) {
     this.name = name;
@@ -25,7 +23,7 @@ class SocialBlock {
     else {
       logo = socialLogo['default'];
     }
-    this.logo = SvgPicture.asset(logo);
+    this.logo = logo;
   }
 
 }
