@@ -44,6 +44,53 @@ class ConnectedListingPage extends StatelessWidget{
     }
     return children;
   }
+  
+  Widget friendLocation(Friend friend) {
+    return Row(
+        children: <Widget>[
+          Icon(Icons.location_on),
+          Padding(
+              padding: EdgeInsets.only(left: 5.0),
+              child: Text(
+                  friend.location,
+                  style: TextStyle(fontSize: 16)
+              )
+          )
+        ]
+    );
+  }
+  
+  Widget friendPhoto(Friend friend) {
+    return CircleAvatar(
+      backgroundImage: NetworkImage(friend.photo),
+      minRadius: 30,
+    );
+  }
+  
+  Widget friendInfo(Friend friend) {
+    return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(friend.name),
+          Padding(
+              padding: EdgeInsets.all(5.0),
+              child: friendLocation(friend)
+          ),
+        ]
+    );
+  }
+
+  Widget friendMainCard(Friend friend) {
+    return Row(
+        children: <Widget>[
+          friendPhoto(friend),
+          Padding(
+              padding: EdgeInsets.only(left: 15.0),
+              child: friendInfo(friend)
+          ),
+        ]
+    );
+  }
 
   generateFriendCard(Friend friend) {
     return new Card(
@@ -51,42 +98,11 @@ class ConnectedListingPage extends StatelessWidget{
             padding: const EdgeInsets.all(12.0),
             child: Column(
               children: <Widget>[
-                Row(
-                    children: <Widget>[
-                      CircleAvatar(
-                        backgroundImage: NetworkImage(friend.photo),
-                        minRadius: 30,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 15.0),
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(friend.name),
-                              Padding(
-                                  padding: EdgeInsets.all(5.0),
-                                  child: Row(
-                                      children: <Widget>[
-                                        Icon(Icons.location_on),
-                                        Padding(
-                                            padding: EdgeInsets.only(left: 5.0),
-                                            child: Text(
-                                                friend.location,
-                                                style: TextStyle(fontSize: 16)
-                                            )
-                                        )
-                                      ]
-                                  )
-                              ),
-                            ]
-                        ),
-                      ),
-                    ]
-                ),
+                friendMainCard(friend),
                 Padding(
                   padding: EdgeInsets.only(top: 10.0),
                   child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: childrenSocials(friend)
                   ),
                 ),

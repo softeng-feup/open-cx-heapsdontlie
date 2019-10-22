@@ -3,12 +3,12 @@ import 'package:flutter_svg/svg.dart';
 class SocialBlock {
 
   static Map<String, String> socialLogo = {
-    'facebook':'assets/logo_facebook.png',
-    'instagram':'assets/logo_instagram.png',
-    'twitter':'assets/logo_twitter.png',
-    'github':'assets/logo_github.png',
-    'linkedin':'assets/logo_linkedin.png',
-    'default':'assets/logo_default.png'
+    'facebook':'assets/facebook.svg',
+    'instagram':'assets/instagram.svg',
+    'twitter':'assets/twitter.svg',
+    'github':'assets/github.svg',
+    'linkedin':'assets/linkedin.svg',
+    'default':'assets/default_social.svg'
   };
 
   String name;
