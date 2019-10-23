@@ -21,6 +21,7 @@ class HomePageView extends StatelessWidget{
       converter: (store) => store.state.content['counter'],
       builder: (context, counter){
         return Container(
+          color: Theme.of(context).accentColor,
           child:
             ListView(
               shrinkWrap: false,
