@@ -95,7 +95,7 @@ class ConnectedListingPage extends StatelessWidget{
     for (var social in friend.socials) {
       children.add(
           new Padding(
-              padding: const EdgeInsets.only(left: 12.0, right: 12.0),
+              padding: const EdgeInsets.only(left: 10.0, right: 10.0),
               child: SvgPicture.asset(
                 social.logo,
                 color: Color.fromARGB(255, 70, 0, 0),
@@ -107,26 +107,27 @@ class ConnectedListingPage extends StatelessWidget{
     return children;
   }
 
-  Widget generateFriendSocialsCard(Friend friend) {
-    return Card(
+  Widget generateFriendSocialsContainer(Friend friend) {
+    return Container(
+      alignment: Alignment.center,
       color: Color.fromARGB(200, 255, 230, 200),
       // will be color of the theme
-      child: Padding(
-        padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
-        child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: generateFriendSocials(friend)
-        ),
-      ),
+      height: 80.0,
+      child: new ListView(
+        shrinkWrap: true,
+        scrollDirection: Axis.horizontal,
+        children: generateFriendSocials(friend)
+      )
     );
   }
 
   generateFriendCard(Friend friend) {
     return new Card(
+        shape: ContinuousRectangleBorder(),
         child: Column(
             children: <Widget>[
               generateFriendMainCard(friend),
-              generateFriendSocialsCard(friend)
+              generateFriendSocialsContainer(friend)
             ]
         )
     );
@@ -139,6 +140,5 @@ class ConnectedListingPage extends StatelessWidget{
     }
     return friendsCards;
   }
-
 }
 
