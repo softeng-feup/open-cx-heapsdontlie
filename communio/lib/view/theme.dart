@@ -15,7 +15,7 @@ ThemeData applicationTheme = new ThemeData(
   brightness: Brightness.light,
   primaryColor: primaryColor,
   accentColor: accentColor,
-  fontFamily: 'Montserrat',
+  fontFamily: 'Nunito',
   buttonColor: buttonColor,
   colorScheme: ColorScheme(
     primary:  primaryColor,
@@ -30,7 +30,7 @@ ThemeData applicationTheme = new ThemeData(
     onBackground: primaryColor,
     error: communRedColor,
     onError: blackColor,
-    brightness: ,
+    brightness: Brightness.light,
   ),
   textTheme: TextTheme(
     headline: TextStyle(
