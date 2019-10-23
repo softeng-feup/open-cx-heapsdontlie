@@ -25,7 +25,7 @@ class PeopleSearchingPage extends StatelessWidget {
         return ListView(
           shrinkWrap: false,
           padding: EdgeInsets.all(20.0),
-          children: this.generateDevicesCards(devices),
+          children: this.generateDevicesCards(context, devices),
         );
       },
     );
@@ -45,24 +45,35 @@ class PeopleSearchingPage extends StatelessWidget {
     return filteredDevices;
   }
 
-  generatePersonCard(PersonFound person) {
+  generatePersonCard(BuildContext context, PersonFound person) {
     return new Card(
         child: Row(
       children: <Widget>[
         CircleAvatar(
           backgroundImage: NetworkImage(person.photo),
           minRadius: 30,
-        )
+        ),
+        this.generateConnectionButton(context, person)
       ],
     ));
   }
 
-  generateDevicesCards(Map<BluetoothDevice, PersonFound> devices) {
+  generateDevicesCards(
+      BuildContext context, Map<BluetoothDevice, PersonFound> devices) {
     final List<Widget> devicesCards = List();
     devicesCards.add(new Filters());
     devices.forEach((device, person) {
-      devicesCards.add(this.generatePersonCard(person));
+      devicesCards.add(this.generatePersonCard(context, person));
     });
     return devicesCards;
+  }
+
+  generateConnectionButton(BuildContext context, PersonFound person) {
+    return FlatButton(
+      child: Icon(Icons.person_add),
+      onPressed: () {
+        StoreProvider.of<AppState>(context).dispatch(person);
+      },
+    );
   }
 }
