@@ -4,6 +4,7 @@ import 'package:flutter_blue/flutter_blue.dart';
 import 'friend.dart';
 
 class AppState {
+
   Map content = Map<String, dynamic>();
 
   Map getInitialContent() {
@@ -30,4 +31,5 @@ class AppState {
   AppState getInitialState() {
     return new AppState(null);
   }
+
 }

@@ -43,7 +43,7 @@ ThunkAction<AppState> scanForDevices() {
 }
 
 ThunkAction<AppState> queryFriendsList() {
-  final friendQueryUrl = "http://www.mocky.io/v2/5db0091a2f00009600c137b0";
+  final friendQueryUrl = "http://www.mocky.io/v2/5db025052f0000b183c138b1";
   return (Store<AppState> store) async {
     final List<Friend> friends = store.state.content['friends'];
     friends.clear();
@@ -52,29 +52,9 @@ ThunkAction<AppState> queryFriendsList() {
       final friendsJson = json.decode(response.body);
       for (var friendJson in friendsJson) {
         final Friend friend = Friend.fromJson(friendJson);
-
-        print("");
-        print("-- NEW FRIEND --");
-        print("name: ${friend.name}");
-        print("location: ${friend.location}");
-        print("photo: ${friend.photo}");
-        print("interests:");
-        for (var interest in friend.interests) {
-          print("-- interest: ${interest}");
-        }
-        print("socials:");
-        for (var block in friend.socials) {
-          print("-- social: ${block.name} - ${block.url}");
-        }
-        print("");
-
-
         friends.add(friend);
         store.dispatch(FoundFriendAction(friend));
       }
-
-      print("Number of friends: ${friends.length}");
-
     }
   };
 }
