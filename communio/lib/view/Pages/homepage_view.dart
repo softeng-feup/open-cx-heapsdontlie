@@ -19,14 +19,14 @@ class HomePageView extends StatelessWidget{
       converter: (store) => store.state.content['counter'],
       builder: (context, counter){
         return Container(
-          color: Theme.of(context).accentColor,
           child:
             ListView(
               shrinkWrap: false,
               padding: EdgeInsets.all(20.0),
               children:<Widget>[
                  new Text(
-                'The button has been clicked $counter times!'
+                'The button has been clicked $counter times!',
+                   style: Theme.of(context).textTheme.body2,
                 ),
               ]
             ),

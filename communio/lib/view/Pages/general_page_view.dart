@@ -14,8 +14,14 @@ class GeneralPageView extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: new AppBar(title: new Text('Commun.io'),),
-      body: child,
+      appBar: new AppBar(
+        backgroundColor: Theme.of(context).colorScheme.onBackground,
+        title: new Text('Commun.io', style: Theme.of(context).textTheme.subhead,),
+      ),
+      body: Container(
+        color: Theme.of(context).colorScheme.background,
+          child: child,
+      ),
       drawer: new NavigationDrawer(parentContext: context,),
       floatingActionButton: this.floatingActionButton,
     );
