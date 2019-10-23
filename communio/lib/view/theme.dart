@@ -12,8 +12,10 @@ const Color communRedColor = Color.fromRGBO(255, 95, 95, 1.0);
 
 ThemeData applicationTheme = new ThemeData(
   brightness: Brightness.light,
-  primaryColor: cyanColor,
   fontFamily: 'Nunito',
+  primaryColor: cyanColor,
+  buttonColor: cyanColor,
+  canvasColor: whiteColor,
   colorScheme: ColorScheme(
     primary:  cyanColor,
     primaryVariant: lightCyanColor,
@@ -32,9 +34,15 @@ ThemeData applicationTheme = new ThemeData(
   textTheme: TextTheme(
     headline: TextStyle(
         fontSize: 72.0, fontWeight: FontWeight.bold, color: navyBlueColor),
-    title: TextStyle(fontSize: 30.0, color: navyBlueColor),
-    subhead: TextStyle(fontSize: 25.0, color: navyBlueColor),
+    title: TextStyle(fontSize: 35.0, color: navyBlueColor),
+    subtitle: TextStyle(fontSize: 30.0, color: navyBlueColor),
+    subhead: TextStyle(fontSize: 23.0, color: navyBlueColor),
+    caption: TextStyle(fontSize: 15.0, color: lightCyanColor),
     body1: TextStyle(fontSize: 20.0, color:navyBlueColor),
     body2: TextStyle(fontSize: 18.0, color: cyanColor),
+    button: TextStyle(fontSize: 25.0, color: whiteColor),
+    overline: TextStyle(fontSize: 10.0, color: lighterCyanColor),
+
+
   ),
 );

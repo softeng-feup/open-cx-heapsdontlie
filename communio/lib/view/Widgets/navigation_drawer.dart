@@ -36,7 +36,8 @@ class NavigationDrawerState extends State<NavigationDrawer> {
     return (name == getCurrentRoute())
         ? (const BoxDecoration(
             border:
-                Border(bottom: BorderSide(width: 5.0, color: primaryColor))))
+                Border(bottom: BorderSide(width: 5.0,
+                    color: cyanColor))))
         : null;
   }
 
