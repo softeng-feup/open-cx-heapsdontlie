@@ -23,6 +23,8 @@ ThunkAction<AppState> scanForDevices() {
       Logger().i('Starting to scan for devices...');
       final personQueryUrl = store.state.content['person_query_url'];
       final isAvailable = await bluetooth.isAvailable;
+      final mockPerson = await PersonFound.fromNetwork(personQueryUrl);
+      store.dispatch(FoundPersonAction(null, mockPerson));
       if (isAvailable) {
         bluetooth
             .scan(scanMode: ScanMode.balanced, timeout: Duration(minutes: 30))

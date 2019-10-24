@@ -17,7 +17,7 @@ class Filters extends StatelessWidget {
           decoration: BoxDecoration(
             border: Border(
               bottom: BorderSide(
-                color: Theme.of(context).accentColor,
+                color: Theme.of(context).colorScheme.primary,
                 width: 5.0
               )
             )
@@ -44,7 +44,7 @@ class Filters extends StatelessWidget {
   Widget generateNewFiltersButton(BuildContext context) {
     return ClipOval(
         child: Container(
-          color: Theme.of(context).accentColor,
+          color: Theme.of(context).colorScheme.primary,
           child:
             IconButton(
               onPressed: () => showDialog(

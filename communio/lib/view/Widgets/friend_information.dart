@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:communio/view/theme.dart' show accentColor;
+import 'package:communio/view/theme.dart' show navyBlueColor;
 
 class FriendInformation extends StatelessWidget {
   final String name;
@@ -16,7 +16,7 @@ class FriendInformation extends StatelessWidget {
             width: MediaQuery.of(context).size.width * 0.4,
             child: Text(
               name,
-              style: Theme.of(context).textTheme.caption,
+              style: Theme.of(context).textTheme.body2,
             ),
           ),
           generateFriendLocation(context, location),
@@ -27,7 +27,7 @@ class FriendInformation extends StatelessWidget {
     return Row(children: <Widget>[
       Icon(
         Icons.location_on,
-        color: accentColor,
+        color: navyBlueColor,
         size: 17,
         // will be color of the theme
       ),
@@ -35,7 +35,7 @@ class FriendInformation extends StatelessWidget {
           padding: const EdgeInsets.only(left: 2.0),
           child: Text(
             location,
-            style: Theme.of(context).textTheme.caption.apply(fontSizeDelta: -5),
+            style: Theme.of(context).textTheme.body2.apply(fontSizeDelta: -5),
           ))
     ]);
   }

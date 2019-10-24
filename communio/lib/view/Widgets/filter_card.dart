@@ -28,7 +28,7 @@ class _FilterCardState extends State<FilterCard> {
       },
       child: Container(
         decoration: BoxDecoration(
-          color: Theme.of(context).accentColor.withAlpha(50),
+          color: Theme.of(context).colorScheme.secondaryVariant,
           borderRadius: BorderRadius.circular(15.0),
         ),
         margin:
@@ -41,7 +41,7 @@ class _FilterCardState extends State<FilterCard> {
                 right: horizontalPadding),
             child: Text(
               filter,
-              style: Theme.of(context).textTheme.caption,
+              style: Theme.of(context).textTheme.body2.apply(fontSizeDelta: -2),
             )),
       ),
     );
