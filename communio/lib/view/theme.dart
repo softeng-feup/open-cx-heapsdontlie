@@ -37,5 +37,6 @@ ThemeData applicationTheme = new ThemeData(
         fontSize: 72.0, fontWeight: FontWeight.bold, color: primaryColor),
     title: TextStyle(fontSize: 36.0, color: accentColor),
     body1: TextStyle(fontSize: 18.0, color: primaryColor),
+    caption: TextStyle(fontSize: 18.0, color: accentColor)
   ),
 );

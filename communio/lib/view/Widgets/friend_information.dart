@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:communio/view/theme.dart' show accentColor;
 
 class FriendInformation extends StatelessWidget {
   final String name;
@@ -11,21 +12,29 @@ class FriendInformation extends StatelessWidget {
     return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(name, style: TextStyle(fontSize: 22)),
-          generateFriendLocation(location),
+          Text(
+            name,
+            style: Theme.of(context).textTheme.caption,
+          ),
+          generateFriendLocation(context, location),
         ]);
   }
 
-  Widget generateFriendLocation(String location) {
+  Widget generateFriendLocation(BuildContext context, String location) {
     return Row(children: <Widget>[
       Icon(
         Icons.location_on,
-        color: Color.fromARGB(255, 70, 0, 0),
+        color: accentColor,
+        size: 17,
         // will be color of the theme
       ),
       Padding(
           padding: const EdgeInsets.only(left: 2.0),
-          child: Text(location, style: TextStyle(fontSize: 14)))
+          child: Text(
+            location,
+            style: Theme.of(context).textTheme.caption.apply(fontSizeDelta: -5),
+            )
+          )
     ]);
   }
 }

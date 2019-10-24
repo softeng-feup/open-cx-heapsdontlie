@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:communio/view/theme.dart' show navyBlueColor;
 
 class PeopleSearchingPage extends StatelessWidget {
   @override
@@ -79,7 +80,11 @@ class PeopleSearchingPage extends StatelessWidget {
 
   generateConnectionButton(BuildContext context, PersonFound person) {
     return FlatButton(
-      child: Icon(Icons.person_add),
+      child: Icon(
+        Icons.person_add,
+        size: 25.0,
+        color: navyBlueColor,
+      ),
       onPressed: () {
         StoreProvider.of<AppState>(context).dispatch(connectToPerson(person));
       },

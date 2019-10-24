@@ -13,8 +13,17 @@ class SecondaryPageView extends StatelessWidget {
         title: new Text('Commun.io'),
         leading: BackButton(),
       ),
-      body: child,
-      
+      body: Container(
+        color: Theme.of(context).colorScheme.background,
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15.0),
+            color: Theme.of(context).colorScheme.onBackground,
+          ),
+          margin: const EdgeInsets.all(15.0),        
+          child: child,
+          )
+      ),
     );
   }
 }
