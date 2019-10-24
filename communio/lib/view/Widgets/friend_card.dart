@@ -3,18 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class FriendCard extends StatefulWidget {
-
   final Friend friend;
 
   const FriendCard({Key key, @required this.friend}) : super(key: key);
 
   @override
   _FriendCardState createState() => _FriendCardState(friend);
-
 }
 
 class _FriendCardState extends State<FriendCard> {
-
   final Friend friend;
   bool opened = false;
 
@@ -50,11 +47,7 @@ class _FriendCardState extends State<FriendCard> {
     for (var social in friend.socials) {
       children.add(new Padding(
           padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-          child: SvgPicture.asset(
-            social.logo,
-            color: Color.fromARGB(255, 70, 0, 0),
-            // will be color of the theme
-          )));
+          child: social.logo));
     }
     return children;
   }
@@ -62,7 +55,7 @@ class _FriendCardState extends State<FriendCard> {
   Widget generateFriendPhoto(Friend friend) {
     return CircleAvatar(
       backgroundImage: NetworkImage(friend.photo),
-      minRadius: 30,
+      radius: 30,
     );
   }
 
@@ -79,7 +72,7 @@ class _FriendCardState extends State<FriendCard> {
     ]);
   }
 
-  Widget generateFriendInfo(Friend friend) {
+  Widget generateFriendText(Friend friend) {
     return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -90,22 +83,32 @@ class _FriendCardState extends State<FriendCard> {
         ]);
   }
 
+  Widget generateFriendInfo(Friend friend) {
+    return Row(
+      children: <Widget>[
+        generateFriendPhoto(friend),
+        Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: generateFriendText(friend),
+        ),
+      ],
+    );
+  }
+
   Widget generateFriendMainCard(Friend friend) {
     return Padding(
       padding: const EdgeInsets.only(left: 20.0),
       child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            generateFriendPhoto(friend),
-            Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: generateFriendInfo(friend),
-            ),
+            generateFriendInfo(friend),
             Padding(
                 padding: const EdgeInsets.only(left: 10.0),
                 child: FlatButton(
                   onPressed: () {
-                    setState(() {this.opened = !this.opened;});
+                    setState(() {
+                      this.opened = !this.opened;
+                    });
                   },
                   child: Icon(
                     this.opened
@@ -114,11 +117,8 @@ class _FriendCardState extends State<FriendCard> {
                     size: 35.0,
                     color: Color.fromARGB(255, 70, 0, 0),
                   ),
-                )
-            )
-          ]
-      ),
+                ))
+          ]),
     );
   }
-
 }

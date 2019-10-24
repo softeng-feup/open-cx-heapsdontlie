@@ -11,35 +11,24 @@ class ConnectedListingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     StoreProvider.of<AppState>(context).dispatch(queryFriendsList());
     return GeneralPageView(
-        child: Container(
-          margin: const EdgeInsets.all(15.0),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(15.0),
-            child: this.buildFriends(context),
-          )
-//          child: this.buildFriends(context),
-        )
+      child: this.buildFriends(context),
     );
   }
 
   Widget buildFriends(BuildContext context) {
-    return StoreConnector<AppState, List<Friend>>(
+    return StoreConnector<AppState, Set<Friend>>(
         converter: (store) => store.state.content['friends'],
         builder: (context, friends) {
           return ListView(
             shrinkWrap: false,
-//            padding: const EdgeInsets.all(20.0),
             children: this.generateFriendsCards(friends),
           );
-        }
-    );
+        });
   }
 
-  generateFriendsCards(List<Friend> friends) {
+  generateFriendsCards(Set<Friend> friends) {
     final List<Widget> friendsCards = List();
-    for (Friend friend in friends) {
-      friendsCards.add(FriendCard(friend: friend));
-    }
+    friends.forEach((friend) => friendsCards.add(FriendCard(friend: friend)));
     return friendsCards;
   }
 }

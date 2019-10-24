@@ -13,7 +13,7 @@ class FoundPersonAction{
   FoundPersonAction(this.device, this.personFound);
 }
 
-class FoundFriendAction{
-  Friend friend;
-  FoundFriendAction(this.friend);
+class QueriedFriendsAction{
+  final Set<Friend> friends;
+  QueriedFriendsAction(this.friends);
 }

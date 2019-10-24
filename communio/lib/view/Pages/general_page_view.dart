@@ -15,7 +15,13 @@ class GeneralPageView extends StatelessWidget{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: new AppBar(title: new Text('Commun.io'),),
-      body: child,
+      body: Container(
+        margin: const EdgeInsets.all(15.0),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(15.0),
+          child: child
+        )
+      ),
       drawer: new NavigationDrawer(parentContext: context,),
       floatingActionButton: this.floatingActionButton,
     );

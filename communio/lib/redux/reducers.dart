@@ -1,3 +1,4 @@
+import 'package:communio/model/friend.dart';
 import 'package:communio/model/person_found.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'package:logger/logger.dart';
@@ -9,6 +10,8 @@ AppState appReducers(AppState state, dynamic action) {
     return incrementCounter(state, action);
   } else if (action is FoundPersonAction) {
     return addNewdevice(state, action);
+  } else if (action is QueriedFriendsAction) {
+    return replaceFriends(state, action);
   }
   return state;
 }
@@ -30,3 +33,8 @@ AppState incrementCounter(AppState state, IncrementCounterAction action) {
   return state.cloneAndUpdateValue('counter', action.counter);
 }
 
+AppState replaceFriends(AppState state, QueriedFriendsAction action) {
+  Logger().i('Found ${action.friends.length} friends:'
+      '${action.friends}');
+  return state.cloneAndUpdateValue('friends', action.friends);
+}

@@ -43,18 +43,17 @@ ThunkAction<AppState> scanForDevices() {
 }
 
 ThunkAction<AppState> queryFriendsList() {
-  final friendQueryUrl = "http://www.mocky.io/v2/5db025052f0000b183c138b1";
+  final friendQueryUrl = "http://www.mocky.io/v2/5db1671e2e0000850050538e";
   return (Store<AppState> store) async {
-    final List<Friend> friends = store.state.content['friends'];
-    friends.clear();
+    final Set<Friend> friends = new Set<Friend>();
     final response = await http.get(friendQueryUrl);
     if (response.statusCode == 200) {
-      final friendsJson = json.decode(response.body);
-      for (var friendJson in friendsJson) {
+      final Iterable friendsJson = json.decode(response.body);
+      friendsJson.forEach((friendJson) {
         final Friend friend = Friend.fromJson(friendJson);
         friends.add(friend);
-        store.dispatch(FoundFriendAction(friend));
-      }
+      });
+      store.dispatch(QueriedFriendsAction(friends));
     }
   };
 }
