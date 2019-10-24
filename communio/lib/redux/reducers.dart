@@ -12,8 +12,21 @@ AppState appReducers(AppState state, dynamic action) {
     return addNewdevice(state, action);
   } else if (action is QueriedFriendsAction) {
     return replaceFriends(state, action);
+  } else if (action is NewFiltersAction){
+    return addNewFilter(state, action);
+  } else if(action is ActivateScanning){
+    return activateScanning(state);
   }
   return state;
+}
+
+AppState activateScanning(AppState state) {
+  return state.cloneAndUpdateValue('scanning_on', true);
+}
+
+AppState addNewFilter(AppState state, NewFiltersAction action) {
+  Logger().i('Filters are now ${action.filters}');
+  return state.cloneAndUpdateValue('current_filters', action.filters);
 }
 
 AppState addNewdevice(AppState state, FoundPersonAction action) {

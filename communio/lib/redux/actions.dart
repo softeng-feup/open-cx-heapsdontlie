@@ -17,3 +17,9 @@ class QueriedFriendsAction{
   final Set<Friend> friends;
   QueriedFriendsAction(this.friends);
 }
+class NewFiltersAction{
+  final Set<String> filters;
+  NewFiltersAction(this.filters);
+}
+
+class ActivateScanning{}

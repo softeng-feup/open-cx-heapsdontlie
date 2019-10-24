@@ -1,6 +1,5 @@
 import 'package:communio/model/friend.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class FriendCard extends StatefulWidget {
   final Friend friend;
@@ -77,9 +76,7 @@ class _FriendCardState extends State<FriendCard> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(friend.name, style: TextStyle(fontSize: 22)),
-          Padding(
-              padding: const EdgeInsets.only(top: 5.0),
-              child: generateFriendLocation(friend)),
+          generateFriendLocation(friend),
         ]);
   }
 
@@ -88,7 +85,7 @@ class _FriendCardState extends State<FriendCard> {
       children: <Widget>[
         generateFriendPhoto(friend),
         Padding(
-          padding: const EdgeInsets.all(15.0),
+          padding: const EdgeInsets.only(left: 13.0, top: 13.0, bottom: 13.0),
           child: generateFriendText(friend),
         ),
       ],
@@ -97,27 +94,27 @@ class _FriendCardState extends State<FriendCard> {
 
   Widget generateFriendMainCard(Friend friend) {
     return Padding(
-      padding: const EdgeInsets.only(left: 20.0),
+      padding:
+          const EdgeInsets.only(left: 17.0, top: 7.5, bottom: 7.5, right: 17.0),
       child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             generateFriendInfo(friend),
-            Padding(
-                padding: const EdgeInsets.only(left: 10.0),
-                child: FlatButton(
-                  onPressed: () {
-                    setState(() {
-                      this.opened = !this.opened;
-                    });
-                  },
-                  child: Icon(
-                    this.opened
-                        ? Icons.keyboard_arrow_up
-                        : Icons.keyboard_arrow_down,
-                    size: 35.0,
-                    color: Color.fromARGB(255, 70, 0, 0),
-                  ),
-                ))
+            IconButton(
+              onPressed: () {
+                setState(() {
+                  this.opened = !this.opened;
+                });
+              },
+              icon: Icon(
+                this.opened
+                    ? Icons.keyboard_arrow_up
+                    : Icons.keyboard_arrow_down,
+                size: 35.0,
+                color: Color.fromARGB(255, 70, 0, 0),
+              )
+            )
           ]),
     );
   }

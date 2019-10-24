@@ -12,7 +12,10 @@ class AppState {
       "counter": 0,
       "scanning_on": false,
       "bluetooth_devices": Map<BluetoothDevice, PersonFound>(),
-      "friends": Set<Friend>()
+      "friends": Set<Friend>(),
+      "current_filters": Set<String>(),
+      "user_id": "UniqueUUID",
+      "person_query_url": "http://www.mocky.io/v2/5da74a162f00002a003683f0"
     };
   }
 
