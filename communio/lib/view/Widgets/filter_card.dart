@@ -16,6 +16,7 @@ class _FilterCardState extends State<FilterCard> {
   final String filter;
   final verticalPadding = 12.0;
   final horizontalPadding = 12.0;
+  final horizontalMargin = 10.0;
 
   _FilterCardState(this.filter);
 
@@ -25,18 +26,24 @@ class _FilterCardState extends State<FilterCard> {
       onLongPress: () {
         StoreProvider.of<AppState>(context).dispatch(removeFilter(filter));
       },
-      child: Card(
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Theme.of(context).accentColor.withAlpha(50),
+          borderRadius: BorderRadius.circular(15.0),
+        ),
+        margin:
+            EdgeInsets.only(right: horizontalMargin, left: horizontalMargin),
         child: Container(
             padding: EdgeInsets.only(
                 top: verticalPadding,
                 bottom: verticalPadding,
                 left: horizontalPadding,
                 right: horizontalPadding),
-            child: Text(filter)),
+            child: Text(
+              filter,
+              style: Theme.of(context).textTheme.caption,
+            )),
       ),
     );
-
   }
 }

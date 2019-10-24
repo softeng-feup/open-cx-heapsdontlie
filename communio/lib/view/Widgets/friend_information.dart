@@ -12,9 +12,12 @@ class FriendInformation extends StatelessWidget {
     return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
-            name,
-            style: Theme.of(context).textTheme.caption,
+          Container(
+            width: MediaQuery.of(context).size.width * 0.4,
+            child: Text(
+              name,
+              style: Theme.of(context).textTheme.caption,
+            ),
           ),
           generateFriendLocation(context, location),
         ]);
@@ -33,8 +36,7 @@ class FriendInformation extends StatelessWidget {
           child: Text(
             location,
             style: Theme.of(context).textTheme.caption.apply(fontSizeDelta: -5),
-            )
-          )
+          ))
     ]);
   }
 }

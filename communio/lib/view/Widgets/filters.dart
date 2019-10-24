@@ -12,8 +12,19 @@ class Filters extends StatelessWidget {
     return StoreConnector<AppState, List<String>>(
       converter: (store) => store.state.content['current_filters'].toList(),
       builder: (context, filters){
-        return Row(
-          children: this.generateFilters(context, filters),
+        return Container(
+          padding: EdgeInsets.all(8.0),
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(
+                color: Theme.of(context).accentColor,
+                width: 5.0
+              )
+            )
+          ),
+          child: Row(
+            children: this.generateFilters(context, filters),
+          ),
         );
       },
     );
@@ -31,14 +42,20 @@ class Filters extends StatelessWidget {
   }
 
   Widget generateNewFiltersButton(BuildContext context) {
-    return IconButton(
-      onPressed: () => showDialog(
-        context: context,
-        builder: (BuildContext context){
-          return FilterForm();
-        }
-      ),
-      icon: Icon(Icons.library_add),
+    return ClipOval(
+        child: Container(
+          color: Theme.of(context).accentColor,
+          child:
+            IconButton(
+              onPressed: () => showDialog(
+                context: context,
+                builder: (BuildContext context){
+                  return FilterForm();
+                }
+              ),
+              icon: Icon(Icons.library_add),
+            ),
+        ),
     );
   }
 }

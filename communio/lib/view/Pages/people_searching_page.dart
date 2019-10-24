@@ -12,6 +12,9 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:communio/view/theme.dart' show navyBlueColor;
 
 class PeopleSearchingPage extends StatelessWidget {
+  final horizontalPadding = 22.0;
+  final verticalPadding = 3.0;
+
   @override
   Widget build(BuildContext context) {
     StoreProvider.of<AppState>(context).dispatch(scanForDevices());
@@ -27,7 +30,6 @@ class PeopleSearchingPage extends StatelessWidget {
       builder: (context, devices) {
         return ListView(
           shrinkWrap: false,
-          padding: EdgeInsets.all(20.0),
           children: this.generateDevicesCards(context, devices),
         );
       },
@@ -50,10 +52,14 @@ class PeopleSearchingPage extends StatelessWidget {
 
   generatePersonCard(BuildContext context, PersonFound person) {
     return new Container(
-        padding: EdgeInsets.all(2.0),
+        padding: EdgeInsets.only(
+            right: horizontalPadding,
+            left: horizontalPadding,
+            top: verticalPadding,
+            bottom: verticalPadding),
         margin: EdgeInsets.only(bottom: 5),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             PhotoAvatar(
               photo: person.photo,
@@ -64,8 +70,7 @@ class PeopleSearchingPage extends StatelessWidget {
             ),
             this.generateConnectionButton(context, person)
           ],
-        )
-      );
+        ));
   }
 
   generateDevicesCards(
@@ -79,10 +84,10 @@ class PeopleSearchingPage extends StatelessWidget {
   }
 
   generateConnectionButton(BuildContext context, PersonFound person) {
-    return FlatButton(
-      child: Icon(
+    return IconButton(
+      icon: Icon(
         Icons.person_add,
-        size: 25.0,
+        size: 30.0,
         color: navyBlueColor,
       ),
       onPressed: () {
