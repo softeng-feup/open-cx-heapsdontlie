@@ -3,6 +3,8 @@ import 'package:communio/model/person_found.dart';
 import 'package:communio/redux/action_creators.dart';
 import 'package:communio/view/Pages/general_page_view.dart';
 import 'package:communio/view/Widgets/filters.dart';
+import 'package:communio/view/Widgets/friend_information.dart';
+import 'package:communio/view/Widgets/photo_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_blue/flutter_blue.dart';
@@ -46,16 +48,23 @@ class PeopleSearchingPage extends StatelessWidget {
   }
 
   generatePersonCard(BuildContext context, PersonFound person) {
-    return new Card(
+    return new Container(
+        padding: EdgeInsets.all(2.0),
+        margin: EdgeInsets.only(bottom: 5),
         child: Row(
-      children: <Widget>[
-        CircleAvatar(
-          backgroundImage: NetworkImage(person.photo),
-          minRadius: 30,
-        ),
-        this.generateConnectionButton(context, person)
-      ],
-    ));
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            PhotoAvatar(
+              photo: person.photo,
+            ),
+            FriendInformation(
+              name: person.name,
+              location: person.location,
+            ),
+            this.generateConnectionButton(context, person)
+          ],
+        )
+      );
   }
 
   generateDevicesCards(
@@ -72,7 +81,7 @@ class PeopleSearchingPage extends StatelessWidget {
     return FlatButton(
       child: Icon(Icons.person_add),
       onPressed: () {
-        StoreProvider.of<AppState>(context).dispatch(person);
+        StoreProvider.of<AppState>(context).dispatch(connectToPerson(person));
       },
     );
   }

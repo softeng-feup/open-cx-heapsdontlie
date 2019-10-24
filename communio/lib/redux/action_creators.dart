@@ -70,7 +70,7 @@ ThunkAction<AppState> startBroadcastingBeacon() {
 
 ThunkAction<AppState> connectToPerson(PersonFound person) {
   return (Store<AppState> store) async {
-    Logger().w('Connect to person!');
+    Logger().w('Connect to person not yet implemented!');
   };
 }
 
