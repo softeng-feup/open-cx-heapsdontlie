@@ -7,7 +7,6 @@ import 'package:communio/view/Widgets/friend_information.dart';
 import 'package:communio/view/Widgets/photo_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_blue/flutter_blue.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:communio/view/theme.dart' show navyBlueColor;
 
@@ -25,10 +24,11 @@ class PeopleSearchingPage extends StatelessWidget {
   }
 
   Widget buildDevices(BuildContext context) {
-    return StoreConnector<AppState, Map<BluetoothDevice, PersonFound>>(
+    return StoreConnector<AppState, dynamic>(
       converter: (store) => getFilteredDevices(store.state),
       builder: (context, devices) {
         return ListView(
+          key: new Key('people-searching-page'),
           shrinkWrap: false,
           children: this.generateDevicesCards(context, devices),
         );
@@ -36,12 +36,12 @@ class PeopleSearchingPage extends StatelessWidget {
     );
   }
 
-  Map<BluetoothDevice, PersonFound> getFilteredDevices(AppState state) {
+  getFilteredDevices(AppState state) {
     final storeContent = state.content;
     final Set<String> filters = storeContent['current_filters'];
-    final Map<BluetoothDevice, PersonFound> devices =
+    final devices =
         storeContent['bluetooth_devices'];
-    final Map<BluetoothDevice, PersonFound> filteredDevices = Map.from(devices)
+    final filteredDevices = Map.from(devices)
       ..removeWhere((key, value) => !value.interests.any((value) =>
           filters.toList().indexWhere(
                   (filter) => filter.toLowerCase() == value.toLowerCase()) !=
@@ -74,7 +74,7 @@ class PeopleSearchingPage extends StatelessWidget {
   }
 
   generateDevicesCards(
-      BuildContext context, Map<BluetoothDevice, PersonFound> devices) {
+      BuildContext context, devices) {
     final List<Widget> devicesCards = List();
     devicesCards.add(new Filters());
     devices.forEach((device, person) {
@@ -83,7 +83,7 @@ class PeopleSearchingPage extends StatelessWidget {
     return devicesCards;
   }
 
-  generateConnectionButton(BuildContext context, PersonFound person) {
+  generateConnectionButton(BuildContext context, person) {
     return IconButton(
       icon: Icon(
         Icons.person_add,
