@@ -10,7 +10,7 @@ class SecondaryPageView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: new AppBar(
-        title: new Text('Commun.io'),
+        title: new Text('Commun.io', style: Theme.of(context).textTheme.title,),
         leading: BackButton(),
       ),
       body: child,

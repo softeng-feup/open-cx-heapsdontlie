@@ -34,8 +34,8 @@ ThemeData applicationTheme = new ThemeData(
   textTheme: TextTheme(
     headline: TextStyle(
         fontSize: 72.0, fontWeight: FontWeight.bold, color: navyBlueColor),
-    title: TextStyle(fontSize: 35.0, color: navyBlueColor),
-    subtitle: TextStyle(fontSize: 30.0, color: navyBlueColor),
+    title: TextStyle(fontSize: 30.0, color: navyBlueColor),
+    subtitle: TextStyle(fontSize: 25.0, color: navyBlueColor),
     subhead: TextStyle(fontSize: 23.0, color: navyBlueColor),
     caption: TextStyle(fontSize: 15.0, color: lightCyanColor),
     body1: TextStyle(fontSize: 20.0, color:navyBlueColor),
