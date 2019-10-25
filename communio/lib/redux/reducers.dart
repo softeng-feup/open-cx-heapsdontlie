@@ -1,4 +1,3 @@
-import 'package:communio/model/friend.dart';
 import 'package:communio/model/person_found.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'package:logger/logger.dart';
@@ -31,7 +30,7 @@ AppState addNewFilter(AppState state, NewFiltersAction action) {
 
 AppState addNewdevice(AppState state, FoundPersonAction action) {
   Logger().i('Adding a new person of '
-      'id ${action.device.id} and name ${action.personFound.name}');
+      'id ${action.device} and name ${action.personFound.name}');
   final Map<BluetoothDevice, PersonFound> bluetoothDevices =
       state.content['bluetooth_devices'];
   bluetoothDevices.putIfAbsent(action.device, () => action.personFound);    

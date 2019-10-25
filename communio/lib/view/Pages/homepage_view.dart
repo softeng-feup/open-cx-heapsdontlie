@@ -25,7 +25,8 @@ class HomePageView extends StatelessWidget{
               padding: EdgeInsets.all(20.0),
               children:<Widget>[
                  new Text(
-                'The button has been clicked $counter times!'
+                'The button has been clicked $counter times!',
+                   style: Theme.of(context).textTheme.body2,
                 ),
               ]
             ),

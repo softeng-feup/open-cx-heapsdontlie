@@ -1,4 +1,7 @@
 import 'package:communio/model/friend.dart';
+import 'package:communio/view/Widgets/friend_information.dart';
+import 'package:communio/view/Widgets/photo_avatar.dart';
+import 'package:communio/view/theme.dart';
 import 'package:flutter/material.dart';
 
 class FriendCard extends StatefulWidget {
@@ -31,8 +34,7 @@ class _FriendCardState extends State<FriendCard> {
     return this.opened
         ? Container(
             alignment: Alignment.center,
-            color: Color.fromARGB(200, 255, 230, 200),
-            // will be color of the theme
+            color: lighterCyanColor,
             height: 80.0,
             child: new ListView(
                 shrinkWrap: true,
@@ -51,42 +53,14 @@ class _FriendCardState extends State<FriendCard> {
     return children;
   }
 
-  Widget generateFriendPhoto(Friend friend) {
-    return CircleAvatar(
-      backgroundImage: NetworkImage(friend.photo),
-      radius: 30,
-    );
-  }
-
-  Widget generateFriendLocation(Friend friend) {
-    return Row(children: <Widget>[
-      Icon(
-        Icons.location_on,
-        color: Color.fromARGB(255, 70, 0, 0),
-        // will be color of the theme
-      ),
-      Padding(
-          padding: const EdgeInsets.only(left: 2.0),
-          child: Text(friend.location, style: TextStyle(fontSize: 14)))
-    ]);
-  }
-
-  Widget generateFriendText(Friend friend) {
-    return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(friend.name, style: TextStyle(fontSize: 22)),
-          generateFriendLocation(friend),
-        ]);
-  }
-
   Widget generateFriendInfo(Friend friend) {
     return Row(
       children: <Widget>[
-        generateFriendPhoto(friend),
+        PhotoAvatar(photo: friend.photo),
         Padding(
           padding: const EdgeInsets.only(left: 13.0, top: 13.0, bottom: 13.0),
-          child: generateFriendText(friend),
+          child:
+              FriendInformation(name: friend.name, location: friend.location),
         ),
       ],
     );
@@ -102,19 +76,18 @@ class _FriendCardState extends State<FriendCard> {
           children: <Widget>[
             generateFriendInfo(friend),
             IconButton(
-              onPressed: () {
-                setState(() {
-                  this.opened = !this.opened;
-                });
-              },
-              icon: Icon(
-                this.opened
-                    ? Icons.keyboard_arrow_up
-                    : Icons.keyboard_arrow_down,
-                size: 35.0,
-                color: Color.fromARGB(255, 70, 0, 0),
-              )
-            )
+                onPressed: () {
+                  setState(() {
+                    this.opened = !this.opened;
+                  });
+                },
+                icon: Icon(
+                  this.opened
+                      ? Icons.keyboard_arrow_up
+                      : Icons.keyboard_arrow_down,
+                  size: 30.0,
+                  color: navyBlueColor,
+                ))
           ]),
     );
   }
