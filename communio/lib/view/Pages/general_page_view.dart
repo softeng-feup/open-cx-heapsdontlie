@@ -29,9 +29,6 @@ class GeneralPageView extends StatelessWidget {
             margin: const EdgeInsets.all(15.0),
             child: child,
           )),
-      drawer: new NavigationDrawer(
-        parentContext: context,
-      ),
       floatingActionButton: this.floatingActionButton,
     );
   }
