@@ -45,10 +45,13 @@ Therefore, the tests have been conceptualized, but not yet implemented.
 
 #### Features
 - Listing connections:
-  - Given a list of two friends, with three registered social network links, then two friends will be shown on the screen, with three different icons.
-  - Given a list of three profiles, where two of them share their uuid, then two friends will be shown, as profiles with the same unique id will be treated as being the same profile.
-  - Given an empty list of friends, no cards will be shown.
-  - Given a list containing a profile with links to multiple profiles of the same social network, the different links will be shown as separate icons of that social network.
+  - Given a list of two friends, with three registered social network links, then two friends will be displayed on the screen, with three different icons.
+  - Given a list of three profiles, where two of them share their uuid, then two friends will be displayed, as profiles with the same unique id will be treated as being the same profile.
+  - Given an empty list of friends, no cards will be displayed.
+  - Given a list containing a profile with links to multiple profiles of the same social network, the different links will be display as separate icons of that social network.
 
 - Searching For Nearby People:
-  - Given a list of two people, both with interest in Big Data 
+  - Given a list of two people, both with interest in Big Data, and with no filters in the app, then it shall display those two people.
+  - Given a list of two people, both with interest in Big Data, and with a filter on Big Data in the app, then it shall display those two people.
+  - Given a list of two people, one with interest in Big Data and another with interest in AI, and with a single filter on AI, only the person with interest on AI will be displayed  
+  - Given a list of two people, one with interest in Big Data and another with interest in AI, and with a filter on AI and another on Big Data, both people will be displayed
