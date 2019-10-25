@@ -1,7 +1,6 @@
 
 
 import 'package:communio/model/person_found.dart';
-import 'package:flutter_blue/flutter_blue.dart';
 
 class IncrementCounterAction{
   final int counter;
@@ -9,9 +8,9 @@ class IncrementCounterAction{
 }
 
 class FoundPersonAction{
-  final BluetoothDevice device;
+  final String uuid;
   final PersonFound personFound;
-  FoundPersonAction(this.device, this.personFound);
+  FoundPersonAction(this.uuid, this.personFound);
 }
 
 class NewFiltersAction{
