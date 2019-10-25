@@ -29,6 +29,7 @@ dependencies:
   synchronized: ^2.1.0
   toast: ^0.1.5
   logger: ^0.7.0+2
+  flutter_blue: 0.6.2
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -59,26 +60,22 @@ flutter:
   uses-material-design: true
 
   fonts:
-    - family: Raleway
+    - family: Nunito
       fonts:
-        - asset: assets/fonts/Raleway-Black.ttf
+        - asset: assets/fonts/Nunito-Black.ttf
           weight: 900
-        - asset: assets/fonts/Raleway-Bold.ttf
+        - asset: assets/fonts/Nunito-Bold.ttf
           weight: 700
-        - asset: assets/fonts/Raleway-ExtraBold.ttf
+        - asset: assets/fonts/Nunito-ExtraBold.ttf
           weight: 800
-        - asset: assets/fonts/Raleway-ExtraLight.ttf
+        - asset: assets/fonts/Nunito-ExtraLight.ttf
           weight: 200
-        - asset: assets/fonts/Raleway-Light.ttf
+        - asset: assets/fonts/Nunito-Light.ttf
           weight: 300
-        - asset: assets/fonts/Raleway-Medium.ttf
-          weight: 500
-        - asset: assets/fonts/Raleway-Regular.ttf
+        - asset: assets/fonts/Nunito-Regular.ttf
           weight: 400
-        - asset: assets/fonts/Raleway-SemiBold.ttf
+        - asset: assets/fonts/Nunito-SemiBold.ttf
           weight: 600
-        - asset: assets/fonts/Raleway-Thin.ttf
-          weight: 100
 
   # To add assets to your application, add an assets section, like this:
   # assets:
@@ -86,6 +83,7 @@ flutter:
   #  - images/a_dot_ham.jpeg
   assets:
    - assets/
+   - assets/fonts/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
