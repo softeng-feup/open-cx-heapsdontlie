@@ -1,5 +1,4 @@
-
-
+import 'package:communio/model/friend.dart';
 import 'package:communio/model/person_found.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 
@@ -14,6 +13,10 @@ class FoundPersonAction{
   FoundPersonAction(this.device, this.personFound);
 }
 
+class QueriedFriendsAction{
+  final Set<Friend> friends;
+  QueriedFriendsAction(this.friends);
+}
 class NewFiltersAction{
   final Set<String> filters;
   NewFiltersAction(this.filters);

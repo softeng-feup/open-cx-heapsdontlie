@@ -20,7 +20,14 @@ class SecondaryPageView extends StatelessWidget {
       ),
       body: Container(
         color: Theme.of(context).colorScheme.background,
-        child: child,
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15.0),
+            color: Theme.of(context).colorScheme.onBackground,
+          ),
+          margin: const EdgeInsets.all(15.0),        
+          child: child,
+          )
       ),
     );
   }

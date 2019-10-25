@@ -5,6 +5,7 @@ class NavigationDrawer extends StatefulWidget {
   final BuildContext parentContext;
 
   NavigationDrawer({@required this.parentContext}) {}
+
   @override
   State<StatefulWidget> createState() {
     return new NavigationDrawerState(parentContext: parentContext);
@@ -16,7 +17,12 @@ class NavigationDrawerState extends State<NavigationDrawer> {
 
   NavigationDrawerState({@required this.parentContext}) {}
 
-  static final drawerItems = ["Homepage", "PeopleSearch", "Settings"];
+  static final drawerItems = [
+    "Homepage",
+    "PeopleSearch",
+    "ListConnected",
+    "Settings"
+  ];
 
   getCurrentRoute() => ModalRoute.of(parentContext).settings.name == null
       ? drawerItems[0]

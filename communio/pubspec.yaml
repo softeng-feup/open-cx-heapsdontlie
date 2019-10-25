@@ -41,6 +41,8 @@ dev_dependencies:
 
   test: any
   flutter_launcher_icons: "^0.7.3"
+  image_test_utils: ^1.0.0
+  mockito: 3.0.0
 
 flutter_icons:
   android: true

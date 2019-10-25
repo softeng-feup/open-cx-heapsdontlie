@@ -42,7 +42,5 @@ ThemeData applicationTheme = new ThemeData(
     body2: TextStyle(fontSize: 18.0, color: cyanColor),
     button: TextStyle(fontSize: 25.0, color: whiteColor),
     overline: TextStyle(fontSize: 10.0, color: lighterCyanColor),
-
-
   ),
 );
