@@ -38,3 +38,14 @@ To check our current user stories, come to our [Trello](https://trello.com/b/Og2
 <div align="center">
   <img width="438" src="assets/domain-model.png">
 </div>
+
+### Acceptance Tests
+The framework for automating the acceptance tests has not yet been implemented.
+Therefore, the tests have been conceptualized, but not yet implemented.
+
+#### Features
+- Listing connections:
+  - Given a list of two friends, with three registered social network links, then two friends will be shown on the screen, with three different icons.
+  - Given a list of three profiles, where two of them share their uuid, then two friends will be shown, as profiles with the same unique id will be treated as being the same profile.
+  - Given an empty list of friends, no cards will be shown.
+  - Given a list containing a profile with links to multiple profiles of the same social network, the different links will be shown as separate icons of that social network.
