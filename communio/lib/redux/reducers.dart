@@ -1,5 +1,4 @@
 import 'package:communio/model/person_found.dart';
-import 'package:flutter_blue/flutter_blue.dart';
 import 'package:logger/logger.dart';
 import '../model/app_state.dart';
 import 'actions.dart';
@@ -13,7 +12,7 @@ AppState appReducers(AppState state, dynamic action) {
     return replaceFriends(state, action);
   } else if (action is NewFiltersAction){
     return addNewFilter(state, action);
-  } else if(action is ActivateScanning){
+  } else if (action is ActivateScanning) {
     return activateScanning(state);
   }
   return state;
@@ -30,14 +29,11 @@ AppState addNewFilter(AppState state, NewFiltersAction action) {
 
 AppState addNewdevice(AppState state, FoundPersonAction action) {
   Logger().i('Adding a new person of '
-      'id ${action.device} and name ${action.personFound.name}');
-  final Map<BluetoothDevice, PersonFound> bluetoothDevices =
+      'id ${action.uuid} and name ${action.personFound.name}');
+  final Map<String, PersonFound> bluetoothDevices =
       state.content['bluetooth_devices'];
-  bluetoothDevices.putIfAbsent(action.device, () => action.personFound);    
-  return state.cloneAndUpdateValue(
-    'bluetooth_devices',
-    bluetoothDevices
-  );
+  bluetoothDevices.putIfAbsent(action.uuid, () => action.personFound);
+  return state.cloneAndUpdateValue('bluetooth_devices', bluetoothDevices);
 }
 
 AppState incrementCounter(AppState state, IncrementCounterAction action) {

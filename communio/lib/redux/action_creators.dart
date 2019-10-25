@@ -26,19 +26,18 @@ ThunkAction<AppState> scanForDevices() {
       Logger().i('Starting to scan for devices...');
       final personQueryUrl = store.state.content['person_query_url'];
       final isAvailable = await bluetooth.isAvailable;
-      final mockPerson = await PersonFound.fromNetwork(personQueryUrl);
-      store.dispatch(FoundPersonAction(null, mockPerson));
       if (isAvailable) {
         bluetooth
             .scan(scanMode: ScanMode.balanced, timeout: Duration(minutes: 30))
             .listen((scanResult) async {
-          final Map<BluetoothDevice, PersonFound> bluetoothDevices =
+          final Map<String, PersonFound> bluetoothDevices =
               store.state.content['bluetooth_devices'];
           final device = scanResult.device;
-          if (!bluetoothDevices.containsKey(device)) {
+          final uuid = device.name.hashCode.toString();
+          if (!bluetoothDevices.containsKey(uuid)) {
             final PersonFound person =
-                await PersonFound.fromNetwork("$personQueryUrl/$device");
-            store.dispatch(FoundPersonAction(device, person));
+                await PersonFound.fromNetwork("$personQueryUrl/$uuid");
+            store.dispatch(FoundPersonAction(uuid, person));
           }
         });
         store.dispatch(ActivateScanning());

@@ -1,5 +1,4 @@
 import 'package:communio/model/person_found.dart';
-import 'package:flutter_blue/flutter_blue.dart';
 
 import 'friend.dart';
 
@@ -11,7 +10,7 @@ class AppState {
     return {
       "counter": 0,
       "scanning_on": false,
-      "bluetooth_devices": Map<BluetoothDevice, PersonFound>(),
+      "bluetooth_devices": Map<String, PersonFound>(),
       "friends": Set<Friend>(),
       "current_filters": Set<String>(),
       "user_id": "UniqueUUID",
