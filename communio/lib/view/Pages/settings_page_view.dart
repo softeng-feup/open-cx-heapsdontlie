@@ -14,7 +14,8 @@ class SettingsPageView extends StatelessWidget {
   List<Widget> buildSettings(BuildContext context) {
     return [
       FlatButton(
-        child: Text('Choose beacon'),
+        child: Text('Choose beacon',
+          style: Theme.of(context).textTheme.body2,),
         onPressed: () {
           
           Navigator.of(context).pushNamed('/SetBeacon');

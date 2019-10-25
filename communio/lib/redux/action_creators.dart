@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:communio/model/friend.dart';
 import 'package:communio/model/person_found.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'package:logger/logger.dart';
@@ -6,6 +7,8 @@ import 'package:redux_thunk/redux_thunk.dart';
 import '../model/app_state.dart';
 import 'actions.dart';
 import 'package:redux/redux.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 ThunkAction<AppState> incrementCounter() {
   return (Store<AppState> store) async {
@@ -43,6 +46,22 @@ ThunkAction<AppState> scanForDevices() {
   };
 }
 
+ThunkAction<AppState> queryFriendsList() {
+  final friendQueryUrl = "http://www.mocky.io/v2/5db1bd722e0000a8c950571f";
+  return (Store<AppState> store) async {
+    final Set<Friend> friends = new Set<Friend>();
+    final response = await http.get(friendQueryUrl);
+    if (response.statusCode == 200) {
+      final Iterable friendsJson = json.decode(response.body);
+      friendsJson.forEach((friendJson) {
+        final Friend friend = Friend.fromJson(friendJson);
+        friends.add(friend);
+      });
+      store.dispatch(QueriedFriendsAction(friends));
+    }
+  };
+}
+
 ThunkAction<AppState> addNewFilter(String filter) {
   return (Store<AppState> store) {
     final Set<String> filters = store.state.content['current_filters'];
@@ -74,6 +93,3 @@ ThunkAction<AppState> connectToPerson(PersonFound person) {
     Logger().w('Connect to person not yet implemented!');
   };
 }
-
-
-
