@@ -49,3 +49,6 @@ Therefore, the tests have been conceptualized, but not yet implemented.
   - Given a list of three profiles, where two of them share their uuid, then two friends will be shown, as profiles with the same unique id will be treated as being the same profile.
   - Given an empty list of friends, no cards will be shown.
   - Given a list containing a profile with links to multiple profiles of the same social network, the different links will be shown as separate icons of that social network.
+
+- Searching For Nearby People:
+  - Given a list of two people, both with interest in Big Data 
