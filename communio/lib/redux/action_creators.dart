@@ -27,7 +27,7 @@ ThunkAction<AppState> scanForDevices() {
         bluetooth
             .scan(scanMode: ScanMode.balanced, timeout: Duration(minutes: 30))
             .listen((scanResult) async {
-          final Map<BluetoothDevice, PersonFound> bluetoothDevices =
+          final Map<String, PersonFound> bluetoothDevices =
               store.state.content['bluetooth_devices'];
           final device = scanResult.device;
           final uuid = device.id.id;
