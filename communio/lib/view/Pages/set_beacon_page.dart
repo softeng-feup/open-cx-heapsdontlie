@@ -11,7 +11,8 @@ class SetBeaconPage extends StatelessWidget {
       child: ListView(
         children: <Widget>[
           FlatButton(
-            child: Text('Use own phone'),
+            child: Text('Use own phone',
+              style: Theme.of(context).textTheme.body2,),
             onPressed: () {
               StoreProvider.of<AppState>(context)
                   .dispatch(startBroadcastingBeacon());
