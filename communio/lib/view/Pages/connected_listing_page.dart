@@ -11,7 +11,10 @@ class ConnectedListingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     StoreProvider.of<AppState>(context).dispatch(queryFriendsList());
     return GeneralPageView(
-      child: this.buildFriends(context),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(15.0),
+        child: this.buildFriends(context)
+      )
     );
   }
 

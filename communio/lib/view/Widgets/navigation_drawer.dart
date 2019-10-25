@@ -42,7 +42,8 @@ class NavigationDrawerState extends State<NavigationDrawer> {
     return (name == getCurrentRoute())
         ? (const BoxDecoration(
             border:
-                Border(bottom: BorderSide(width: 5.0, color: primaryColor))))
+                Border(bottom: BorderSide(width: 5.0,
+                    color: cyanColor))))
         : null;
   }
 
@@ -53,8 +54,8 @@ class NavigationDrawerState extends State<NavigationDrawer> {
           new Container(
             decoration: _buildBorder("Terminar sessão"),
             child: new Text("Terminar sessão",
-                style: TextStyle(fontSize: 24.0, color: primaryColor)),
-          ),
+              style: Theme.of(context).textTheme.body1))  ,
+
         ],
       ),
       onTap: () => Navigator.pushReplacementNamed(context, '/Terminar sessão'),
@@ -68,7 +69,7 @@ class NavigationDrawerState extends State<NavigationDrawer> {
           new Container(
             decoration: _buildBorder(d),
             child: new Text(d,
-                style: TextStyle(fontSize: 24.0, color: primaryColor)),
+                style: Theme.of(context).textTheme.body1),
           ),
         ],
       ),

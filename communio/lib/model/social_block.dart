@@ -1,14 +1,33 @@
+import 'package:communio/view/theme.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class SocialBlock {
 
   static final Map<String, SvgPicture> _socialLogo = {
-    'facebook':SvgPicture.asset('assets/facebook.svg'),
-    'instagram':SvgPicture.asset('assets/instagram.svg'),
-    'twitter':SvgPicture.asset('assets/twitter.svg'),
-    'github':SvgPicture.asset('assets/github.svg'),
-    'linkedin':SvgPicture.asset('assets/linkedin.svg'),
-    'default':SvgPicture.asset('assets/default_social.svg')
+    'facebook':SvgPicture.asset(
+      'assets/facebook.svg',
+      color: navyBlueColor,
+    ),
+    'instagram':SvgPicture.asset(
+      'assets/instagram.svg',
+      color: navyBlueColor,
+    ),
+    'twitter':SvgPicture.asset(
+      'assets/twitter.svg',
+      color: navyBlueColor,
+    ),
+    'github':SvgPicture.asset(
+      'assets/github.svg',
+      color: navyBlueColor,
+    ),
+    'linkedin':SvgPicture.asset(
+      'assets/linkedin.svg',
+      color: navyBlueColor,
+    ),
+    'default':SvgPicture.asset(
+      'assets/default_social.svg',
+      color: navyBlueColor,
+    )
   };
 
   String name;
