@@ -11,7 +11,7 @@ class PersonFound {
 
   static Future<PersonFound> fromNetwork (String url) async{
     final response = await http.get(url);
-    final responseJson = json.decode(response.body);
+    final responseJson = json.decode(utf8.decode(response.bodyBytes));
     return PersonFound(
       name: responseJson['name'],
       photo: responseJson['photo'],
