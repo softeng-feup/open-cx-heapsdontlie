@@ -52,7 +52,7 @@ ThunkAction<AppState> queryFriendsList() {
     final Set<Friend> friends = new Set<Friend>();
     final response = await http.get(friendQueryUrl);
     if (response.statusCode == 200) {
-      final Iterable friendsJson = json.decode(response.body);
+      final Iterable friendsJson = json.decode(utf8.decode(response.bodyBytes));
       friendsJson.forEach((friendJson) {
         final Friend friend = Friend.fromJson(friendJson);
         friends.add(friend);
