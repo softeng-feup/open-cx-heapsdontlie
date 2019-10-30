@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:communio/model/friend.dart';
 import 'package:communio/model/person_found.dart';
 import 'package:flutter_blue/flutter_blue.dart';
@@ -12,10 +11,7 @@ import 'package:http/http.dart' as http;
 
 ThunkAction<AppState> incrementCounter() {
   return (Store<AppState> store) async {
-    final Future<int> futurIncrementCounter = Future.delayed(
-        Duration(seconds: 2), () => store.state.content['counter'] + 1);
-    final int incrementCounter = await futurIncrementCounter;
-    store.dispatch(IncrementCounterAction(incrementCounter));
+    store.dispatch(IncrementCounterAction(store.state.content['counter'] + 1));
   };
 }
 

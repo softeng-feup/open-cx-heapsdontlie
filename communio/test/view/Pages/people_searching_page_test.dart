@@ -11,7 +11,7 @@ import 'package:image_test_utils/image_test_utils.dart';
 import 'package:mockito/mockito.dart';
 import 'package:redux/redux.dart';
 
-import '../../make_redux_testable_widget.dart';
+import '../../../test_driver/make_redux_testable_widget.dart';
 
 class MockBluetoothDevice extends Mock implements BluetoothDevice {}
 

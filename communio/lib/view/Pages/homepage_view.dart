@@ -25,7 +25,8 @@ class HomePageView extends StatelessWidget{
               padding: EdgeInsets.all(20.0),
               children:<Widget>[
                  new Text(
-                'The button has been clicked $counter times!',
+                '$counter',
+                key: Key('counter'),
                    style: Theme.of(context).textTheme.body2,
                 ),
               ]
@@ -37,6 +38,7 @@ class HomePageView extends StatelessWidget{
 
   Widget createActionButton(BuildContext context){
     return new FloatingActionButton(
+      key: new Key('increment'),
       onPressed: () => {
         StoreProvider.of<AppState>(context).dispatch(incrementCounter())  
       },
