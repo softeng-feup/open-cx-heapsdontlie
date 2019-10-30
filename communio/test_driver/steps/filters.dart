@@ -6,14 +6,20 @@ class FiltersStep extends Given1WithWorld<Table, FlutterWorld> {
   @override
   Future<void> executeStep(Table input1) async {
     final columns = input1.asMap();
+    final find = driver.find;
     final filters = columns.map((filter) => filter['filter']);
+    await world.driver.tap(find.byTooltip("Open navigation menu"));
     await FlutterDriverUtils.tap(
-        world.driver, driver.find.byValueKey('ListConnected'));
-    filters.forEach((filter) {});
-    return null;
+        world.driver, find.byValueKey('ListConnected'));
+    filters.forEach((filter) async{
+      await world.driver.tap(find.byValueKey('filter-button'));
+      await world.driver.tap(find.byValueKey('form-textfield'));
+    await world.driver.enterText(filter);
+      await world.driver.tap(find.byValueKey('form-submit'));
+      await FlutterDriverUtils.waitForFlutter(world.driver);
+    });
   }
 
   @override
-  // TODO: implement pattern
-  RegExp get pattern => null;
+  RegExp get pattern => RegExp(r"the following filters");
 }

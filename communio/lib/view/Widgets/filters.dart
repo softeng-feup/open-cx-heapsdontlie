@@ -47,6 +47,7 @@ class Filters extends StatelessWidget {
           color: Theme.of(context).colorScheme.primary,
           child:
             IconButton(
+              key: Key('filter-button'),
               onPressed: () => showDialog(
                 context: context,
                 builder: (BuildContext context){
