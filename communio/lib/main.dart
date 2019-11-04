@@ -2,6 +2,7 @@ import 'package:communio/model/app_state.dart';
 import 'package:communio/redux/reducers.dart';
 import 'package:communio/view/Pages/connected_listing_page.dart';
 import 'package:communio/view/Pages/people_searching_page.dart';
+import 'package:communio/view/Pages/profile_page.dart';
 import 'package:communio/view/Pages/set_beacon_page.dart';
 import 'package:communio/view/Pages/settings_page_view.dart';
 import 'package:communio/view/navigation_service.dart';
@@ -68,6 +69,11 @@ class MyAppState extends State<MyApp> {
               case '/SetBeacon':
                 return MaterialPageRoute(
                     builder: (context) => SetBeaconPage(),
+                    settings: settings);
+              case '/Profile':
+                final String profile = state.state.content['user_id'];
+                return MaterialPageRoute(
+                    builder: (context) => ProfilePage(profileId: profile,),
                     settings: settings);
             }
           }),

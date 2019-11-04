@@ -1,11 +1,11 @@
-import 'package:communio/model/friend.dart';
+import 'package:communio/model/known_person.dart';
 import 'package:communio/view/Widgets/friend_information.dart';
 import 'package:communio/view/Widgets/photo_avatar.dart';
 import 'package:communio/view/theme.dart';
 import 'package:flutter/material.dart';
 
 class FriendCard extends StatefulWidget {
-  final Friend friend;
+  final KnownPerson friend;
 
   const FriendCard({Key key, @required this.friend}) : super(key: key);
 
@@ -14,7 +14,7 @@ class FriendCard extends StatefulWidget {
 }
 
 class _FriendCardState extends State<FriendCard> {
-  final Friend friend;
+  final KnownPerson friend;
   bool opened = false;
 
   _FriendCardState(this.friend);
@@ -30,7 +30,7 @@ class _FriendCardState extends State<FriendCard> {
         ]));
   }
 
-  Widget generateFriendSocialsContainer(Friend friend) {
+  Widget generateFriendSocialsContainer(KnownPerson friend) {
     return this.opened
         ? Container(
             alignment: Alignment.center,
@@ -43,7 +43,7 @@ class _FriendCardState extends State<FriendCard> {
         : Container();
   }
 
-  List<Widget> generateFriendSocials(Friend friend) {
+  List<Widget> generateFriendSocials(KnownPerson friend) {
     final List<Widget> children = new List<Widget>();
     for (var social in friend.socials) {
       children.add(new Padding(
@@ -53,7 +53,7 @@ class _FriendCardState extends State<FriendCard> {
     return children;
   }
 
-  Widget generateFriendInfo(Friend friend) {
+  Widget generateFriendInfo(KnownPerson friend) {
     return Row(
       children: <Widget>[
         PhotoAvatar(photo: friend.photo),
@@ -66,7 +66,7 @@ class _FriendCardState extends State<FriendCard> {
     );
   }
 
-  Widget generateFriendMainCard(Friend friend) {
+  Widget generateFriendMainCard(KnownPerson friend) {
     return Padding(
       padding:
           const EdgeInsets.only(left: 17.0, top: 7.5, bottom: 7.5, right: 17.0),

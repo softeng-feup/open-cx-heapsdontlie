@@ -1,5 +1,5 @@
 import 'package:communio/model/app_state.dart';
-import 'package:communio/model/friend.dart';
+import 'package:communio/model/known_person.dart';
 import 'package:communio/redux/action_creators.dart';
 import 'package:communio/view/Pages/general_page_view.dart';
 import 'package:communio/view/Widgets/friend_card.dart';
@@ -19,7 +19,7 @@ class ConnectedListingPage extends StatelessWidget {
   }
 
   Widget buildFriends(BuildContext context) {
-    return StoreConnector<AppState, Set<Friend>>(
+    return StoreConnector<AppState, Set<KnownPerson>>(
         converter: (store) => store.state.content['friends'],
         builder: (context, friends) {
           return ListView(
@@ -29,7 +29,7 @@ class ConnectedListingPage extends StatelessWidget {
         });
   }
 
-  generateFriendsCards(Set<Friend> friends) {
+  generateFriendsCards(Set<KnownPerson> friends) {
     final List<Widget> friendsCards = List();
     friends.forEach((friend) => friendsCards.add(FriendCard(friend: friend)));
     return friendsCards;

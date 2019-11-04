@@ -1,6 +1,6 @@
 import 'package:communio/model/person_found.dart';
 
-import 'friend.dart';
+import 'known_person.dart';
 
 class AppState {
 
@@ -11,7 +11,7 @@ class AppState {
       "counter": 0,
       "scanning_on": false,
       "bluetooth_devices": Map<String, PersonFound>(),
-      "friends": Set<Friend>(),
+      "friends": Set<KnownPerson>(),
       "current_filters": Set<String>(),
       "user_id": "UniqueUUID",
       "person_query_url": "http://www.mocky.io/v2/5da74a162f00002a003683f0"

@@ -1,6 +1,6 @@
 import 'package:communio/model/social_block.dart';
 
-class Friend {
+class KnownPerson {
   final String uuid;
   final String name;
   final String photo;
@@ -8,7 +8,7 @@ class Friend {
   List<SocialBlock> socials;
   List<dynamic> interests;
 
-  Friend(
+  KnownPerson(
       {this.uuid,
       this.name,
       this.photo,
@@ -27,13 +27,13 @@ class Friend {
     };
   }
 
-  factory Friend.fromJson(Map<String, dynamic> json) {
-    return new Friend(
+  factory KnownPerson.fromJson(Map<String, dynamic> json) {
+    return new KnownPerson(
         uuid: json['uuid'],
         name: json['name'],
         photo: json['photo'],
         location: json['location'],
-        socials: Friend._createSocial(json['socials']),
+        socials: KnownPerson._createSocial(json['socials']),
         interests: json['interests']
     );
   }
@@ -47,7 +47,7 @@ class Friend {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is Friend &&
+      other is KnownPerson &&
           runtimeType == other.runtimeType &&
           uuid == other.uuid;
 

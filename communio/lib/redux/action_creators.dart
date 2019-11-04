@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:communio/model/friend.dart';
+import 'package:communio/model/known_person.dart';
 import 'package:communio/model/person_found.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'package:logger/logger.dart';
@@ -49,12 +49,12 @@ ThunkAction<AppState> scanForDevices() {
 ThunkAction<AppState> queryFriendsList() {
   final friendQueryUrl = "http://www.mocky.io/v2/5db1bd722e0000a8c950571f";
   return (Store<AppState> store) async {
-    final Set<Friend> friends = new Set<Friend>();
+    final Set<KnownPerson> friends = new Set<KnownPerson>();
     final response = await http.get(friendQueryUrl);
     if (response.statusCode == 200) {
       final Iterable friendsJson = json.decode(utf8.decode(response.bodyBytes));
       friendsJson.forEach((friendJson) {
-        final Friend friend = Friend.fromJson(friendJson);
+        final KnownPerson friend = KnownPerson.fromJson(friendJson);
         friends.add(friend);
       });
       store.dispatch(QueriedFriendsAction(friends));
@@ -91,5 +91,11 @@ ThunkAction<AppState> startBroadcastingBeacon() {
 ThunkAction<AppState> connectToPerson(PersonFound person) {
   return (Store<AppState> store) async {
     Logger().w('Connect to person not yet implemented!');
+  };
+}
+
+ThunkAction<AppState> getProfilePage(){
+  return (Store<AppState> store){
+
   };
 }
