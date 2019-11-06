@@ -23,8 +23,6 @@ class ProfilePage extends StatelessWidget {
             !snapshot.hasError) {
           final person = snapshot.data;
           return ListView(
-            padding: EdgeInsets.only(
-                left: query.height * 0.05, right: query.height * 0.05),
             children: <Widget>[
               buildImage(context, person, query),
               buildName(person, context, query),
@@ -41,7 +39,8 @@ class ProfilePage extends StatelessWidget {
   Widget padWidget({Widget child, Size query}) {
     return Padding(
         padding: EdgeInsets.only(
-            top: query.height * 0.005, bottom: query.height * 0.005),
+            top: query.height * 0.005, bottom: query.height * 0.005,
+            left: query.height * 0.05, right: query.height * 0.05),
         child: child);
   }
 
@@ -50,7 +49,7 @@ class ProfilePage extends StatelessWidget {
         child: Center(
           child: Text(
             person.name,
-            style: Theme.of(context).textTheme.body2.apply(fontSizeDelta: 5),
+            style: Theme.of(context).textTheme.body2.apply(fontSizeDelta: 10),
           ),
         ),
         query: query);
@@ -92,14 +91,36 @@ class ProfilePage extends StatelessWidget {
   }
 
   buildDescription(PersonFound person, BuildContext context, Size query) {
-    return padWidget(
-        child: Center(
-          child: Text(
-            person.description,
-            style: Theme.of(context).textTheme.body2,
-            textAlign: TextAlign.center,
+    return buildRowWithItem(
+          context,
+          Icons.info,
+          Flexible(
+              child: Text(
+                person.description,
+                style: Theme.of(context).textTheme.body2,
+              ),
+            ),
+          query);
+  }
+
+  buildRowWithItem(BuildContext context, IconData iconData, Widget widget, Size query){
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Container(
+          width: query.width * 0.13,
+          child: Center(
+            child: Icon(
+              iconData,
+              color: cyanColor,
+            ),
           ),
         ),
-        query: query);
+        Container(
+            child: widget,
+        )
+      ],
+    );
   }
 }
