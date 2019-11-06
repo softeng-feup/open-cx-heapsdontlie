@@ -141,43 +141,44 @@ class ProfilePage extends StatelessWidget {
   }
 
   buildSocialMedia(KnownPerson person, BuildContext context, Size query) {
-    return Padding(
-      padding: EdgeInsets.only(
-        top: query.height * 0.02,
-        bottom: query.height * 0.02,
-      ),
-      child: buildRowWithItem(
+    return buildRowWithItem(
           context,
           Icons.person,
           SocialMediaColumn(
             person: person,
             edit: edit
           ),
-          query),
-    );
+          query);
   }
 
   buildRowWithItem(
       BuildContext context, IconData iconData, Widget widget, Size query) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        Container(
-          width: query.width * 0.13,
-          child: Center(
-            child: Icon(
-              iconData,
-              color: cyanColor,
+    return Padding(
+        padding: EdgeInsets.only(
+        top: query.height * 0.03,
+        bottom: query.height * 0.03,
+        ),
+       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Container(
+            width: query.width * 0.13,
+            child: Center(
+              child: Icon(
+                iconData,
+                color: cyanColor,
+              ),
             ),
           ),
-        ),
-        Container(
-          child: widget,
-        )
-      ],
+          Container(
+            child: widget,
+          )
+        ],
+      ),
     );
-  }
+    }
+
   
 
   Future<KnownPerson> getPerson(String profileId) async {

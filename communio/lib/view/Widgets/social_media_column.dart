@@ -1,5 +1,6 @@
 import 'package:communio/model/known_person.dart';
 import 'package:communio/model/social_block.dart';
+import 'package:communio/view/theme.dart';
 import 'package:flutter/material.dart';
 
 class SocialMediaColumn extends StatefulWidget {
@@ -32,7 +33,7 @@ class _SocialMediaColumnState extends State<SocialMediaColumn> {
       children.add(Container(
           width: query.width * 0.75,
           margin: EdgeInsets.only(
-              top: query.height * 0.005, bottom: query.height * 0.005),
+              top: query.height * 0.005, bottom: query.height * 0.002),
           child: buildExternalRow(context, query, socialMedia)));
     });
     return children;
@@ -40,7 +41,7 @@ class _SocialMediaColumnState extends State<SocialMediaColumn> {
 
   buildExternalRow(BuildContext context, Size query, SocialBlock socialMedia) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: buildRowsList(context, query, socialMedia)
     );
   }
@@ -59,7 +60,7 @@ class _SocialMediaColumnState extends State<SocialMediaColumn> {
         IconButton(
           icon: Icon(
             Icons.delete,
-            color: Color.fromRGBO(204, 204, 204, 1),
+            color: grayColor,
           ),
           onPressed: () {
             // TO-DO delete from Server
@@ -77,7 +78,16 @@ class _SocialMediaColumnState extends State<SocialMediaColumn> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
-        socialMedia.logo,
+        new Transform(
+          alignment: Alignment.center,
+            transform: new Matrix4.identity()..scale(0.9, 0.9),
+            child: Container(
+                  margin: EdgeInsets.only(
+                      top: query.height * 0.01,
+                      bottom: query.height * 0.01),
+                       child: socialMedia.logo,
+                  )
+        ),
         Container(
             width: query.width * 0.3,
             child: Text(
@@ -90,7 +100,7 @@ class _SocialMediaColumnState extends State<SocialMediaColumn> {
             width: query.width * 0.1,
             child: Text(
               socialMedia.name[0].toUpperCase() + socialMedia.name.substring(1),
-              style: Theme.of(context).textTheme.body1.apply(fontSizeDelta: -8),
+              style: Theme.of(context).textTheme.body1.apply(fontSizeDelta: -10),
             )),
       ],
     );
