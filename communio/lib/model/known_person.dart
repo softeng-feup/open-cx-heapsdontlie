@@ -5,8 +5,11 @@ class KnownPerson {
   final String name;
   final String photo;
   final String location;
+  final String description;
   List<SocialBlock> socials;
   List<dynamic> interests;
+  List<dynamic> programmingLanguages;
+  List<dynamic> skills;
 
   KnownPerson(
       {this.uuid,
@@ -14,7 +17,10 @@ class KnownPerson {
       this.photo,
       this.location,
       this.socials,
-      this.interests});
+      this.interests,
+      this.description,
+      this.programmingLanguages,
+      this.skills});
 
   Map<String, dynamic> get map {
     return {
@@ -23,7 +29,9 @@ class KnownPerson {
       "photo": photo,
       "location": location,
       "socials": socials,
-      "interests": interests
+      "interests": interests,
+      "programming_languages": programmingLanguages,
+      "skills": skills
     };
   }
 
@@ -34,7 +42,10 @@ class KnownPerson {
         photo: json['photo'],
         location: json['location'],
         socials: KnownPerson._createSocial(json['socials']),
-        interests: json['interests']
+        interests: json['interests'],
+        description: json['description'],
+        programmingLanguages: json['programming_languages'],
+        skills: json['skills'] 
     );
   }
 
@@ -62,6 +73,8 @@ class KnownPerson {
         'location: $location,\n'
         'socials: $socials,\n'
         'interests: $interests\n'
+        'programming languages: $programmingLanguages\n'
+        'skills: $skills\n'
         '}';
   }
 }

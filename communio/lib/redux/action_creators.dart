@@ -47,7 +47,7 @@ ThunkAction<AppState> scanForDevices() {
 }
 
 ThunkAction<AppState> queryFriendsList() {
-  final friendQueryUrl = "http://www.mocky.io/v2/5db1bd722e0000a8c950571f";
+  final friendQueryUrl = "http://www.mocky.io/v2/5dc2fc212f0000beba4be556";
   return (Store<AppState> store) async {
     final Set<KnownPerson> friends = new Set<KnownPerson>();
     final response = await http.get(friendQueryUrl);

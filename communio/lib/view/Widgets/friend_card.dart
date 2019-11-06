@@ -1,4 +1,5 @@
 import 'package:communio/model/known_person.dart';
+import 'package:communio/view/Pages/profile_page.dart';
 import 'package:communio/view/Widgets/friend_information.dart';
 import 'package:communio/view/Widgets/photo_avatar.dart';
 import 'package:communio/view/theme.dart';
@@ -56,7 +57,18 @@ class _FriendCardState extends State<FriendCard> {
   Widget generateFriendInfo(KnownPerson friend) {
     return Row(
       children: <Widget>[
-        PhotoAvatar(photo: friend.photo),
+        MaterialButton(
+            padding: EdgeInsets.all(0.0),
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ProfilePage(
+                            knownPerson: friend,
+                            edit: false,
+                          )));
+            },
+            child: PhotoAvatar(photo: friend.photo)),
         Padding(
           padding: const EdgeInsets.only(left: 13.0, top: 13.0, bottom: 13.0),
           child:

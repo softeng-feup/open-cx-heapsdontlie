@@ -52,8 +52,7 @@ class MyAppState extends State<MyApp> {
             switch (settings.name) {
               case '/Homepage':
                 return MaterialPageRoute(
-                    builder: (context) => HomePageView(),
-                    settings: settings);
+                    builder: (context) => HomePageView(), settings: settings);
               case '/PeopleSearch':
                 return MaterialPageRoute(
                     builder: (context) => PeopleSearchingPage(),
@@ -68,13 +67,16 @@ class MyAppState extends State<MyApp> {
                     settings: settings);
               case '/SetBeacon':
                 return MaterialPageRoute(
-                    builder: (context) => SetBeaconPage(),
-                    settings: settings);
+                    builder: (context) => SetBeaconPage(), settings: settings);
               case '/Profile':
                 final String profile = state.state.content['user_id'];
                 return MaterialPageRoute(
-                    builder: (context) => ProfilePage(profileId: profile,),
-                    settings: settings);
+                    builder: (context) => ProfilePage(
+                          profileId: profile,
+                          edit: true,
+                        ),
+                    settings: settings,
+                    maintainState: false);
             }
           }),
     );

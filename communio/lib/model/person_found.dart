@@ -18,7 +18,6 @@ class PersonFound {
         name: responseJson['name'],
         photo: responseJson['photo'],
         location: responseJson['location'],
-        interests: responseJson['interests'],
-        description: responseJson['description']);
+        interests: responseJson['interests']);
   }
 }

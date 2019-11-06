@@ -1,30 +1,29 @@
-import 'package:communio/model/app_state.dart';
-import 'package:communio/redux/action_creators.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 
 class FilterCard extends StatefulWidget {
   final String filter;
+  final Function removeFilter;
 
-  FilterCard({@required this.filter});
+  FilterCard({@required this.filter, @required this.removeFilter});
 
   @override
-  _FilterCardState createState() => _FilterCardState(filter);
+  _FilterCardState createState() => _FilterCardState(filter, removeFilter);
 }
 
 class _FilterCardState extends State<FilterCard> {
+  final Function removeFilter;
   final String filter;
   final verticalPadding = 12.0;
   final horizontalPadding = 12.0;
   final horizontalMargin = 10.0;
 
-  _FilterCardState(this.filter);
+  _FilterCardState(this.filter, this.removeFilter);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onLongPress: () {
-        StoreProvider.of<AppState>(context).dispatch(removeFilter(filter));
+        this.removeFilter();
       },
       child: Container(
         decoration: BoxDecoration(
