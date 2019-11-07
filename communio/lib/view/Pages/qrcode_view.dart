@@ -1,5 +1,7 @@
 import 'package:communio/view/Pages/general_page_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 class QRCodePage extends StatefulWidget {
   const QRCodePage({Key key}) : super(key: key);
@@ -10,6 +12,7 @@ class QRCodePage extends StatefulWidget {
 class _QRCodePage extends State<QRCodePage>
     with SingleTickerProviderStateMixin {
   final List<Tab> _tabs = <Tab>[Tab(text: "SCAN"), Tab(text: "QRCODE")];
+  String _scanned = "N/A";
 
   GlobalKey key = GlobalKey();
   TabController _tabController;
@@ -33,7 +36,7 @@ class _QRCodePage extends State<QRCodePage>
             borderRadius: BorderRadius.circular(15.0),
             child: Column(children: [
               Card(child: _tabbar(context)),
-              Expanded(child:_tabviews(context))
+              Expanded(child: _tabviews(context))
             ])));
   }
 
@@ -63,10 +66,35 @@ class _QRCodePage extends State<QRCodePage>
   }
 
   Widget _qrscan() {
-    return Center(child: Text("hi"));
+    // return Center(child: Text("hi"));
+    return Center(
+        child: Column(children: <Widget>[
+      RaisedButton(child: Text('Scan qr code'), onPressed: () => _scanqrcode()),
+      Text(_scanned)
+    ]));
   }
 
   Widget _qrcodegenerate() {
     return Center(child: Text("hi"));
   }
+
+  Future<void> _scanqrcode() async {
+    String barcodeScanRes;
+
+    try {
+      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
+          "#ff6666", "Cancel", true, ScanMode.QR);
+    } on PlatformException {
+      barcodeScanRes = 'PLATFORM_EXCEPTION_ERROR';
+    }
+
+
+    if (!mounted) return;
+
+    setState(() {
+      _scanned = barcodeScanRes;
+      
+    });
+  }
 }
+
