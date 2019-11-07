@@ -1,13 +1,65 @@
+import 'package:communio/model/app_state.dart';
+import 'package:communio/model/friend.dart';
+import 'package:communio/model/person_found.dart';
+import 'package:logger/logger.dart';
 
-
-import 'package:flutter_blue/flutter_blue.dart';
-
-class IncrementCounterAction{
-  final int counter;
-  IncrementCounterAction(this.counter);
+abstract class ReduceableAction {
+  AppState reduceAction(AppState state);
 }
 
-class BluetoothDeviceAction{
-  final BluetoothDevice device;
-  BluetoothDeviceAction(this.device);
+class IncrementCounterAction implements ReduceableAction {
+  final int counter;
+  IncrementCounterAction(this.counter);
+
+  @override
+  reduceAction(AppState state) {
+    Logger().i('setting counter to ${counter}');
+    return state.cloneAndUpdateValue('counter', counter);
+  }
+}
+
+class FoundPersonAction implements ReduceableAction {
+  final String uuid;
+  final PersonFound personFound;
+  FoundPersonAction(this.uuid, this.personFound);
+
+  @override
+  reduceAction(AppState state) {
+    Logger().i('Adding a new person of '
+        'id ${uuid} and name ${personFound.name}');
+    final Map<String, PersonFound> bluetoothDevices =
+        state.content['bluetooth_devices'];
+    bluetoothDevices.putIfAbsent(uuid, () => personFound);
+    return state.cloneAndUpdateValue('bluetooth_devices', bluetoothDevices);
+  }
+}
+
+class QueriedFriendsAction implements ReduceableAction {
+  final Set<Friend> friends;
+  QueriedFriendsAction(this.friends);
+
+  @override
+  reduceAction(AppState state) {
+    Logger().i('Found ${friends.length} friends:'
+        '${friends}');
+    return state.cloneAndUpdateValue('friends', friends);
+  }
+}
+
+class NewFiltersAction implements ReduceableAction {
+  final Set<String> filters;
+  NewFiltersAction(this.filters);
+
+  @override
+  reduceAction(AppState state) {
+    Logger().i('Filters are now ${filters}');
+    return state.cloneAndUpdateValue('current_filters', filters);
+  }
+}
+
+class ActivateScanning implements ReduceableAction {
+  @override
+  reduceAction(AppState state) {
+    return state.cloneAndUpdateValue('scanning_on', true);
+  }
 }
