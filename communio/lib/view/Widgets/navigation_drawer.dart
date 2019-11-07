@@ -5,6 +5,7 @@ class NavigationDrawer extends StatefulWidget {
   final BuildContext parentContext;
 
   NavigationDrawer({@required this.parentContext}) {}
+
   @override
   State<StatefulWidget> createState() {
     return new NavigationDrawerState(parentContext: parentContext);
@@ -16,7 +17,12 @@ class NavigationDrawerState extends State<NavigationDrawer> {
 
   NavigationDrawerState({@required this.parentContext}) {}
 
-  static final drawerItems = ["Homepage", "PeopleSearch", "QRCode"];
+  static final drawerItems = [
+    "Homepage",
+    "PeopleSearch",
+    "ListConnected",
+    "Settings", "QRCode"
+  ];
 
   getCurrentRoute() => ModalRoute.of(parentContext).settings.name == null
       ? drawerItems[0]
@@ -36,7 +42,8 @@ class NavigationDrawerState extends State<NavigationDrawer> {
     return (name == getCurrentRoute())
         ? (const BoxDecoration(
             border:
-                Border(bottom: BorderSide(width: 5.0, color: primaryColor))))
+                Border(bottom: BorderSide(width: 5.0,
+                    color: cyanColor))))
         : null;
   }
 
@@ -47,8 +54,8 @@ class NavigationDrawerState extends State<NavigationDrawer> {
           new Container(
             decoration: _buildBorder("Terminar sessão"),
             child: new Text("Terminar sessão",
-                style: TextStyle(fontSize: 24.0, color: primaryColor)),
-          ),
+              style: Theme.of(context).textTheme.body1))  ,
+
         ],
       ),
       onTap: () => Navigator.pushReplacementNamed(context, '/Terminar sessão'),
@@ -62,7 +69,7 @@ class NavigationDrawerState extends State<NavigationDrawer> {
           new Container(
             decoration: _buildBorder(d),
             child: new Text(d,
-                style: TextStyle(fontSize: 24.0, color: primaryColor)),
+                style: Theme.of(context).textTheme.body1),
           ),
         ],
       ),
