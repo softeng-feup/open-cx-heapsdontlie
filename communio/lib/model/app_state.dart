@@ -14,7 +14,8 @@ class AppState {
       "friends": Set<Friend>(),
       "current_filters": Set<String>(),
       "user_id": "UniqueUUID",
-      "person_query_url": "http://www.mocky.io/v2/5da74a162f00002a003683f0"
+      "person_query_url": "http://www.mocky.io/v2/5da74a162f00002a003683f0",
+      "current_device": ""
     };
   }
 

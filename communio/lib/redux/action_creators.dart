@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:communio/model/friend.dart';
 import 'package:communio/model/person_found.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'package:logger/logger.dart';
 import 'package:redux_thunk/redux_thunk.dart';
@@ -33,7 +34,7 @@ ThunkAction<AppState> scanForDevices() {
           final Map<String, PersonFound> bluetoothDevices =
               store.state.content['bluetooth_devices'];
           final device = scanResult.device;
-          final uuid = device.name.hashCode.toString();
+          final uuid = device.name;
           if (!bluetoothDevices.containsKey(uuid)) {
             final PersonFound person =
                 await PersonFound.fromNetwork("$personQueryUrl/$uuid");
@@ -91,5 +92,23 @@ ThunkAction<AppState> startBroadcastingBeacon() {
 ThunkAction<AppState> connectToPerson(PersonFound person) {
   return (Store<AppState> store) async {
     Logger().w('Connect to person not yet implemented!');
+  };
+}
+
+
+ThunkAction<AppState> selectNewDevice(String device){
+
+  //TO-DO Add request to server
+  return (Store<AppState> store) {
+    store.dispatch(SelectActiveDevice(device));
+  };
+}
+
+ThunkAction<AppState> selectOwnDevice(){
+  //TO-DO Add request to server
+  return (Store<AppState> store) async {
+    final platform = MethodChannel('pt.up.fe.communio');
+    final String device = await platform.invokeMethod('getLocalBluetoothName');
+    store.dispatch(SelectActiveDevice(device));
   };
 }

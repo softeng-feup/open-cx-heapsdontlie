@@ -63,3 +63,15 @@ class ActivateScanning implements ReduceableAction {
     return state.cloneAndUpdateValue('scanning_on', true);
   }
 }
+
+class SelectActiveDevice implements ReduceableAction {
+  final String deviceId;
+
+  SelectActiveDevice(this.deviceId);
+
+  @override
+  AppState reduceAction(AppState state) {
+    Logger().i('Added $deviceId as new device');
+    return state.cloneAndUpdateValue('current_device', deviceId);
+  }
+}
