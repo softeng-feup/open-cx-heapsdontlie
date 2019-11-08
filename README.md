@@ -36,7 +36,7 @@ To check our current user stories, come to our [Trello](https://trello.com/b/Og2
 
 ### Domain Model
 <div align="center">
-  <img width="438" src="assets/domain-model.png">
+  <img width="600" src="assets/domain-model.png">
 </div>
 
 ### Acceptance Tests
@@ -67,4 +67,3 @@ Therefore, the tests have been conceptualized, but not yet implemented.
      - Given a user that is already logged in, when he's on his profile page, he can click on his skills text box and add a new one to the list
      - Given a user that is already logged in, when he's on his profile page, he can click on his programming languages text box and add a new one to the list
      - Given a user that is already logged in, then he can access his friends on listing connected and select one of them and see their profiles.
-     
