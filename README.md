@@ -36,7 +36,7 @@ To check our current user stories, come to our [Trello](https://trello.com/b/Og2
 
 ### Domain Model
 <div align="center">
-  <img width="438" src="assets/domain-model.png">
+  <img width="600" src="assets/domain-model.png">
 </div>
 
 ### Acceptance Tests
