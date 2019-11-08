@@ -28,7 +28,8 @@ class GeneralPageView extends StatelessWidget {
             ),
             margin: const EdgeInsets.all(15.0),
             child: child,
-          )),
+          )
+        ),
       floatingActionButton: this.floatingActionButton,
     );
   }

@@ -60,3 +60,10 @@ Therefore, the tests have been conceptualized, but not yet implemented.
   - Given a list of two people, both with interest in Big Data, and with a filter on Big Data in the app, then it shall display those two people.
   - Given a list of two people, one with interest in Big Data and another with interest in AI, and with a single filter on AI, only the person with interest on AI will be displayed  
   - Given a list of two people, one with interest in Big Data and another with interest in AI, and with a filter on AI and another on Big Data, both people will be displayed
+  
+- Profile Page:
+     - Given a user that is already logged in, then it is possible for him to choose his profile page and check all information regarding himself.
+     - Given a user that is already logged in, when he's on his profile page, he can click on his interests text box and add a new one to the list
+     - Given a user that is already logged in, when he's on his profile page, he can click on his skills text box and add a new one to the list
+     - Given a user that is already logged in, when he's on his profile page, he can click on his programming languages text box and add a new one to the list
+     - Given a user that is already logged in, then he can access his friends on listing connected and select one of them and see their profiles.
