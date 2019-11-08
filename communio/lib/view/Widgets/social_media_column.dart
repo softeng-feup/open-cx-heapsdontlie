@@ -41,35 +41,32 @@ class _SocialMediaColumnState extends State<SocialMediaColumn> {
 
   buildExternalRow(BuildContext context, Size query, SocialBlock socialMedia) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: buildRowsList(context, query, socialMedia)
-    );
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: buildRowsList(context, query, socialMedia));
   }
 
-  buildRowsList(BuildContext context, Size query, SocialBlock socialMedia){
+  buildRowsList(BuildContext context, Size query, SocialBlock socialMedia) {
     final List<Widget> children = List();
     children.add(
       Container(
-            width: query.width * 0.61,
-            color: Theme.of(context).colorScheme.primaryVariant,
-            child: buildInternalRow(context, query, socialMedia)),
+          width: query.width * 0.61,
+          color: Theme.of(context).colorScheme.primaryVariant,
+          child: buildInternalRow(context, query, socialMedia)),
     );
 
-    if(edit){
-      children.add(
-        IconButton(
-          icon: Icon(
-            Icons.delete,
-            color: grayColor,
-          ),
-          onPressed: () {
-            // TO-DO delete from Server
-            setState(() {
-              person.socials.remove(socialMedia);
-            });
-          },
-        )
-      );
+    if (edit) {
+      children.add(IconButton(
+        icon: Icon(
+          Icons.delete,
+          color: grayColor,
+        ),
+        onPressed: () {
+          // TO-DO delete from Server
+          setState(() {
+            person.socials.remove(socialMedia);
+          });
+        },
+      ));
     }
     return children;
   }
@@ -79,15 +76,13 @@ class _SocialMediaColumnState extends State<SocialMediaColumn> {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
         new Transform(
-          alignment: Alignment.center,
+            alignment: Alignment.center,
             transform: new Matrix4.identity()..scale(0.9, 0.9),
             child: Container(
-                  margin: EdgeInsets.only(
-                      top: query.height * 0.01,
-                      bottom: query.height * 0.01),
-                       child: socialMedia.logo,
-                  )
-        ),
+              margin: EdgeInsets.only(
+                  top: query.height * 0.01, bottom: query.height * 0.01),
+              child: socialMedia.logo,
+            )),
         Container(
             width: query.width * 0.3,
             child: Text(
@@ -100,7 +95,8 @@ class _SocialMediaColumnState extends State<SocialMediaColumn> {
             width: query.width * 0.1,
             child: Text(
               socialMedia.name[0].toUpperCase() + socialMedia.name.substring(1),
-              style: Theme.of(context).textTheme.body1.apply(fontSizeDelta: -10),
+              style:
+                  Theme.of(context).textTheme.body1.apply(fontSizeDelta: -10),
             )),
       ],
     );

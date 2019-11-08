@@ -95,10 +95,10 @@ class ProfilePage extends StatelessWidget {
   buildImage(BuildContext context, KnownPerson person, Size query) {
     return padWidget(
         child: Container(
-          margin: EdgeInsets.only(top: query.height * 0.06),
+          margin: EdgeInsets.only(top: query.height * 0.03),
           padding: EdgeInsets.only(
               left: query.height * 0.1, right: query.height * 0.1),
-          height: query.height * 0.2,
+          height: query.height * 0.21,
           child: PhotoAvatar(
             photo: person.photo,
           ),

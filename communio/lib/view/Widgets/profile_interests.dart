@@ -32,13 +32,17 @@ class _ProfileInterestsState extends State<ProfileInterests> {
 
   buildInterestsCol(BuildContext context) {
     final List<Widget> children = List();
+    final padding = MediaQuery.of(context).size.height * 0.008;
     children.add(buildInterestTitle(context));
 
-    children.add(SizedBox(
-      height: Theme.of(context).textTheme.body2.fontSize + 30,
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        children: buildCurrentInterests(context),
+    children.add(Container(
+      padding: EdgeInsets.only(top: padding, bottom: padding),
+      child: SizedBox(
+        height: Theme.of(context).textTheme.body2.fontSize + 25,
+        child: ListView(
+          scrollDirection: Axis.horizontal,
+          children: buildCurrentInterests(context),
+        ),
       ),
     ));
     if (edit) {
@@ -51,12 +55,13 @@ class _ProfileInterestsState extends State<ProfileInterests> {
 
   buildInterestTitle(BuildContext context) {
     return Container(
-        padding:
-            EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.05),
+        padding: EdgeInsets.only(
+            left: MediaQuery.of(context).size.width * 0.05, top: 10),
         child: Text(
           type,
           style: Theme.of(context).textTheme.body2,
-        ));
+        )
+    );
   }
 
   buildCurrentInterests(BuildContext context) {

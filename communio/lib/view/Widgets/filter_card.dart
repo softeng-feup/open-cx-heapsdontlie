@@ -15,7 +15,7 @@ class _FilterCardState extends State<FilterCard> {
   final String filter;
   final verticalPadding = 12.0;
   final horizontalPadding = 12.0;
-  final horizontalMargin = 10.0;
+  final horizontalMargin = 5.0;
 
   _FilterCardState(this.filter, this.removeFilter);
 
@@ -40,7 +40,7 @@ class _FilterCardState extends State<FilterCard> {
                 right: horizontalPadding),
             child: Text(
               filter,
-              style: Theme.of(context).textTheme.body2.apply(fontSizeDelta: -2),
+              style: Theme.of(context).textTheme.body2.apply(fontSizeDelta: -5),
             )),
       ),
     );
