@@ -34,7 +34,7 @@ ThunkAction<AppState> scanForDevices() {
           final Map<String, PersonFound> bluetoothDevices =
               store.state.content['bluetooth_devices'];
           final device = scanResult.device;
-          final uuid = device.name;
+          final uuid = device.id.id;
           if (!bluetoothDevices.containsKey(uuid)) {
             final PersonFound person =
                 await PersonFound.fromNetwork("$personQueryUrl/$uuid");
