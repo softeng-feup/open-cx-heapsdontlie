@@ -2,6 +2,7 @@ import 'package:communio/model/app_state.dart';
 import 'package:communio/redux/reducers.dart';
 import 'package:communio/view/Pages/bluetooth_beacon_selection.dart';
 import 'package:communio/view/Pages/connected_listing_page.dart';
+import 'package:communio/view/Pages/create_profile_page.dart';
 import 'package:communio/view/Pages/people_searching_page.dart';
 import 'package:communio/view/Pages/profile_page.dart';
 import 'package:communio/view/Pages/set_beacon_page.dart';
@@ -83,6 +84,10 @@ class MyAppState extends State<MyApp> {
                         ),
                     settings: settings,
                     maintainState: false);
+              case '/CreateProfile':
+                return MaterialPageRoute(
+                  builder: (context) => CreateProfilePage(),
+                  settings: settings);
             }
           }),
     );
