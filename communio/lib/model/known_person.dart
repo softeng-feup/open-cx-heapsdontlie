@@ -1,20 +1,26 @@
 import 'package:communio/model/social_block.dart';
 
-class Friend {
+class KnownPerson {
   final String uuid;
   final String name;
   final String photo;
   final String location;
+  final String description;
   List<SocialBlock> socials;
   List<dynamic> interests;
+  List<dynamic> programmingLanguages;
+  List<dynamic> skills;
 
-  Friend(
+  KnownPerson(
       {this.uuid,
       this.name,
       this.photo,
       this.location,
       this.socials,
-      this.interests});
+      this.interests,
+      this.description,
+      this.programmingLanguages,
+      this.skills});
 
   Map<String, dynamic> get map {
     return {
@@ -23,18 +29,23 @@ class Friend {
       "photo": photo,
       "location": location,
       "socials": socials,
-      "interests": interests
+      "interests": interests,
+      "programming_languages": programmingLanguages,
+      "skills": skills
     };
   }
 
-  factory Friend.fromJson(Map<String, dynamic> json) {
-    return new Friend(
+  factory KnownPerson.fromJson(Map<String, dynamic> json) {
+    return new KnownPerson(
         uuid: json['uuid'],
         name: json['name'],
         photo: json['photo'],
         location: json['location'],
-        socials: Friend._createSocial(json['socials']),
-        interests: json['interests']
+        socials: KnownPerson._createSocial(json['socials']),
+        interests: json['interests'],
+        description: json['description'],
+        programmingLanguages: json['programming_languages'],
+        skills: json['skills'] 
     );
   }
 
@@ -47,7 +58,7 @@ class Friend {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is Friend &&
+      other is KnownPerson &&
           runtimeType == other.runtimeType &&
           uuid == other.uuid;
 
@@ -62,6 +73,8 @@ class Friend {
         'location: $location,\n'
         'socials: $socials,\n'
         'interests: $interests\n'
+        'programming languages: $programmingLanguages\n'
+        'skills: $skills\n'
         '}';
   }
 }

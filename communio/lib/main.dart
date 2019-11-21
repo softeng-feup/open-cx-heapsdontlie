@@ -1,8 +1,10 @@
 import 'package:communio/model/app_state.dart';
 import 'package:communio/redux/reducers.dart';
+import 'package:communio/view/Pages/bluetooth_beacon_selection.dart';
 import 'package:communio/view/Pages/connected_listing_page.dart';
 import 'package:communio/view/Pages/people_searching_page.dart';
 import 'package:communio/view/Pages/qrcode_view.dart';
+import 'package:communio/view/Pages/profile_page.dart';
 import 'package:communio/view/Pages/set_beacon_page.dart';
 import 'package:communio/view/Pages/settings_page_view.dart';
 import 'package:communio/view/navigation_service.dart';
@@ -52,8 +54,7 @@ class MyAppState extends State<MyApp> {
             switch (settings.name) {
               case '/Homepage':
                 return MaterialPageRoute(
-                    builder: (context) => HomePageView(),
-                    settings: settings);
+                    builder: (context) => HomePageView(), settings: settings);
               case '/PeopleSearch':
                 return MaterialPageRoute(
                     builder: (context) => PeopleSearchingPage(),
@@ -73,6 +74,19 @@ class MyAppState extends State<MyApp> {
                 return MaterialPageRoute(
                     builder: (context) => SetBeaconPage(),
                     settings: settings);
+              case '/BluetoothBeaconSelection':
+                return MaterialPageRoute(
+                    builder: (context) => BluetoothBeaconSelection(),
+                    settings: settings);
+              case '/Profile':
+                final String profile = state.state.content['user_id'];
+                return MaterialPageRoute(
+                    builder: (context) => ProfilePage(
+                          profileId: profile,
+                          edit: true,
+                        ),
+                    settings: settings,
+                    maintainState: false);
             }
           }),
     );
