@@ -2,6 +2,8 @@ import 'package:communio/view/Pages/general_page_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:path/path.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class QRCodePage extends StatefulWidget {
   const QRCodePage({Key key}) : super(key: key);
@@ -12,7 +14,9 @@ class QRCodePage extends StatefulWidget {
 class _QRCodePage extends State<QRCodePage>
     with SingleTickerProviderStateMixin {
   final List<Tab> _tabs = <Tab>[Tab(text: "SCAN"), Tab(text: "QRCODE")];
+  bool _enteredInScantab = false;
   String _scanned = "N/A";
+  AssetImage icon = AssetImage("assets/icon/icon.png");
 
   GlobalKey key = GlobalKey();
   TabController _tabController;
@@ -20,7 +24,10 @@ class _QRCodePage extends State<QRCodePage>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(vsync: this, length: _tabs.length);
+    _tabController =
+        TabController(vsync: this, length: _tabs.length, initialIndex: 1);
+    _tabController.addListener(this._qrscanlistener);
+    _tabController.addListener(this._qrgenlistener);
   }
 
   @override
@@ -38,6 +45,23 @@ class _QRCodePage extends State<QRCodePage>
               Card(child: _tabbar(context)),
               Expanded(child: _tabviews(context))
             ])));
+  }
+
+  _qrscanlistener() {
+    setState(() {
+      if (this._tabController.index == 0 && !this._enteredInScantab) {
+        this._enteredInScantab = true;
+        _scanqrcode();
+      }
+    });
+  }
+
+  _qrgenlistener() {
+    setState(() {
+      if (this._tabController.index == 1) {
+        this._enteredInScantab = false;
+      }
+    });
   }
 
   Widget _tabbar(BuildContext context) {
@@ -59,23 +83,14 @@ class _QRCodePage extends State<QRCodePage>
           case 'SCAN':
             return _qrscan();
           case 'QRCODE':
-            return _qrcodegenerate();
+            return _qrcodegenerate(context);
         }
       }).toList(),
     );
   }
 
   Widget _qrscan() {
-    // return Center(child: Text("hi"));
-    return Center(
-        child: Column(children: <Widget>[
-      RaisedButton(child: Text('Scan qr code'), onPressed: () => _scanqrcode()),
-      Text(_scanned)
-    ]));
-  }
-
-  Widget _qrcodegenerate() {
-    return Center(child: Text("hi"));
+    return Center(child: Text(_scanned)   );
   }
 
   Future<void> _scanqrcode() async {
@@ -88,13 +103,32 @@ class _QRCodePage extends State<QRCodePage>
       barcodeScanRes = 'PLATFORM_EXCEPTION_ERROR';
     }
 
-
     if (!mounted) return;
 
     setState(() {
-      _scanned = barcodeScanRes;
-      
+      _scanned = (barcodeScanRes=="-1") ? _scanned : barcodeScanRes ;
     });
   }
-}
 
+  Widget _qrcodegenerate(BuildContext context) {
+    final QrImage qrcode = QrImage(
+      data: "PLACE_HOLDER_FOR_1_ON_1_CONNECTION",
+      version: QrVersions.auto,
+      size: 325,
+      embeddedImage: icon,
+      embeddedImageStyle: QrEmbeddedImageStyle(size: Size(80, 80)),
+      errorStateBuilder: (cxt, err) {
+        return Container(
+          child: Center(
+            child: Text(
+              "Uh oh! Something went wrong...",
+              textAlign: TextAlign.center,
+            ),
+          ),
+        );
+      },
+    );
+
+    return Center(child: qrcode);
+  }
+}
