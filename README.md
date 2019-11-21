@@ -1,6 +1,13 @@
 # Commun.io
 Passively Networking
 
+## Development
+### Requirements
+Want to contribute to this project? Here are some requirements you will need!
+ - Flutter
+ - Dart
+ - OpenCX Server (PROVIDE URL HERE AFTER DEPLOYMENT OF DEV SERVER)
+
 ## Business Modeling
 ### Vision
 Our App aims to:

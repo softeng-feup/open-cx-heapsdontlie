@@ -7,6 +7,7 @@ import 'package:communio/view/Widgets/photo_avatar.dart';
 import 'package:communio/view/Widgets/profile_interests.dart';
 import 'package:communio/view/Widgets/social_media_column.dart';
 import 'package:communio/view/theme.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
@@ -186,7 +187,7 @@ class ProfilePage extends StatelessWidget {
 
   Future<KnownPerson> getPerson(String profileId) async {
     final response = await http
-        .get('http://www.mocky.io/v2/5dc2f17f2f000072004be502/$profileId');
+        .get('${DotEnv().env['API_URL']}users/$profileId');
     final map = json.decode(utf8.decode(response.bodyBytes));
     return KnownPerson.fromJson(map);
   }
