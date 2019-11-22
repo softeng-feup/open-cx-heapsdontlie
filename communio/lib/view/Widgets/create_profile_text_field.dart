@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 class CreateProfileTextField extends StatelessWidget {
+
   final Function validation;
   final String name;
   final IconData icon;
+  final bool sensitive;
 
-  CreateProfileTextField(this.validation, this.name, this.icon);
+  CreateProfileTextField(this.validation, this.name, this.icon, this.sensitive);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +17,8 @@ class CreateProfileTextField extends StatelessWidget {
         validator: (value) {
           return validation(value);
         },
-        keyboardType: TextInputType.emailAddress,
+        keyboardType: TextInputType.text,
+        obscureText: sensitive,
         decoration: InputDecoration(
           prefixIcon: Icon(
             icon,

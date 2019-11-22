@@ -40,9 +40,12 @@ class CreateProfileFormState extends State<CreateProfileForm> {
               Padding(
                   padding: EdgeInsets.symmetric(vertical: 15),
                   child: ImageUpload()),
-              CreateProfileTextField(validateText, 'Name', Icons.person),
-              CreateProfileTextField(validateEmail, 'Email', Icons.email),
-              CreateProfileTextField(validateText, 'Password', Icons.lock),
+              CreateProfileTextField(
+                validateText, 'Name', Icons.person, false),
+              CreateProfileTextField(
+                validateEmail, 'Email', Icons.email, false),
+              CreateProfileTextField(
+                validateText, 'Password', Icons.lock, true),
               ProfileInterests(
                 type: 'Interests',
                 interests: interests,
