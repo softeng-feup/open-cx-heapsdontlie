@@ -3,6 +3,7 @@ import 'package:communio/redux/reducers.dart';
 import 'package:communio/view/Pages/bluetooth_beacon_selection.dart';
 import 'package:communio/view/Pages/connected_listing_page.dart';
 import 'package:communio/view/Pages/people_searching_page.dart';
+import 'package:communio/view/Pages/qrcode_view.dart';
 import 'package:communio/view/Pages/profile_page.dart';
 import 'package:communio/view/Pages/set_beacon_page.dart';
 import 'package:communio/view/Pages/settings_page_view.dart';
@@ -58,6 +59,9 @@ class MyAppState extends State<MyApp> {
                 return MaterialPageRoute(
                     builder: (context) => PeopleSearchingPage(),
                     settings: settings);
+              case '/QRCode':
+                return MaterialPageRoute(
+                    builder: (context) => QRCodePage(), settings: settings);
               case '/ListConnected':
                 return MaterialPageRoute(
                     builder: (context) => ConnectedListingPage(),
