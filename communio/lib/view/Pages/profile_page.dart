@@ -63,7 +63,7 @@ class ProfilePage extends StatelessWidget {
       final String profile =
         StoreProvider.of<AppState>(context).state.content['user_id'];
       final Map<String, String> body = {'$type': interest};
-          await http.put('${DotEnv().env['API_URL']}users/tags/$profile',
+          await http.post('${DotEnv().env['API_URL']}users/tags/$profile',
               body: json.encode(body),
               headers: {
                 HttpHeaders.contentTypeHeader: 'application/json',
