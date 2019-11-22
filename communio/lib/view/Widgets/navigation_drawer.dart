@@ -21,7 +21,8 @@ class NavigationDrawerState extends State<NavigationDrawer> {
     "Homepage",
     "PeopleSearch",
     "ListConnected",
-    "Settings",
+    "Settings", 
+    "QRCode",
     "Profile",
     "CreateProfile"
   ];
