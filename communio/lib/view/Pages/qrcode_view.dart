@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:logger/logger.dart';
-import 'package:path/path.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:toast/toast.dart';
 
@@ -29,7 +28,6 @@ class _QRCodePage extends State<QRCodePage>
     super.initState();
     _tabController =
         TabController(vsync: this, length: _tabs.length, initialIndex: 1);
-    _tabController.addListener(this._qrscanlistener);
     _tabController.addListener(this._qrgenlistener);
   }
 
@@ -59,8 +57,6 @@ class _QRCodePage extends State<QRCodePage>
             ])));
   }
 
-  _qrscanlistener() {}
-
   _qrgenlistener() {
     setState(() {
       if (this._tabController.index == 1) {
@@ -89,6 +85,9 @@ class _QRCodePage extends State<QRCodePage>
             return _qrscan();
           case 'QRCODE':
             return _qrcodegenerate(context);
+          default:
+            Navigator.of(context).pop();
+            return Container();
         }
       }).toList(),
     );
@@ -126,7 +125,7 @@ class _QRCodePage extends State<QRCodePage>
       data: dataToQR,
       version: QrVersions.auto,
       size: MediaQuery.of(context).size.width * 0.75,
-      embeddedImage: icon,
+      // embeddedImage: icon,
       embeddedImageStyle: QrEmbeddedImageStyle(size: Size(80, 80)),
       errorStateBuilder: (cxt, err) {
         Logger().e("Error in QRCode Page: ${err}");
