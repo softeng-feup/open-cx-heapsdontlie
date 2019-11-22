@@ -1,3 +1,4 @@
+import 'package:communio/view/Widgets/create_profile_text_field.dart';
 import 'package:communio/view/Widgets/image_upload.dart';
 import 'package:communio/view/Widgets/profile_interests.dart';
 import 'package:flutter/cupertino.dart';
@@ -39,9 +40,9 @@ class CreateProfileFormState extends State<CreateProfileForm> {
               Padding(
                   padding: EdgeInsets.symmetric(vertical: 15),
                   child: ImageUpload()),
-              buildTextField(validateText, 'Name'),
-              buildTextField(validateEmail, 'Email'),
-              buildTextField(validateText, 'Password'),
+              CreateProfileTextField(validateText, 'Name', Icons.person),
+              CreateProfileTextField(validateEmail, 'Email', Icons.email),
+              CreateProfileTextField(validateText, 'Password', Icons.lock),
               ProfileInterests(
                 type: 'Interests',
                 interests: interests,
@@ -72,49 +73,6 @@ class CreateProfileFormState extends State<CreateProfileForm> {
     if (!RegExp(emailRegex).hasMatch(value))
       return 'Insert a valid e-mail address';
     return null;
-  }
-
-  buildTextField(Function validFunc, String name) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-      child: TextFormField(
-        validator: (value) {
-          return validFunc(value);
-        },
-        keyboardType: TextInputType.emailAddress,
-        decoration: InputDecoration(
-          prefixIcon: Icon(
-            Icons.email,
-            color: Theme.of(context).colorScheme.primaryVariant,
-          ),
-          hintText: name,
-          hintStyle: TextStyle(
-            color: Theme.of(context).colorScheme.primaryVariant,
-          ),
-          enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-            color: Theme.of(context).buttonColor,
-            width: 1.5,
-            style: BorderStyle.solid,
-          )),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Theme.of(context).colorScheme.onSurface,
-              width: 1.5,
-              style: BorderStyle.solid,
-            ),
-          ),
-          errorBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Theme.of(context).colorScheme.error,
-              width: 1.5,
-              style: BorderStyle.solid,
-            ),
-          ),
-        ),
-        maxLines: 1,
-      ),
-    );
   }
 
   buildTOSCheckbox() {
