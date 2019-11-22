@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:path/path.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:toast/toast.dart';
 
 class QRCodePage extends StatefulWidget {
   const QRCodePage({Key key}) : super(key: key);
@@ -14,11 +15,11 @@ class QRCodePage extends StatefulWidget {
 class _QRCodePage extends State<QRCodePage>
     with SingleTickerProviderStateMixin {
   final List<Tab> _tabs = <Tab>[Tab(text: "SCAN"), Tab(text: "QRCODE")];
+  final AssetImage icon = AssetImage("assets/icon/icon.png");
+  final GlobalKey key = GlobalKey();
+
   bool _enteredInScantab = false;
   String _scanned = "N/A";
-  AssetImage icon = AssetImage("assets/icon/icon.png");
-
-  GlobalKey key = GlobalKey();
   TabController _tabController;
 
   @override
@@ -38,23 +39,25 @@ class _QRCodePage extends State<QRCodePage>
 
   @override
   Widget build(BuildContext context) {
+    _tabController.addListener(() => {
+          setState(() {
+            if (this._tabController.index == 0 && !this._enteredInScantab) {
+              this._enteredInScantab = true;
+              _scanqrcode(context);
+            }
+          })
+        });
     return GeneralPageView(
-        child: ClipRRect(
-            borderRadius: BorderRadius.circular(15.0),
+        child: Container(
+            decoration:
+                BoxDecoration(borderRadius: BorderRadius.circular(15.0)),
             child: Column(children: [
               Card(child: _tabbar(context)),
               Expanded(child: _tabviews(context))
             ])));
   }
 
-  _qrscanlistener() {
-    setState(() {
-      if (this._tabController.index == 0 && !this._enteredInScantab) {
-        this._enteredInScantab = true;
-        _scanqrcode();
-      }
-    });
-  }
+  _qrscanlistener() {}
 
   _qrgenlistener() {
     setState(() {
@@ -90,10 +93,10 @@ class _QRCodePage extends State<QRCodePage>
   }
 
   Widget _qrscan() {
-    return Center(child: Text(_scanned)   );
+    return Center(child: Text(_scanned));
   }
 
-  Future<void> _scanqrcode() async {
+  Future<void> _scanqrcode(BuildContext context) async {
     String barcodeScanRes;
 
     try {
@@ -106,8 +109,10 @@ class _QRCodePage extends State<QRCodePage>
     if (!mounted) return;
 
     setState(() {
-      _scanned = (barcodeScanRes=="-1") ? _scanned : barcodeScanRes ;
+      _scanned = (barcodeScanRes == "-1") ? _scanned : barcodeScanRes;
+      Toast.show(_scanned, context,duration: Toast.LENGTH_LONG);
     });
+    Navigator.of(context).pop();
   }
 
   Widget _qrcodegenerate(BuildContext context) {
