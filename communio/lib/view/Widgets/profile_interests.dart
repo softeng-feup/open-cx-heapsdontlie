@@ -1,30 +1,29 @@
-import 'dart:convert';
-import 'dart:io';
 
-import 'package:communio/model/app_state.dart';
 import 'package:communio/view/Widgets/filter_card.dart';
 import 'package:communio/view/Widgets/textfield_form.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:http/http.dart' as http;
 
 class ProfileInterests extends StatefulWidget {
   final List interests;
   final String type;
   final String name;
   final bool edit;
+  final Function(String, String) adding;
+  final Function(String, String) removing;
 
   const ProfileInterests(
       {Key key,
       this.interests,
       this.type,
       @required this.edit,
-      @required this.name})
+      @required this.name,
+      @required this.adding,
+      @required this.removing
+      })
       : super(key: key);
   @override
   _ProfileInterestsState createState() =>
-      _ProfileInterestsState(interests, type, edit, name);
+      _ProfileInterestsState(interests, type, edit, name, adding, removing);
 }
 
 class _ProfileInterestsState extends State<ProfileInterests> {
@@ -32,8 +31,11 @@ class _ProfileInterestsState extends State<ProfileInterests> {
   final String type;
   final String name;
   final bool edit;
+  final Function(String, String) adding;
+  final Function(String, String) removing;
 
-  _ProfileInterestsState(this.interests, this.type, this.edit, this.name);
+  _ProfileInterestsState(this.interests, this.type, this.edit, this.name,
+      this.adding, this.removing);
 
   @override
   Widget build(BuildContext context) {
@@ -82,17 +84,7 @@ class _ProfileInterestsState extends State<ProfileInterests> {
       interestsCards.add(FilterCard(
         filter: interest,
         removeFilter: () async {
-          final String profile =
-              StoreProvider.of<AppState>(context).state.content['user_id'];
-          final Map<String, String> body={
-            '$type': interest
-          };
-          await http
-              .post(
-                '${DotEnv().env['API_URL']}users/tags/$profile', body: json.encode(body), headers: {
-                      HttpHeaders.contentTypeHeader: 'application/json',
-                  }
-          );
+          removing(interest, type);
           setState(() {
             interests.remove(interest);
           });
@@ -103,17 +95,7 @@ class _ProfileInterestsState extends State<ProfileInterests> {
   }
 
   addInterest(String interest) async {
-    final String profile =
-        StoreProvider.of<AppState>(context).state.content['user_id'];
-    final Map<String, String> body={
-      '$type': interest
-    };
-    await http
-        .put(
-          '${DotEnv().env['API_URL']}users/tags/$profile', body: json.encode(body), headers: {
-                HttpHeaders.contentTypeHeader: 'application/json',
-            }
-    );
+    adding(interest, type);
     setState(() {
       interests.add(interest);
     });
