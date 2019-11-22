@@ -6,7 +6,12 @@ Passively Networking
 Want to contribute to this project? Here are some requirements you will need!
  - Flutter
  - Dart
- - OpenCX Server (PROVIDE URL HERE AFTER DEPLOYMENT OF DEV SERVER)
+ - OpenCX Server - you can use ours at https://open-cx-communio.herokuapp.com/
+
+Add a .env file at the root of the communio with the following information
+```
+API_URL=https://open-cx-communio.herokuapp.com/
+```
 
 ## Business Modeling
 ### Vision
