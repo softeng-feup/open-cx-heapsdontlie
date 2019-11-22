@@ -2,6 +2,7 @@ import 'package:communio/view/Pages/general_page_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:logger/logger.dart';
 import 'package:path/path.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:toast/toast.dart';
@@ -17,6 +18,7 @@ class _QRCodePage extends State<QRCodePage>
   final List<Tab> _tabs = <Tab>[Tab(text: "SCAN"), Tab(text: "QRCODE")];
   final AssetImage icon = AssetImage("assets/icon/icon.png");
   final GlobalKey key = GlobalKey();
+  final dataToQR = "PLACE_HOLDER_FOR_1_ON_1_CONNECTION";
 
   bool _enteredInScantab = false;
   String _scanned = "N/A";
@@ -110,19 +112,24 @@ class _QRCodePage extends State<QRCodePage>
 
     setState(() {
       _scanned = (barcodeScanRes == "-1") ? _scanned : barcodeScanRes;
-      Toast.show(_scanned, context,duration: Toast.LENGTH_LONG);
+      Logger().i("QRCode scanner read: ${barcodeScanRes}");
+      Toast.show(_scanned, context, duration: Toast.LENGTH_LONG);
+      _tabController.index = 1;
     });
-    Navigator.of(context).pop();
+    // Navigator.of(context).pop();
   }
 
   Widget _qrcodegenerate(BuildContext context) {
-    final QrImage qrcode = QrImage(
-      data: "PLACE_HOLDER_FOR_1_ON_1_CONNECTION",
+    Logger().i("QR code created with info: ${dataToQR}");
+    return Center(
+        child: QrImage(
+      data: dataToQR,
       version: QrVersions.auto,
-      size: 325,
+      size: MediaQuery.of(context).size.width * 0.75,
       embeddedImage: icon,
       embeddedImageStyle: QrEmbeddedImageStyle(size: Size(80, 80)),
       errorStateBuilder: (cxt, err) {
+        Logger().e("Error in QRCode Page: ${err}");
         return Container(
           child: Center(
             child: Text(
@@ -132,8 +139,6 @@ class _QRCodePage extends State<QRCodePage>
           ),
         );
       },
-    );
-
-    return Center(child: qrcode);
+    ));
   }
 }
