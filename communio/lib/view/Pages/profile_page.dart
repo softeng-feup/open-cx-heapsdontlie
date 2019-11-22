@@ -55,17 +55,20 @@ class ProfilePage extends StatelessWidget {
         buildSocialMedia(person, context, query),
         ProfileInterests(
           interests: person.interests,
-          type: 'Interests',
+          name: 'Interests',
+          type: 'tags',
           edit: edit,
         ),
         ProfileInterests(
           interests: person.programmingLanguages,
-          type: 'Programming Languages',
+          name: 'Programming Languages',
+          type: 'programming_languages',
           edit: edit,
         ),
         ProfileInterests(
           interests: person.skills,
-          type: 'Skills',
+          name: 'Skills',
+          type: 'skills',
           edit: edit,
         )
       ],

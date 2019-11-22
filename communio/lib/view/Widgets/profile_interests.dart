@@ -1,26 +1,39 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:communio/model/app_state.dart';
 import 'package:communio/view/Widgets/filter_card.dart';
 import 'package:communio/view/Widgets/textfield_form.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:http/http.dart' as http;
 
 class ProfileInterests extends StatefulWidget {
   final List interests;
   final String type;
+  final String name;
   final bool edit;
 
   const ProfileInterests(
-      {Key key, this.interests, this.type, @required this.edit})
+      {Key key,
+      this.interests,
+      this.type,
+      @required this.edit,
+      @required this.name})
       : super(key: key);
   @override
   _ProfileInterestsState createState() =>
-      _ProfileInterestsState(interests, type, edit);
+      _ProfileInterestsState(interests, type, edit, name);
 }
 
 class _ProfileInterestsState extends State<ProfileInterests> {
   final List interests;
   final String type;
+  final String name;
   final bool edit;
 
-  _ProfileInterestsState(this.interests, this.type, this.edit);
+  _ProfileInterestsState(this.interests, this.type, this.edit, this.name);
 
   @override
   Widget build(BuildContext context) {
@@ -58,10 +71,9 @@ class _ProfileInterestsState extends State<ProfileInterests> {
         padding: EdgeInsets.only(
             left: MediaQuery.of(context).size.width * 0.05, top: 10),
         child: Text(
-          type,
+          name,
           style: Theme.of(context).textTheme.body2,
-        )
-    );
+        ));
   }
 
   buildCurrentInterests(BuildContext context) {
@@ -69,8 +81,18 @@ class _ProfileInterestsState extends State<ProfileInterests> {
     interests.forEach((interest) {
       interestsCards.add(FilterCard(
         filter: interest,
-        removeFilter: () {
-          //TO-DO Remove from server
+        removeFilter: () async {
+          final String profile =
+              StoreProvider.of<AppState>(context).state.content['user_id'];
+          final Map<String, String> body={
+            '$type': interest
+          };
+          await http
+              .post(
+                '${DotEnv().env['API_URL']}users/tags/$profile', body: json.encode(body), headers: {
+                      HttpHeaders.contentTypeHeader: 'application/json',
+                  }
+          );
           setState(() {
             interests.remove(interest);
           });
@@ -80,8 +102,18 @@ class _ProfileInterestsState extends State<ProfileInterests> {
     return interestsCards;
   }
 
-  addInterest(String interest) {
-    // TO-DO Add to server
+  addInterest(String interest) async {
+    final String profile =
+        StoreProvider.of<AppState>(context).state.content['user_id'];
+    final Map<String, String> body={
+      '$type': interest
+    };
+    await http
+        .put(
+          '${DotEnv().env['API_URL']}users/tags/$profile', body: json.encode(body), headers: {
+                HttpHeaders.contentTypeHeader: 'application/json',
+            }
+    );
     setState(() {
       interests.add(interest);
     });
