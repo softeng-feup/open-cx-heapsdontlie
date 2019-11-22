@@ -13,6 +13,7 @@ import 'package:communio/view/Pages/homepage_view.dart';
 import 'package:communio/controller/middleware.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'view/theme.dart';
 import 'model/app_state.dart';
@@ -25,6 +26,7 @@ final Store<AppState> state = Store<AppState>(appReducers,
     middleware: [generalMiddleware]);
 
 void main() {
+  DotEnv().load('.env');
   runApp(new MyApp());
 }
 

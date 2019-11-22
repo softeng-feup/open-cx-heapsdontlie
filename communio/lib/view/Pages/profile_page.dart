@@ -1,12 +1,16 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:communio/model/app_state.dart';
 import 'package:communio/model/known_person.dart';
 import 'package:communio/view/Pages/general_page_view.dart';
 import 'package:communio/view/Pages/secondary_page_view.dart';
 import 'package:communio/view/Widgets/photo_avatar.dart';
 import 'package:communio/view/Widgets/profile_interests.dart';
 import 'package:communio/view/Widgets/social_media_column.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:communio/view/theme.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
@@ -45,6 +49,26 @@ class ProfilePage extends StatelessWidget {
 
   buildPerson(BuildContext context, KnownPerson person) {
     final query = MediaQuery.of(context).size;
+    final Function(String, String) addingFunc = (interest, type) async {
+      final String profile =
+        StoreProvider.of<AppState>(context).state.content['user_id'];
+      final Map<String, String> body = {'$type': interest};
+          await http.put('${DotEnv().env['API_URL']}users/tags/$profile',
+              body: json.encode(body),
+              headers: {
+                HttpHeaders.contentTypeHeader: 'application/json',
+      });
+    };
+    final Function(String, String) removeFunc = (interest, type) async {
+      final String profile =
+        StoreProvider.of<AppState>(context).state.content['user_id'];
+      final Map<String, String> body = {'$type': interest};
+          await http.put('${DotEnv().env['API_URL']}users/tags/$profile',
+              body: json.encode(body),
+              headers: {
+                HttpHeaders.contentTypeHeader: 'application/json',
+      });
+    };
     return ListView(
       children: <Widget>[
         buildImage(context, person, query),
@@ -54,18 +78,27 @@ class ProfilePage extends StatelessWidget {
         buildSocialMedia(person, context, query),
         ProfileInterests(
           interests: person.interests,
-          type: 'Interests',
+          name: 'Interests',
+          type: 'tags',
           edit: edit,
+          adding: addingFunc,
+          removing: removeFunc,
         ),
         ProfileInterests(
           interests: person.programmingLanguages,
-          type: 'Programming Languages',
+          name: 'Programming Languages',
+          type: 'programming_languages',
           edit: edit,
+          adding: addingFunc,
+          removing: removeFunc,
         ),
         ProfileInterests(
           interests: person.skills,
-          type: 'Skills',
+          name: 'Skills',
+          type: 'skills',
           edit: edit,
+          adding: addingFunc,
+          removing: removeFunc,
         )
       ],
     );
@@ -186,7 +219,7 @@ class ProfilePage extends StatelessWidget {
 
   Future<KnownPerson> getPerson(String profileId) async {
     final response = await http
-        .get('http://www.mocky.io/v2/5dc2f17f2f000072004be502/$profileId');
+        .get('${DotEnv().env['API_URL']}users/$profileId');
     final map = json.decode(utf8.decode(response.bodyBytes));
     return KnownPerson.fromJson(map);
   }

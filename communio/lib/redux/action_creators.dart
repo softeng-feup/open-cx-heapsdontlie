@@ -3,6 +3,7 @@ import 'package:communio/model/known_person.dart';
 import 'package:communio/model/person_found.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_blue/flutter_blue.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:logger/logger.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import '../model/app_state.dart';
@@ -48,7 +49,7 @@ ThunkAction<AppState> scanForDevices() {
 }
 
 ThunkAction<AppState> queryFriendsList() {
-  final friendQueryUrl = "http://www.mocky.io/v2/5dc2fc212f0000beba4be556";
+  final friendQueryUrl = DotEnv().env['API_URL']+'users';
   return (Store<AppState> store) async {
     final Set<KnownPerson> friends = new Set<KnownPerson>();
     final response = await http.get(friendQueryUrl);

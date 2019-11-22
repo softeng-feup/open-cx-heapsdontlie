@@ -1,6 +1,18 @@
 # Commun.io
 Passively Networking
 
+## Development
+### Requirements
+Want to contribute to this project? Here are some requirements you will need!
+ - Flutter
+ - Dart
+ - OpenCX Server - you can use ours at https://open-cx-communio.herokuapp.com/
+
+Add a .env file at the root of the communio with the following information
+```
+API_URL=https://open-cx-communio.herokuapp.com/
+```
+
 ## Business Modeling
 ### Vision
 Our App aims to:
