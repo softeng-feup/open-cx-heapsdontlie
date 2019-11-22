@@ -55,20 +55,21 @@ class _ImageUploadState extends State<ImageUpload> {
                                   height: radius * 2,
                                   fit: BoxFit.cover,
                                 )
-                              : Padding(
-                                  padding:
-                                      EdgeInsets.only(bottom: radius * 0.5),
-                                  child: Icon(
-                                    Icons.person,
-                                    size: radius,
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .secondaryVariant,
-                                  ))),
+                              : defaultPicture(radius)),
                       Align(
                         alignment: Alignment.bottomCenter,
                         child: ImagePickerButton(picker, radius),
                       )
                     ])))));
+  }
+
+  Widget defaultPicture(radius) {
+    return Padding(
+        padding: EdgeInsets.only(bottom: radius * 0.5),
+        child: Icon(
+          Icons.person,
+          size: radius,
+          color: Theme.of(context).colorScheme.secondaryVariant,
+        ));
   }
 }

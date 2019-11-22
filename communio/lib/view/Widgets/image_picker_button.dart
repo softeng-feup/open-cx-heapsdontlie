@@ -20,42 +20,21 @@ class _ImagePickerButtonState extends State<ImagePickerButton> {
 
   takePic() async {
     final source = await showDialog<ImageSource>(
-        context: context,
-        builder: (context) => AlertDialog(
-              title: Text("Select profile picture source",
-                  style: Theme.of(context).textTheme.body2),
-              actions: <Widget>[
-                Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      MaterialButton(
-                        color: Theme.of(context).colorScheme.primaryVariant,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Text('Camera'),
-                            Icon(Icons.camera_alt),
-                          ],
-                        ),
-                        onPressed: () =>
-                            Navigator.pop(context, ImageSource.camera),
-                      ),
-                      MaterialButton(
-                        color: Theme.of(context).colorScheme.primaryVariant,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Text('Gallery'),
-                            Icon(Icons.photo),
-                          ],
-                        ),
-                        onPressed: () =>
-                            Navigator.pop(context, ImageSource.gallery),
-                      )
-                    ]),
-              ],
-            ));
+      context: context,
+      builder: (context) => SimpleDialog(
+        title: Text("Select profile picture source.",
+            style: Theme.of(context).textTheme.body2),
+        children: <Widget>[
+          Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                buildButton(cameraText(), ImageSource.camera),
+                buildButton(galleryText(), ImageSource.gallery),
+              ]),
+        ],
+      ),
+    );
 
     onPressed(source);
   }
@@ -75,5 +54,42 @@ class _ImagePickerButtonState extends State<ImagePickerButton> {
             onPressed: takePic,
           ),
         ));
+  }
+
+  Widget cameraText() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Text(
+          'Camera',
+          style: Theme.of(context).textTheme.button,
+        ),
+        Icon(Icons.camera_alt, color: Theme.of(context).canvasColor),
+      ],
+    );
+  }
+
+  Widget galleryText() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Text(
+          'Gallery',
+          style: Theme.of(context).textTheme.button,
+        ),
+        Icon(Icons.photo, color: Theme.of(context).canvasColor),
+      ],
+    );
+  }
+
+  buildButton(Widget child, ImageSource ret) {
+    return  MaterialButton(
+          color: Theme.of(context).colorScheme.primaryVariant,
+          child: Padding(
+            padding: EdgeInsets.all(3.0),
+            child: child,
+          ),
+          onPressed: () => Navigator.pop(context, ret),
+        );
   }
 }
