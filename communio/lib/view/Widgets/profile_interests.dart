@@ -35,16 +35,18 @@ class _ProfileInterestsState extends State<ProfileInterests> {
     final padding = MediaQuery.of(context).size.height * 0.008;
     children.add(buildInterestTitle(context));
 
-    children.add(Container(
-      padding: EdgeInsets.only(top: padding, bottom: padding),
-      child: SizedBox(
-        height: Theme.of(context).textTheme.body2.fontSize + 25,
-        child: ListView(
-          scrollDirection: Axis.horizontal,
-          children: buildCurrentInterests(context),
+    if (interests.isNotEmpty) {
+      children.add(Container(
+        padding: EdgeInsets.only(top: padding, bottom: padding),
+        child: SizedBox(
+          height: Theme.of(context).textTheme.body2.fontSize + 25,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            children: buildCurrentInterests(context),
+          ),
         ),
-      ),
-    ));
+      ));
+    }
     if (edit) {
       children.add(TextFieldForm(
         callback: addInterest,
@@ -60,8 +62,7 @@ class _ProfileInterestsState extends State<ProfileInterests> {
         child: Text(
           type,
           style: Theme.of(context).textTheme.body2,
-        )
-    );
+        ));
   }
 
   buildCurrentInterests(BuildContext context) {
