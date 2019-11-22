@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:communio/view/Widgets/image_picker_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,14 +13,15 @@ class _ImageUploadState extends State<ImageUpload> {
   File image;
   bool _loaded = false;
 
-  picker() async {
-    final File img = await ImagePicker.pickImage(source: ImageSource.gallery);
-
-    if (img != null) {
-      setState(() {
-        image = img;
-        _loaded = true;
-      });
+  picker(source) async {
+    if (source != null) {
+      final File img = await ImagePicker.pickImage(source: source);
+      if (img != null) {
+        setState(() {
+          image = img;
+          _loaded = true;
+        });
+      }
     }
   }
 
@@ -49,7 +49,12 @@ class _ImageUploadState extends State<ImageUpload> {
                       Align(
                           alignment: Alignment.center,
                           child: _isLoaded()
-                              ? image
+                              ? Image.file(
+                                  image,
+                                  width: radius * 2,
+                                  height: radius * 2,
+                                  fit: BoxFit.cover,
+                                )
                               : Padding(
                                   padding:
                                       EdgeInsets.only(bottom: radius * 0.5),
