@@ -33,6 +33,7 @@ dependencies:
   flutter_dotenv: ^2.0.3
   flutter_barcode_scanner: ^0.1.7
   qr_flutter: ^3.1.0
+  image_picker:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -89,11 +90,8 @@ flutter:
   assets:
    - assets/
    - assets/fonts/
-<<<<<<< HEAD
    - .env 
-=======
    - assets/icon/
->>>>>>> origin/master
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

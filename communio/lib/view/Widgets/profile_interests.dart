@@ -17,8 +17,8 @@ class ProfileInterests extends StatefulWidget {
       this.type,
       @required this.edit,
       @required this.name,
-      @required this.adding,
-      @required this.removing
+      this.adding,
+      this.removing
       })
       : super(key: key);
   @override
@@ -50,16 +50,18 @@ class _ProfileInterestsState extends State<ProfileInterests> {
     final padding = MediaQuery.of(context).size.height * 0.008;
     children.add(buildInterestTitle(context));
 
-    children.add(Container(
-      padding: EdgeInsets.only(top: padding, bottom: padding),
-      child: SizedBox(
-        height: Theme.of(context).textTheme.body2.fontSize + 25,
-        child: ListView(
-          scrollDirection: Axis.horizontal,
-          children: buildCurrentInterests(context),
+    if (interests.isNotEmpty) {
+      children.add(Container(
+        padding: EdgeInsets.only(top: padding, bottom: padding),
+        child: SizedBox(
+          height: Theme.of(context).textTheme.body2.fontSize + 25,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            children: buildCurrentInterests(context),
+          ),
         ),
-      ),
-    ));
+      ));
+    }
     if (edit) {
       children.add(TextFieldForm(
         callback: addInterest,
@@ -84,7 +86,8 @@ class _ProfileInterestsState extends State<ProfileInterests> {
       interestsCards.add(FilterCard(
         filter: interest,
         removeFilter: () async {
-          removing(interest, type);
+          if(removing != null)
+            removing(interest, type);
           setState(() {
             interests.remove(interest);
           });
@@ -95,7 +98,8 @@ class _ProfileInterestsState extends State<ProfileInterests> {
   }
 
   addInterest(String interest) async {
-    adding(interest, type);
+    if(adding != null)
+      adding(interest, type);
     setState(() {
       interests.add(interest);
     });
