@@ -5,7 +5,8 @@ class KnownPerson {
   final String name;
   final String photo;
   final String location;
-  final String description;
+  //final String description;
+  String description;
   List<SocialBlock> socials;
   List<dynamic> interests;
   List<dynamic> programmingLanguages;

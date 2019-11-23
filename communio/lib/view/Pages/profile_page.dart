@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:communio/model/known_person.dart';
 import 'package:communio/view/Pages/general_page_view.dart';
 import 'package:communio/view/Pages/secondary_page_view.dart';
+import 'package:communio/view/Widgets/editable_description.dart';
 import 'package:communio/view/Widgets/photo_avatar.dart';
 import 'package:communio/view/Widgets/profile_interests.dart';
 import 'package:communio/view/Widgets/social_media_column.dart';
@@ -14,7 +15,10 @@ class ProfilePage extends StatelessWidget {
   final String profileId;
   final KnownPerson knownPerson;
   final bool edit;
+  bool profileEdit = false;
   static Future<KnownPerson> person;
+
+  EditableDescription description;
 
   ProfilePage({this.profileId, this.knownPerson, @required this.edit}) {
     if (person == null) person = getPerson(profileId);
@@ -22,7 +26,7 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if(knownPerson != null){
+    if (knownPerson != null) {
       return SecondaryPageView(
         child: buildPerson(context, knownPerson),
       );
@@ -45,29 +49,36 @@ class ProfilePage extends StatelessWidget {
 
   buildPerson(BuildContext context, KnownPerson person) {
     final query = MediaQuery.of(context).size;
-    return ListView(
-      children: <Widget>[
-        buildImage(context, person, query),
-        buildName(person, context, query),
-        buildLocation(person, context, query),
-        buildDescription(person, context, query),
-        buildSocialMedia(person, context, query),
-        ProfileInterests(
-          interests: person.interests,
-          type: 'Interests',
-          edit: edit,
-        ),
-        ProfileInterests(
-          interests: person.programmingLanguages,
-          type: 'Programming Languages',
-          edit: edit,
-        ),
-        ProfileInterests(
-          interests: person.skills,
-          type: 'Skills',
-          edit: edit,
-        )
-      ],
+
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).requestFocus(new FocusNode());
+        this.profileEdit = false;
+      },
+      child: ListView(
+        children: <Widget>[
+          buildImage(person, context, query),
+          buildName(person, context, query),
+          buildLocation(person, context, query),
+          buildDescription(person, context, query),
+          buildSocialMedia(person, context, query),
+          ProfileInterests(
+            interests: person.interests,
+            type: 'Interests',
+            edit: edit,
+          ),
+          ProfileInterests(
+            interests: person.programmingLanguages,
+            type: 'Programming Languages',
+            edit: edit,
+          ),
+          ProfileInterests(
+            interests: person.skills,
+            type: 'Skills',
+            edit: edit,
+          )
+        ],
+      ),
     );
   }
 
@@ -92,21 +103,40 @@ class ProfilePage extends StatelessWidget {
         query: query);
   }
 
-  buildImage(BuildContext context, KnownPerson person, Size query) {
-
-    final double _picRatio = 0.217;
+  buildImage(KnownPerson person, BuildContext context,  Size query) {
+    final double _picRatio = (4.0/5.0) * (query.width / query.height);
 
     return padWidget(
+        child: Align(
+        alignment: Alignment.center,
         child: Container(
-          margin: EdgeInsets.only(top: query.height * 0.03),
-          padding: EdgeInsets.only(
-              left: query.height * 0.1, right: query.height * 0.1),
-          height: query.height * _picRatio,
-          child: PhotoAvatar(
+            margin: EdgeInsets.only(top: query.height * 0.01),
+            padding: EdgeInsets.only(
+                left: query.height * 0.1,
+                right: query.height * 0.1),
+            height: query.width * _picRatio,
+            width: query.width * _picRatio,
+            decoration: ShapeDecoration(
+              shape: CircleBorder(
+                side: BorderSide.none,
+              ),
+              image: new DecorationImage(
+                  fit: BoxFit.fitWidth,
+                  image: NetworkImage(person.photo))
+            ),
+/*
+            decoration: new BoxDecoration(
+                shape: CircleBorder({
+                  side: BorderSide.none,
+                }),
+                image: new DecorationImage(
+                    fit: BoxFit.cover, image: NetworkImage(person.photo)))*/
+            /*child: PhotoAvatar(
             photo: person.photo,
-          ),
-        ),
-        query: query);
+          ),*/
+            )
+    ),
+    query: query);
   }
 
   buildLocation(KnownPerson person, BuildContext context, Size query) {
@@ -131,37 +161,26 @@ class ProfilePage extends StatelessWidget {
 
   buildDescription(KnownPerson person, BuildContext context, Size query) {
     return buildRowWithItem(
-        context,
-        Icons.info,
-        Container(
-          width: query.width * 0.75,
-          child: Text(
-            person.description,
-            style: Theme.of(context).textTheme.body2,
-          ),
-        ),
-        query);
+      context,
+      Icons.info,
+      EditableDescription(person: person, edit: profileEdit),
+      query,
+    );
   }
 
   buildSocialMedia(KnownPerson person, BuildContext context, Size query) {
-    return buildRowWithItem(
-          context,
-          Icons.person,
-          SocialMediaColumn(
-            person: person,
-            edit: edit
-          ),
-          query);
+    return buildRowWithItem(context, Icons.person,
+        SocialMediaColumn(person: person, edit: edit), query);
   }
 
   buildRowWithItem(
       BuildContext context, IconData iconData, Widget widget, Size query) {
     return Padding(
-        padding: EdgeInsets.only(
+      padding: EdgeInsets.only(
         top: query.height * 0.03,
         bottom: query.height * 0.03,
-        ),
-       child: Row(
+      ),
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
@@ -180,9 +199,7 @@ class ProfilePage extends StatelessWidget {
         ],
       ),
     );
-    }
-
-  
+  }
 
   Future<KnownPerson> getPerson(String profileId) async {
     final response = await http
