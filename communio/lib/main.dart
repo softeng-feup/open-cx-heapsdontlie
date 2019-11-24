@@ -1,3 +1,4 @@
+import 'package:communio/controller/friend_notifications.dart';
 import 'package:communio/model/app_state.dart';
 import 'package:communio/redux/reducers.dart';
 import 'package:communio/view/Pages/bluetooth_beacon_selection.dart';
@@ -25,8 +26,13 @@ final Store<AppState> state = Store<AppState>(appReducers,
     initialState: new AppState(null),
     middleware: [generalMiddleware]);
 
+initialLoad() async{
+  await DotEnv().load('.env');
+  setupNotifications(state.state.content['user_id']);
+}
+
 void main() {
-  DotEnv().load('.env');
+  initialLoad();
   runApp(new MyApp());
 }
 
