@@ -1,8 +1,10 @@
-import 'package:communio/view/Widgets/create_profile_text_field.dart';
 import 'package:communio/view/Widgets/image_upload.dart';
+import 'package:communio/view/Widgets/insert_email_field.dart';
+import 'package:communio/view/Widgets/insert_name_field.dart';
+import 'package:communio/view/Widgets/insert_password_field.dart';
 import 'package:communio/view/Widgets/profile_interests.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 
 class CreateProfileForm extends StatefulWidget {
   @override
@@ -12,23 +14,16 @@ class CreateProfileForm extends StatefulWidget {
 }
 
 class CreateProfileFormState extends State<CreateProfileForm> {
-  static final emailRegex =
-      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
-
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _agreedToTOS = false;
-
-  final nameController = TextEditingController();
-  final eMailController = TextEditingController();
-  final passwordController = TextEditingController();
-  final confPassController = TextEditingController();
-
-  String name;
-  String eMail;
 
   final List interests = new List();
   final List programmingLanguages = new List();
   final List skills = new List();
+
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -40,45 +35,30 @@ class CreateProfileFormState extends State<CreateProfileForm> {
               Padding(
                   padding: EdgeInsets.symmetric(vertical: 15),
                   child: ImageUpload()),
-              CreateProfileTextField(
-                validateText, 'Name', Icons.person, false),
-              CreateProfileTextField(
-                validateEmail, 'Email', Icons.email, false),
-              CreateProfileTextField(
-                validateText, 'Password', Icons.lock, true),
+              InsertNameField(nameController),
+              InsertEmailField(emailController),
+              InsertPasswordField(passwordController),
               ProfileInterests(
-                type: 'Interests',
+                type: 'tags',
                 interests: interests,
                 edit: true,
-                name: 'tags',
+                name: 'Interests',
               ),
               ProfileInterests(
-                type: 'Programming Languages',
+                type: 'programming_languages',
                 interests: programmingLanguages,
                 edit: true,
-                name: 'programming_languages',
+                name: 'Programming Languages',
               ),
               ProfileInterests(
-                type: 'Skills',
+                type: 'skills',
                 interests: skills,
                 edit: true,
-                name: 'skills',
+                name: 'Skills',
               ),
               buildTOSCheckbox(),
               buildSubmitButton(),
             ]));
-  }
-
-  validateText(value) {
-    if (value.trim().isEmpty) return 'Field is empty';
-    return null;
-  }
-
-  validateEmail(String value) {
-    if (value.trim().isEmpty) return 'Field is empty';
-    if (!RegExp(emailRegex).hasMatch(value))
-      return 'Insert a valid e-mail address';
-    return null;
   }
 
   buildTOSCheckbox() {
@@ -99,23 +79,52 @@ class CreateProfileFormState extends State<CreateProfileForm> {
     );
   }
 
-  buildSubmitButton() {
+  submit() {
+    if (!_agreedWithTerms()) {
+      Scaffold.of(context)
+          .showSnackBar(SnackBar(content: Text('You must accept the TOS!')));
+      return;
+    }
+
+    if (_formKey.currentState.validate() && _agreedWithTerms()) {
+      Scaffold.of(context)
+          .showSnackBar(SnackBar(content: Text('Processing Data')));
+      final name = nameController.text;
+      final email = emailController.text;
+      final testPassword = passwordController.text;
+      Logger().i("""
+Name: $name,
+Email: $email,
+Test Password: $testPassword
+              """);
+    }
+  }
+
+  Widget buildSubmitButton() {
+    final width = MediaQuery.of(context).size.width * 0.5;
+    final height = MediaQuery.of(context).size.width * 0.15;
+
     return Padding(
         padding: EdgeInsets.only(bottom: 10),
         child: Center(
-            child: RaisedButton(
-          onPressed: () {
-            if (!_agreedWithTerms()) {
-              Scaffold.of(context).showSnackBar(
-                  SnackBar(content: Text('You must accept the TOS!')));
-            }
-            if (_formKey.currentState.validate() && _agreedWithTerms()) {
-              Scaffold.of(context)
-                  .showSnackBar(SnackBar(content: Text('Processing Data')));
-            }
-          },
-          child: Text('Sign Up'),
-        )));
+            child: ButtonTheme(
+                minWidth: width,
+                height: height,
+                child: RaisedButton(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(height * 0.5)),
+                  textColor: Theme.of(context).canvasColor,
+                  onPressed: () {
+                    submit();
+                  },
+                  child: Text(
+                    'Sign Up',
+                    style: Theme.of(context)
+                        .textTheme
+                        .button
+                        .apply(fontSizeDelta: -5),
+                  ),
+                ))));
   }
 
   bool _agreedWithTerms() {

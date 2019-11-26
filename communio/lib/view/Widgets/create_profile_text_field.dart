@@ -6,14 +6,17 @@ class CreateProfileTextField extends StatelessWidget {
   final String name;
   final IconData icon;
   final bool sensitive;
+  final TextEditingController controller;
 
-  CreateProfileTextField(this.validation, this.name, this.icon, this.sensitive);
+  CreateProfileTextField(this.validation, this.name, this.icon,
+      {this.sensitive = false, this.controller = null});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
       child: TextFormField(
+        controller: this.controller,
         validator: (value) {
           return validation(value);
         },
