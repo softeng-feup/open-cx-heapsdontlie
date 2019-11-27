@@ -5,22 +5,36 @@ import 'package:flutter/material.dart';
 class ProfileInterests extends StatefulWidget {
   final List interests;
   final String type;
+  final String name;
   final bool edit;
+  final Function(String, String) adding;
+  final Function(String, String) removing;
 
   const ProfileInterests(
-      {Key key, this.interests, this.type, @required this.edit})
+      {Key key,
+      this.interests,
+      this.type,
+      @required this.edit,
+      @required this.name,
+      this.adding,
+      this.removing
+      })
       : super(key: key);
   @override
   _ProfileInterestsState createState() =>
-      _ProfileInterestsState(interests, type, edit);
+      _ProfileInterestsState(interests, type, edit, name, adding, removing);
 }
 
 class _ProfileInterestsState extends State<ProfileInterests> {
   final List interests;
   final String type;
+  final String name;
   final bool edit;
+  final Function(String, String) adding;
+  final Function(String, String) removing;
 
-  _ProfileInterestsState(this.interests, this.type, this.edit);
+  _ProfileInterestsState(this.interests, this.type, this.edit, this.name,
+      this.adding, this.removing);
 
   @override
   Widget build(BuildContext context) {
@@ -35,16 +49,19 @@ class _ProfileInterestsState extends State<ProfileInterests> {
     final padding = MediaQuery.of(context).size.height * 0.008;
     children.add(buildInterestTitle(context));
 
-    children.add(Container(
-      padding: EdgeInsets.only(top: padding, bottom: padding),
-      child: SizedBox(
-        height: Theme.of(context).textTheme.body2.fontSize + 25,
-        child: ListView(
-          scrollDirection: Axis.horizontal,
-          children: buildCurrentInterests(context),
+    if (interests.isNotEmpty) {
+      children.add(Container(
+        padding: EdgeInsets.only(top: padding, bottom: padding),
+        child: SizedBox(
+          height: Theme.of(context).textTheme.body2.fontSize + 25,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            children: buildCurrentInterests(context),
+          ),
         ),
-      ),
-    ));
+      ));
+    }
+
     if (edit) {
       children.add(TextFieldForm(
         callback: addInterest,
@@ -58,10 +75,9 @@ class _ProfileInterestsState extends State<ProfileInterests> {
         padding: EdgeInsets.only(
             left: MediaQuery.of(context).size.width * 0.05, top: 10),
         child: Text(
-          type,
+          name,
           style: Theme.of(context).textTheme.body2,
-        )
-    );
+        ));
   }
 
   buildCurrentInterests(BuildContext context) {
@@ -69,8 +85,9 @@ class _ProfileInterestsState extends State<ProfileInterests> {
     interests.forEach((interest) {
       interestsCards.add(FilterCard(
         filter: interest,
-        removeFilter: () {
-          //TO-DO Remove from server
+        removeFilter: () async {
+          if(removing != null)
+            removing(interest, type);
           setState(() {
             interests.remove(interest);
           });
@@ -80,8 +97,9 @@ class _ProfileInterestsState extends State<ProfileInterests> {
     return interestsCards;
   }
 
-  addInterest(String interest) {
-    // TO-DO Add to server
+  addInterest(String interest) async {
+    if(adding != null)
+      adding(interest, type);
     setState(() {
       interests.add(interest);
     });

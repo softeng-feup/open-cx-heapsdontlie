@@ -5,8 +5,7 @@ class KnownPerson {
   final String name;
   final String photo;
   final String location;
-  //final String description;
-  String description;
+  final String description;
   List<SocialBlock> socials;
   List<dynamic> interests;
   List<dynamic> programmingLanguages;
@@ -38,12 +37,12 @@ class KnownPerson {
 
   factory KnownPerson.fromJson(Map<String, dynamic> json) {
     return new KnownPerson(
-        uuid: json['uuid'],
-        name: json['name'],
+        uuid: json['_id'],
+        name: json['fullname'],
         photo: json['photo'],
         location: json['location'],
         socials: KnownPerson._createSocial(json['socials']),
-        interests: json['interests'],
+        interests: json['tags'],
         description: json['description'],
         programmingLanguages: json['programming_languages'],
         skills: json['skills'] 

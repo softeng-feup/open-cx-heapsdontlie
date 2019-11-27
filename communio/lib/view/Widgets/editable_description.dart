@@ -54,7 +54,7 @@ class _EditableDescriptionState extends State<EditableDescription> {
   }
 
   _onChangeText(String newDescription) {
-    this.person.description = newDescription;
+    //this.person.description = newDescription;
   }
 
   buildDescription(BuildContext context) {

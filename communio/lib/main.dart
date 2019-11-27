@@ -1,7 +1,10 @@
 import 'package:communio/model/app_state.dart';
 import 'package:communio/redux/reducers.dart';
+import 'package:communio/view/Pages/bluetooth_beacon_selection.dart';
 import 'package:communio/view/Pages/connected_listing_page.dart';
+import 'package:communio/view/Pages/create_profile_page.dart';
 import 'package:communio/view/Pages/people_searching_page.dart';
+import 'package:communio/view/Pages/qrcode_view.dart';
 import 'package:communio/view/Pages/profile_page.dart';
 import 'package:communio/view/Pages/set_beacon_page.dart';
 import 'package:communio/view/Pages/settings_page_view.dart';
@@ -10,6 +13,7 @@ import 'package:communio/view/Pages/homepage_view.dart';
 import 'package:communio/controller/middleware.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'view/theme.dart';
 import 'model/app_state.dart';
@@ -22,6 +26,7 @@ final Store<AppState> state = Store<AppState>(appReducers,
     middleware: [generalMiddleware]);
 
 void main() {
+  DotEnv().load('.env');
   runApp(new MyApp());
 }
 
@@ -57,6 +62,9 @@ class MyAppState extends State<MyApp> {
                 return MaterialPageRoute(
                     builder: (context) => PeopleSearchingPage(),
                     settings: settings);
+              case '/QRCode':
+                return MaterialPageRoute(
+                    builder: (context) => QRCodePage(), settings: settings);
               case '/ListConnected':
                 return MaterialPageRoute(
                     builder: (context) => ConnectedListingPage(),
@@ -67,7 +75,12 @@ class MyAppState extends State<MyApp> {
                     settings: settings);
               case '/SetBeacon':
                 return MaterialPageRoute(
-                    builder: (context) => SetBeaconPage(), settings: settings);
+                    builder: (context) => SetBeaconPage(),
+                    settings: settings);
+              case '/BluetoothBeaconSelection':
+                return MaterialPageRoute(
+                    builder: (context) => BluetoothBeaconSelection(),
+                    settings: settings);
               case '/Profile':
                 final String profile = state.state.content['user_id'];
                 return MaterialPageRoute(
@@ -77,6 +90,10 @@ class MyAppState extends State<MyApp> {
                         ),
                     settings: settings,
                     maintainState: false);
+              case '/CreateProfile':
+                return MaterialPageRoute(
+                  builder: (context) => CreateProfilePage(),
+                  settings: settings);
             }
           }),
     );

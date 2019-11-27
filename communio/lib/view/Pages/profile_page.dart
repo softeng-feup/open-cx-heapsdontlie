@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:communio/model/app_state.dart';
 import 'package:communio/model/known_person.dart';
 import 'package:communio/view/Pages/general_page_view.dart';
 import 'package:communio/view/Pages/secondary_page_view.dart';
@@ -7,7 +9,9 @@ import 'package:communio/view/Widgets/editable_description.dart';
 import 'package:communio/view/Widgets/photo_avatar.dart';
 import 'package:communio/view/Widgets/profile_interests.dart';
 import 'package:communio/view/Widgets/social_media_column.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:communio/view/theme.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
@@ -15,10 +19,7 @@ class ProfilePage extends StatelessWidget {
   final String profileId;
   final KnownPerson knownPerson;
   final bool edit;
-  bool profileEdit = false;
   static Future<KnownPerson> person;
-
-  EditableDescription description;
 
   ProfilePage({this.profileId, this.knownPerson, @required this.edit}) {
     if (person == null) person = getPerson(profileId);
@@ -26,7 +27,7 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (knownPerson != null) {
+    if(knownPerson != null){
       return SecondaryPageView(
         child: buildPerson(context, knownPerson),
       );
@@ -49,36 +50,58 @@ class ProfilePage extends StatelessWidget {
 
   buildPerson(BuildContext context, KnownPerson person) {
     final query = MediaQuery.of(context).size;
-
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).requestFocus(new FocusNode());
-        this.profileEdit = false;
-      },
-      child: ListView(
-        children: <Widget>[
-          buildImage(person, context, query),
-          buildName(person, context, query),
-          buildLocation(person, context, query),
-          buildDescription(person, context, query),
-          buildSocialMedia(person, context, query),
-          ProfileInterests(
-            interests: person.interests,
-            type: 'Interests',
-            edit: edit,
-          ),
-          ProfileInterests(
-            interests: person.programmingLanguages,
-            type: 'Programming Languages',
-            edit: edit,
-          ),
-          ProfileInterests(
-            interests: person.skills,
-            type: 'Skills',
-            edit: edit,
-          )
-        ],
-      ),
+    final Function(String, String) addingFunc = (interest, type) async {
+      final String profile =
+        StoreProvider.of<AppState>(context).state.content['user_id'];
+      final Map<String, String> body = {'$type': interest};
+          await http.put('${DotEnv().env['API_URL']}users/tags/$profile',
+              body: json.encode(body),
+              headers: {
+                HttpHeaders.contentTypeHeader: 'application/json',
+      });
+    };
+    final Function(String, String) removeFunc = (interest, type) async {
+      final String profile =
+        StoreProvider.of<AppState>(context).state.content['user_id'];
+      final Map<String, String> body = {'$type': interest};
+          await http.post('${DotEnv().env['API_URL']}users/tags/$profile',
+              body: json.encode(body),
+              headers: {
+                HttpHeaders.contentTypeHeader: 'application/json',
+      });
+    };
+    return ListView(
+      children: <Widget>[
+        buildImage(person, context, query),
+        buildName(person, context, query),
+        buildLocation(person, context, query),
+        buildDescription(person, context, query),
+        buildSocialMedia(person, context, query),
+        ProfileInterests(
+          interests: person.interests,
+          name: 'Interests',
+          type: 'tags',
+          edit: edit,
+          adding: addingFunc,
+          removing: removeFunc,
+        ),
+        ProfileInterests(
+          interests: person.programmingLanguages,
+          name: 'Programming Languages',
+          type: 'programming_languages',
+          edit: edit,
+          adding: addingFunc,
+          removing: removeFunc,
+        ),
+        ProfileInterests(
+          interests: person.skills,
+          name: 'Skills',
+          type: 'skills',
+          edit: edit,
+          adding: addingFunc,
+          removing: removeFunc,
+        )
+      ],
     );
   }
 
@@ -163,24 +186,31 @@ class ProfilePage extends StatelessWidget {
     return buildRowWithItem(
       context,
       Icons.info,
-      EditableDescription(person: person, edit: profileEdit),
+      EditableDescription(person: person, edit: edit),
       query,
     );
   }
 
+
   buildSocialMedia(KnownPerson person, BuildContext context, Size query) {
-    return buildRowWithItem(context, Icons.person,
-        SocialMediaColumn(person: person, edit: edit), query);
+    return buildRowWithItem(
+          context,
+          Icons.person,
+          SocialMediaColumn(
+            person: person,
+            edit: edit
+          ),
+          query);
   }
 
   buildRowWithItem(
       BuildContext context, IconData iconData, Widget widget, Size query) {
     return Padding(
-      padding: EdgeInsets.only(
+        padding: EdgeInsets.only(
         top: query.height * 0.03,
         bottom: query.height * 0.03,
-      ),
-      child: Row(
+        ),
+       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
@@ -201,9 +231,11 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
+  
+
   Future<KnownPerson> getPerson(String profileId) async {
     final response = await http
-        .get('http://www.mocky.io/v2/5dc2f17f2f000072004be502/$profileId');
+        .get('${DotEnv().env['API_URL']}users/$profileId');
     final map = json.decode(utf8.decode(response.bodyBytes));
     return KnownPerson.fromJson(map);
   }

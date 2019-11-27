@@ -1,6 +1,18 @@
 # Commun.io
 Passively Networking
 
+## Development
+### Requirements
+Want to contribute to this project? Here are some requirements you will need!
+ - Flutter
+ - Dart
+ - OpenCX Server - you can use ours at https://open-cx-communio.herokuapp.com/
+
+Add a .env file at the root of the communio with the following information
+```
+API_URL=https://open-cx-communio.herokuapp.com/
+```
+
 ## Business Modeling
 ### Vision
 Our App aims to:
@@ -60,6 +72,14 @@ Therefore, the tests have been conceptualized, but not yet implemented.
   - Given a list of two people, both with interest in Big Data, and with a filter on Big Data in the app, then it shall display those two people.
   - Given a list of two people, one with interest in Big Data and another with interest in AI, and with a single filter on AI, only the person with interest on AI will be displayed  
   - Given a list of two people, one with interest in Big Data and another with interest in AI, and with a filter on AI and another on Big Data, both people will be displayed
+<<<<<<< HEAD
+=======
+
+- Set Beacon
+ - Given a logged in user, when he presses to go to the settings, when he presses to use his phone, pressing continue, then he is redirected to the settings page with a message saying his phone is now the beacon.
+ - Given a logged in user, when he presses to go to the settings, when he presses to use an external beacon, pressing continue, then he is sent to a new page where he can select a new device, then being redirected to the settings page with a message saying he has selected a new beacon.
+
+>>>>>>> master
   
 - Profile Page:
      - Given a user that is already logged in, then it is possible for him to choose his profile page and check all information regarding himself.
