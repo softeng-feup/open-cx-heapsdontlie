@@ -1,8 +1,7 @@
-import 'package:communio/view/Widgets/create_profile_text_field.dart';
+import 'package:communio/view/Widgets/profile_text_field.dart';
 import 'package:flutter/material.dart';
 
 class InsertPasswordField extends StatefulWidget {
-
   final TextEditingController controller;
   InsertPasswordField(this.controller);
 
@@ -13,7 +12,6 @@ class InsertPasswordField extends StatefulWidget {
 }
 
 class _InsertPasswordFieldState extends State<InsertPasswordField> {
-
   final TextEditingController controller;
   _InsertPasswordFieldState(this.controller);
 
@@ -23,7 +21,8 @@ class _InsertPasswordFieldState extends State<InsertPasswordField> {
   }
 
   validationSecond(value) {
-    if (!(controller.text == value)) return 'Passwords don\'t match!';
+    if (!(controller.text.trim() == value.trim()))
+      return 'Passwords don\'t match!';
     return null;
   }
 
@@ -31,9 +30,16 @@ class _InsertPasswordFieldState extends State<InsertPasswordField> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        CreateProfileTextField(validationFirst, 'Password', Icons.lock,
-            sensitive: true, controller: controller),
-        CreateProfileTextField(validationSecond, 'Confirm Password', Icons.lock,
+        ProfileTextField(
+            validation: validationFirst,
+            name: 'Password',
+            icon: Icons.lock,
+            sensitive: true,
+            controller: controller),
+        ProfileTextField(
+            validation: validationSecond,
+            name: 'Confirm Password',
+            icon: Icons.lock,
             sensitive: true),
       ],
     );

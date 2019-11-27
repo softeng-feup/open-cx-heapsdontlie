@@ -1,4 +1,4 @@
-import 'package:communio/view/Widgets/create_profile_text_field.dart';
+import 'package:communio/view/Widgets/profile_text_field.dart';
 import 'package:flutter/material.dart';
 
 class InsertEmailField extends StatefulWidget {
@@ -19,15 +19,20 @@ class _InsertEmailFieldState extends State<InsertEmailField> {
   _InsertEmailFieldState(this.controller);
 
   validation(value) {
-    if (value.trim().isEmpty) return 'Field is empty';
-    if (!RegExp(emailRegex).hasMatch(value))
+    final checkVal = value.trim();
+    if (checkVal.isEmpty) return 'Field is empty';
+    if (!RegExp(emailRegex).hasMatch(checkVal))
       return 'Insert a valid e-mail address';
     return null;
   }
 
   @override
   Widget build(BuildContext context) {
-    return CreateProfileTextField(validation, 'Email', Icons.email,
-        controller: this.controller);
+    return ProfileTextField(
+        validation: validation,
+        name: 'Email',
+        icon: Icons.email,
+        controller: this.controller,
+        inputType: TextInputType.emailAddress,);
   }
 }

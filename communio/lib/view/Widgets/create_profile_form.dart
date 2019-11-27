@@ -5,6 +5,7 @@ import 'package:communio/view/Widgets/insert_password_field.dart';
 import 'package:communio/view/Widgets/profile_interests.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
+import 'package:toast/toast.dart';
 
 class CreateProfileForm extends StatefulWidget {
   @override
@@ -81,22 +82,22 @@ class CreateProfileFormState extends State<CreateProfileForm> {
 
   submit() {
     if (!_agreedWithTerms()) {
-      Scaffold.of(context)
-          .showSnackBar(SnackBar(content: Text('You must accept the TOS!')));
+      Toast.show('You must accept the TOS!', context);
       return;
     }
 
     if (_formKey.currentState.validate() && _agreedWithTerms()) {
-      Scaffold.of(context)
-          .showSnackBar(SnackBar(content: Text('Processing Data')));
-      final name = nameController.text;
-      final email = emailController.text;
-      final testPassword = passwordController.text;
+      Toast.show('Processing Data', context);
+      final name = nameController.text.trim();
+      final email = emailController.text.trim();
+      final testPassword = passwordController.text.trim();
       Logger().i("""
 Name: $name,
 Email: $email,
-Test Password: $testPassword
-              """);
+Test Password: $testPassword,
+Interests: $interests,
+Programming Languages: $programmingLanguages
+Skills: $skills""");
     }
   }
 
@@ -112,7 +113,7 @@ Test Password: $testPassword
                 height: height,
                 child: RaisedButton(
                   shape: RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(height * 0.5)),
+                      borderRadius: new BorderRadius.circular(height * 0.25)),
                   textColor: Theme.of(context).canvasColor,
                   onPressed: () {
                     submit();

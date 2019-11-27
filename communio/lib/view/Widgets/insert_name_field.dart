@@ -1,4 +1,4 @@
-import 'package:communio/view/Widgets/create_profile_text_field.dart';
+import 'package:communio/view/Widgets/profile_text_field.dart';
 import 'package:flutter/material.dart';
 
 class InsertNameField extends StatefulWidget {
@@ -23,7 +23,10 @@ class _InsertNameFieldState extends State<InsertNameField> {
 
   @override
   Widget build(BuildContext context) {
-    return CreateProfileTextField(validation, 'Name', Icons.person,
+    return ProfileTextField(
+        validation: validation,
+        name: 'Name',
+        icon: Icons.person,
         controller: this.controller);
   }
 }
