@@ -1,7 +1,7 @@
 import 'package:communio/view/Widgets/image_upload.dart';
 import 'package:communio/view/Widgets/insert_email_field.dart';
 import 'package:communio/view/Widgets/insert_name_field.dart';
-import 'package:communio/view/Widgets/insert_password_field.dart';
+import 'package:communio/view/Widgets/insert_new_password_field.dart';
 import 'package:communio/view/Widgets/profile_interests.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
@@ -38,7 +38,7 @@ class CreateProfileFormState extends State<CreateProfileForm> {
                   child: ImageUpload()),
               InsertNameField(nameController),
               InsertEmailField(emailController),
-              InsertPasswordField(passwordController),
+              InsertNewPasswordField(passwordController),
               ProfileInterests(
                 type: 'tags',
                 interests: interests,
@@ -91,8 +91,7 @@ class CreateProfileFormState extends State<CreateProfileForm> {
       final name = nameController.text.trim();
       final email = emailController.text.trim();
       final testPassword = passwordController.text.trim();
-      Logger().i("""
-Name: $name,
+      Logger().i("""Name: $name,
 Email: $email,
 Test Password: $testPassword,
 Interests: $interests,
