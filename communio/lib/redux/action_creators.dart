@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:communio/model/known_person.dart';
 import 'package:communio/model/person_found.dart';
 import 'package:flutter/services.dart';
@@ -48,8 +49,8 @@ ThunkAction<AppState> scanForDevices() {
   };
 }
 
-ThunkAction<AppState> queryFriendsList() {
-  final friendQueryUrl = DotEnv().env['API_URL']+'users';
+ThunkAction<AppState> queryFriendsList(String profileId) {
+  final friendQueryUrl = DotEnv().env['API_URL'] + 'users/matches/$profileId';
   return (Store<AppState> store) async {
     final Set<KnownPerson> friends = new Set<KnownPerson>();
     final response = await http.get(friendQueryUrl);
@@ -90,22 +91,27 @@ ThunkAction<AppState> startBroadcastingBeacon() {
   };
 }
 
-ThunkAction<AppState> connectToPerson(PersonFound person) {
+ThunkAction<AppState> connectToPerson(String person) {
   return (Store<AppState> store) async {
-    Logger().w('Connect to person not yet implemented!');
+    final body = {"id": person, "user_id": store.state.content['user_id']};
+    await http.post('${DotEnv().env['API_URL']}users/matches/request',
+        body: json.encode(body),
+        headers: {
+          HttpHeaders.contentTypeHeader: 'application/json',
+        }
+      );
+    store.dispatch(RemovePersonAction(person));
   };
 }
 
-
-ThunkAction<AppState> selectNewDevice(String device){
-
+ThunkAction<AppState> selectNewDevice(String device) {
   //TO-DO Add request to server
   return (Store<AppState> store) {
     store.dispatch(SelectActiveDevice(device));
   };
 }
 
-ThunkAction<AppState> selectOwnDevice(){
+ThunkAction<AppState> selectOwnDevice() {
   //TO-DO Add request to server
   return (Store<AppState> store) async {
     final platform = MethodChannel('pt.up.fe.communio');

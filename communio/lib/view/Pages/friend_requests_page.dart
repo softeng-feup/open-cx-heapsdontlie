@@ -40,7 +40,6 @@ class FriendRequestsPage extends StatelessWidget {
 
   buildFriendRequests(
       BuildContext context, Iterable<FriendRequest> friendRequests) {
-    final requests = friendRequests.toList();
     return ListView(
       children: this.requestsLists(context, friendRequests),
     );

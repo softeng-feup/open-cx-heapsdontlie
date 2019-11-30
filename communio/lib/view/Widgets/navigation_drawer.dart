@@ -29,7 +29,7 @@ class NavigationDrawerState extends State<NavigationDrawer> {
   ];
 
   getCurrentRoute() => ModalRoute.of(parentContext).settings.name == null
-      ? drawerItems[0]
+      ? null
       : ModalRoute.of(parentContext).settings.name.substring(1);
 
   _onSelectItem(int index) {

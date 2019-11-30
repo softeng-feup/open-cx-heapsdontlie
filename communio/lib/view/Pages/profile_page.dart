@@ -28,14 +28,18 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (knownPerson != null) {
-      return SecondaryPageView(
-        child: buildPerson(context, knownPerson),
-      );
+      return buildProfilePage(context, knownPerson);
     }
-    return GeneralPageView(child: 
-    new FuturePageBuilder<KnownPerson>(
+    return new FuturePageBuilder<KnownPerson>(
       data: person,
-      func: this.buildPerson,));
+      func: this.buildProfilePage,);
+  }
+
+  buildProfilePage(BuildContext context, KnownPerson person){
+    if(edit){
+      return GeneralPageView(child: this.buildPerson(context, person),);
+    }
+    return SecondaryPageView(child: this.buildPerson(context, person),);
   }
 
   buildPerson(BuildContext context, KnownPerson person) {
