@@ -1,12 +1,17 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:communio/model/app_state.dart';
 import 'package:communio/view/Pages/general_page_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:logger/logger.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:toast/toast.dart';
+import 'package:http/http.dart' as http;
 
 class QRCodePage extends StatefulWidget {
   const QRCodePage({Key key}) : super(key: key);
@@ -100,6 +105,8 @@ class _QRCodePage extends State<QRCodePage>
 
   Future<void> _scanqrcode(BuildContext context) async {
     String barcodeScanRes;
+    final myUserID =
+        StoreProvider.of<AppState>(context).state.content['user_id'];
 
     try {
       barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
@@ -110,13 +117,13 @@ class _QRCodePage extends State<QRCodePage>
 
     if (!mounted) return;
 
+    final statuscode = await this.__sendFriendRequest(barcodeScanRes, myUserID);
     setState(() {
-      _scanned = (barcodeScanRes == "-1") ? _scanned : barcodeScanRes;
       Logger().i("QRCode scanner read: ${barcodeScanRes}");
-      Toast.show(_scanned, context, duration: Toast.LENGTH_LONG);
+      Toast.show(this.__responseMessage(statuscode), context,
+          duration: Toast.LENGTH_LONG);
       _tabController.index = 1;
     });
-    // Navigator.of(context).pop();
   }
 
   Widget _qrcodegenerate(BuildContext context) {
@@ -143,5 +150,35 @@ class _QRCodePage extends State<QRCodePage>
         );
       },
     ));
+  }
+
+  String __responseMessage(int code) {
+    switch (code) {
+      case 200:
+        return "Friend request sent successfully.";
+      case 409:
+        return "Friend request already sent.";
+        break;
+      case 406:
+        return "You are already friends with that user";
+      case 404:
+        return "User doesn't exist or you didn't scan a Commun.io qr code.";
+      case 500:
+        return "Oof! It seems there are problems with the server. Try again later.";
+      default:
+        return "Unknown error.";
+    }
+  }
+
+  Future<int> __sendFriendRequest(String otherUserID, String myUserID) async {
+    final map = {"id": otherUserID, "user_id": myUserID};
+    final response = await http.post(
+        '${DotEnv().env['API_URL']}users/matches/request',
+        body: json.encode(map),
+        headers: {
+          HttpHeaders.contentTypeHeader: 'application/json',
+        });
+
+    return response.statusCode;
   }
 }
