@@ -98,10 +98,11 @@ class _ProfileInterestsState extends State<ProfileInterests> {
   }
 
   addInterest(String interest) async {
+    final trimmed = interest.trim();
     if(adding != null)
-      adding(interest, type);
+      adding(trimmed, type);
     setState(() {
-      interests.add(interest);
+      interests.add(trimmed);
     });
   }
 }

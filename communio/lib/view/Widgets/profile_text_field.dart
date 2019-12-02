@@ -1,23 +1,31 @@
 import 'package:flutter/material.dart';
 
-class CreateProfileTextField extends StatelessWidget {
-
+class ProfileTextField extends StatelessWidget {
   final Function validation;
   final String name;
   final IconData icon;
   final bool sensitive;
+  final TextEditingController controller;
+  final TextInputType inputType;
 
-  CreateProfileTextField(this.validation, this.name, this.icon, this.sensitive);
+  ProfileTextField(
+      {@required this.validation,
+      @required this.name,
+      @required this.icon,
+      this.sensitive = false,
+      this.controller = null,
+      this.inputType = TextInputType.text});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
       child: TextFormField(
+        controller: this.controller,
         validator: (value) {
           return validation(value);
         },
-        keyboardType: TextInputType.text,
+        keyboardType: inputType,
         obscureText: sensitive,
         decoration: InputDecoration(
           prefixIcon: Icon(
