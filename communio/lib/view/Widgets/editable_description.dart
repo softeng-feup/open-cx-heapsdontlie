@@ -6,13 +6,18 @@ import '../theme.dart';
 class EditableDescription extends StatefulWidget {
   final KnownPerson person;
   final bool edit;
+  final Function(String) update;
   _EditableDescriptionState state;
 
-  EditableDescription({@required this.person, @required this.edit});
+  EditableDescription({
+    @required this.person,
+    @required this.edit,
+    @required this.update}
+    );
 
   @override
   _EditableDescriptionState createState() {
-    this.state = _EditableDescriptionState(person);
+    this.state = _EditableDescriptionState(person, update);
     return this.state;
   }
 }
@@ -21,11 +26,13 @@ class _EditableDescriptionState extends State<EditableDescription> {
   KnownPerson person;
   TextEditingController controller;
   static bool edit = false;
+  final Function(String) update;
+
   static final focusNode = FocusNode(
 
   );
 
-  _EditableDescriptionState(this.person);
+  _EditableDescriptionState(this.person, this.update);
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +61,20 @@ class _EditableDescriptionState extends State<EditableDescription> {
   }
 
   _onChangeText(String newDescription) {
-    //this.person.description = newDescription;
+    this.update(newDescription);
+    setState(() {
+      person = new KnownPerson(
+          uuid: person.uuid,
+          name: person.name,
+          photo: person.photo,
+          location: person.location,
+          socials: person.socials,
+          interests: person.interests,
+          description: newDescription,
+          programmingLanguages: person.programmingLanguages,
+          skills: person.skills
+          );
+    });
   }
 
   buildDescription(BuildContext context) {

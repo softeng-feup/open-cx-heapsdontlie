@@ -183,10 +183,22 @@ class ProfilePage extends StatelessWidget {
   }
 
   buildDescription(KnownPerson person, BuildContext context, Size query) {
+    final Function(String) updateFunc = (description) async {
+      final String profile =
+      StoreProvider.of<AppState>(context).state.content['user_id'];
+
+      final Map<String, String> body = {'description': description};
+      await http.post('${DotEnv().env['API_URL']}users/description/$profile',
+          body: json.encode(body),
+          headers: {
+            HttpHeaders.contentTypeHeader: 'application/json',
+          });
+    };
+
     return buildRowWithItem(
       context,
       Icons.info,
-      EditableDescription(person: person, edit: edit),
+      EditableDescription(person: person, edit: edit, update: updateFunc),
       query,
     );
   }

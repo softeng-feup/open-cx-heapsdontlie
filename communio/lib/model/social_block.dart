@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class SocialBlock {
 
-  static final Map<String, SvgPicture> _socialLogo = {
+  static final Map<String, SvgPicture> socialLogo = {
     'facebook':SvgPicture.asset(
       'assets/facebook.svg',
       color: navyBlueColor,
@@ -35,11 +35,11 @@ class SocialBlock {
   SvgPicture logo;
 
   SocialBlock(this.name, this.url) {
-    if (_socialLogo.containsKey(name)) {
-      this.logo = _socialLogo[name];
+    if (socialLogo.containsKey(name)) {
+      this.logo = socialLogo[name];
     }
     else {
-      this.logo = _socialLogo['default'];
+      this.logo = socialLogo['default'];
     }
   }
 

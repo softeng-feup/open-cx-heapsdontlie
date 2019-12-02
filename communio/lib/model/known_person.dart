@@ -30,6 +30,7 @@ class KnownPerson {
       "location": location,
       "socials": socials,
       "interests": interests,
+      "description": description,
       "programming_languages": programmingLanguages,
       "skills": skills
     };
