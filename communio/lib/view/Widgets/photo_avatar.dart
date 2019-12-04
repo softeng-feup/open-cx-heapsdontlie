@@ -1,3 +1,4 @@
+import 'package:communio/view/theme.dart';
 import 'package:flutter/material.dart';
 
 class PhotoAvatar extends StatelessWidget {
@@ -12,6 +13,7 @@ class PhotoAvatar extends StatelessWidget {
   Widget build(BuildContext context) {
     return (
       CircleAvatar(
+        backgroundColor: whiteColor,
         backgroundImage: NetworkImage(photo),
         minRadius: 30,
       )

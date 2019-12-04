@@ -135,7 +135,6 @@ class _QRCodePage extends State<QRCodePage>
       data: dataToQR,
       version: QrVersions.auto,
       size: MediaQuery.of(context).size.width * 0.75,
-      embeddedImage: icon,
       embeddedImageStyle: QrEmbeddedImageStyle(size: Size(60, 60)),
       foregroundColor: Theme.of(context).colorScheme.primary,
       errorStateBuilder: (cxt, err) {
