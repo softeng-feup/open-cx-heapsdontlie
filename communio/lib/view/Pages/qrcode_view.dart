@@ -26,7 +26,7 @@ class _QRCodePage extends State<QRCodePage>
   final GlobalKey key = GlobalKey();
 
   bool _enteredInScantab = false;
-  String _scanned = "N/A";
+  final String _scanned = "N/A";
   TabController _tabController;
 
   @override
@@ -129,14 +129,18 @@ class _QRCodePage extends State<QRCodePage>
   Widget _qrcodegenerate(BuildContext context) {
     final String dataToQR =
         StoreProvider.of<AppState>(context).state.content['user_id'];
+    final scalinngFactor = 0.17;
     Logger().i("QR code created with info: ${dataToQR}");
     return Center(
         child: QrImage(
       data: dataToQR,
+      errorCorrectionLevel: QrErrorCorrectLevel.H,
       version: QrVersions.auto,
       size: MediaQuery.of(context).size.width * 0.75,
       embeddedImage: icon,
-      embeddedImageStyle: QrEmbeddedImageStyle(size: Size(60, 60)),
+      embeddedImageStyle: QrEmbeddedImageStyle(
+          size: Size(MediaQuery.of(context).size.width * scalinngFactor,
+              MediaQuery.of(context).size.width * scalinngFactor)),
       foregroundColor: Theme.of(context).colorScheme.primary,
       errorStateBuilder: (cxt, err) {
         Logger().e("Error in QRCode Page: ${err}");
@@ -164,7 +168,8 @@ class _QRCodePage extends State<QRCodePage>
       case 404:
         return "User doesn't exist or you didn't scan a Commun.io qr code.";
       case 500:
-        return "Oof! It seems there are problems with the server. Try again later.";
+        return
+         "Oof! It seems there are problems with the server. Try again later.";
       default:
         return "Unknown error.";
     }
