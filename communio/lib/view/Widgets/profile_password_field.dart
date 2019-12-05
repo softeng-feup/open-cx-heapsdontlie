@@ -47,6 +47,7 @@ class _ProfilePasswordFieldState extends State<ProfilePasswordField> {
                 prefixIcon: Icon(
                   Icons.lock,
                   color: Theme.of(context).colorScheme.primaryVariant,
+                  size: 20,
                 ),
                 hintText: 'Password',
                 hintStyle: Theme.of(context).textTheme.caption,
@@ -81,7 +82,9 @@ class _ProfilePasswordFieldState extends State<ProfilePasswordField> {
                   ),
                 ),
                 suffixIcon: IconButton(
-                  icon: Icon(Icons.visibility),
+                  icon: Icon(Icons.visibility,
+                      color: Theme.of(context).colorScheme.primaryVariant,
+                      size: 20),
                   onPressed: _toggle,
                 ))));
   }

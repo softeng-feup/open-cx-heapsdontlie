@@ -40,12 +40,7 @@ class _LoginFormState extends State<LoginForm> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   buildRememberMeCheckbox(),
-                  Text(
-                    'Forgot your password?',
-                    style: Theme.of(context).textTheme.caption.apply(
-                        decoration: TextDecoration.underline,
-                        fontSizeDelta: -2),
-                  ),
+                  buildForgottenPassword(),
                 ],
               ),
             ),
@@ -66,13 +61,28 @@ class _LoginFormState extends State<LoginForm> {
       onTap: () => _setRememberMe(!_rememberMe),
       child: Row(
         children: <Widget>[
-          Checkbox(value: _rememberMe, onChanged: _setRememberMe),
+          Checkbox(
+            value: _rememberMe,
+            onChanged: _setRememberMe,
+            activeColor: Theme.of(context).colorScheme.primary,
+            checkColor: Theme.of(context).colorScheme.onPrimary,
+          ),
           Text(
             'Keep me signed in',
-            style: Theme.of(context).textTheme.caption.apply(fontSizeDelta: -2),
+            style: Theme.of(context).textTheme.body2.apply(fontSizeDelta: -5),
           )
         ],
       ),
+    );
+  }
+
+  buildForgottenPassword() {
+    return Text(
+      'Forgot your password?',
+      style: Theme.of(context)
+          .textTheme
+          .body2
+          .apply(decoration: TextDecoration.underline, fontSizeDelta: -5),
     );
   }
 
@@ -103,9 +113,11 @@ Test Password: $testPassword""");
               submit();
             },
             child: Text(
-              'Log In',
-              style:
-                  Theme.of(context).textTheme.button.apply(fontSizeDelta: -5),
+              'LOG IN',
+              style: Theme.of(context)
+                  .textTheme
+                  .button
+                  .apply(fontSizeDelta: -8, fontWeightDelta: 1),
             ),
           ),
           // clickable text
@@ -122,9 +134,10 @@ Test Password: $testPassword""");
               .body2
               .apply(decoration: TextDecoration.underline, fontSizeDelta: -5),
         ),
-        // onTap: ,
+        onTap: () {
+          Navigator.of(context).pushNamed('/CreateProfile');
+        },
       ),
     );
   }
-
 }

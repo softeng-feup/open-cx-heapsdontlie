@@ -59,8 +59,8 @@ class CreateProfileFormState extends State<CreateProfileForm> {
                       'I agree to the Terms of Service and Privacy Policy',
                       style: Theme.of(context)
                           .textTheme
-                          .caption
-                          .apply(fontSizeDelta: -3)))
+                          .body2
+                          .apply(fontSizeDelta: -6)))
             ],
           )),
     );
@@ -100,11 +100,11 @@ Test Password: $testPassword,""");
                     submit();
                   },
                   child: Text(
-                    'Continue',
+                    'CONTINUE',
                     style: Theme.of(context)
                         .textTheme
                         .button
-                        .apply(fontSizeDelta: -5),
+                        .apply(fontSizeDelta: -8, fontWeightDelta: 1),
                   ),
                 ))));
   }
@@ -119,7 +119,9 @@ Test Password: $testPassword,""");
               .body2
               .apply(decoration: TextDecoration.underline, fontSizeDelta: -5),
         ),
-        // onTap: ,
+        onTap: () {
+          Navigator.of(context).pushNamed('/Login');
+        },
       ),
     );
   }
