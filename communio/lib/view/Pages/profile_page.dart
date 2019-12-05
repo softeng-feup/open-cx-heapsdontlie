@@ -11,7 +11,7 @@ import 'package:communio/view/Widgets/social_media_column.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:communio/view/theme.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:http/http.dart' as http;
+import 'package:communio/controller/network.dart' as http;
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -220,7 +220,7 @@ class ProfilePage extends StatelessWidget {
   Future<KnownPerson> getPerson(String profileId) async {
     final response = await http
         .get('${DotEnv().env['API_URL']}users/$profileId');
-    final map = json.decode(utf8.decode(response.bodyBytes));
+    final map = response.data;
     return KnownPerson.fromJson(map);
   }
 }

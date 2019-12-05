@@ -1,3 +1,4 @@
+import 'package:communio/controller/network.dart';
 import 'package:communio/model/app_state.dart';
 import 'package:communio/redux/reducers.dart';
 import 'package:communio/view/Pages/bluetooth_beacon_selection.dart';
@@ -27,6 +28,7 @@ final Store<AppState> state = Store<AppState>(appReducers,
 
 void main() {
   DotEnv().load('.env');
+  onStart();
   runApp(new MyApp());
 }
 
