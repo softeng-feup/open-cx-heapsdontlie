@@ -25,7 +25,7 @@ class _InsertNameFieldState extends State<InsertNameField> {
   Widget build(BuildContext context) {
     return ProfileTextField(
         validation: validation,
-        name: 'Name',
+        name: 'Full Name',
         icon: Icons.person,
         controller: this.controller);
   }

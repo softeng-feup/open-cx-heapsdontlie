@@ -35,7 +35,6 @@ class _LoginFormState extends State<LoginForm> {
                 left: 5.0,
                 right: 15.0,
                 top: 10.0,
-                bottom: 10.0,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -51,15 +50,7 @@ class _LoginFormState extends State<LoginForm> {
               ),
             ),
             buildSubmitButton(),
-            Padding(
-                padding: EdgeInsets.only(top: 5.0),
-                child: Text(
-                  'Don\'t have an account yet?',
-                  style: Theme.of(context)
-                      .textTheme
-                      .caption
-                      .apply(decoration: TextDecoration.underline),
-                ))
+            buildSignupLink(),
           ],
         ));
   }
@@ -96,14 +87,13 @@ Test Password: $testPassword""");
   }
 
   Widget buildSubmitButton() {
-    final width = MediaQuery.of(context).size.width * 0.5;
     final height = MediaQuery.of(context).size.width * 0.15;
 
     return Padding(
-        padding: EdgeInsets.only(bottom: 10),
+        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
         child: Center(
             child: ButtonTheme(
-          minWidth: width,
+          minWidth: MediaQuery.of(context).size.width,
           height: height,
           child: RaisedButton(
             shape: RoundedRectangleBorder(
@@ -121,4 +111,20 @@ Test Password: $testPassword""");
           // clickable text
         )));
   }
+
+  Widget buildSignupLink() {
+    return Center(
+      child: GestureDetector(
+        child: Text(
+          "Don\'t have an account yet?",
+          style: Theme.of(context)
+              .textTheme
+              .body2
+              .apply(decoration: TextDecoration.underline, fontSizeDelta: -5),
+        ),
+        // onTap: ,
+      ),
+    );
+  }
+
 }

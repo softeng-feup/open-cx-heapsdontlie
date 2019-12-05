@@ -21,6 +21,7 @@ class _InsertNewPasswordFieldState extends State<InsertNewPasswordField> {
   }
 
   validationSecond(value) {
+    if (value.trim().isEmpty) return 'Field is empty';
     if (!(controller.text.trim() == value.trim()))
       return 'Passwords don\'t match!';
     return null;
