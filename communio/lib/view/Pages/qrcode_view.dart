@@ -160,6 +160,9 @@ class _QRCodePage extends State<QRCodePage>
     switch (code) {
       case 200:
         return "Friend request sent successfully.";
+      case 400:
+        return 
+        "There seems to be an error with the qr code. Try scanning it again";
       case 409:
         return "Friend request already sent.";
       case 406:
@@ -167,8 +170,8 @@ class _QRCodePage extends State<QRCodePage>
       case 404:
         return "User doesn't exist or you didn't scan a Commun.io qr code.";
       case 500:
-        return
-         "Oof! It seems there are problems with the server. Try again later.";
+        return 
+        "Oof! It seems there are problems with the server. Try again later.";
       default:
         return "Unknown error.";
     }
