@@ -1,6 +1,5 @@
 import 'package:communio/view/Pages/general_page_view.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class HomePageView extends StatelessWidget {
   @override
@@ -52,11 +51,11 @@ class HomePageView extends StatelessWidget {
 
   Widget buildLogo(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(top: 10, left: 23, right: 23, bottom: 0),
+      padding: EdgeInsets.only(top: 30, left: 23, right: 23, bottom: 0),
       child: Container(
         alignment: Alignment.center,
-        child: SvgPicture.asset(
-          'assets/communio.svg',
+        child: Image.asset(
+          'assets/communio.png',
           width: MediaQuery.of(context).size.width,
         ),
       ),
@@ -76,6 +75,7 @@ class HomePageView extends StatelessWidget {
           '...passively networking',
           style: Theme.of(context).textTheme.display1.apply(
                 fontSizeDelta: -13.5,
+                fontWeightDelta: -1,
                 color: Theme.of(context).colorScheme.primary,
               ),
         ),

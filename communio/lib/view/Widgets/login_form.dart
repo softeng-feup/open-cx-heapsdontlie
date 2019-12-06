@@ -1,7 +1,6 @@
 import 'package:communio/view/Widgets/insert_email_field.dart';
 import 'package:communio/view/Widgets/profile_password_field.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:logger/logger.dart';
 import 'package:toast/toast.dart';
 
@@ -26,8 +25,9 @@ class _LoginFormState extends State<LoginForm> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Padding(
-                padding: EdgeInsets.symmetric(vertical: 30.0),
-                child: SvgPicture.asset('assets/communio.svg')),
+              padding: EdgeInsets.symmetric(vertical: 30.0, horizontal: 60.0),
+              child: Image.asset('assets/communio.png'),
+            ),
             InsertEmailField(emailController),
             ProfilePasswordField(passwordController),
             Padding(
