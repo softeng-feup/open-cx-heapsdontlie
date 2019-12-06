@@ -1,13 +1,23 @@
-import 'package:communio/view/Pages/general_page_view.dart';
 import 'package:flutter/material.dart';
 
 class HomePageView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return GeneralPageView(
-      child: ListView(
-        shrinkWrap: false,
-        children: this.buildOptions(context),
+    return Container(
+      color: Theme.of(context).colorScheme.background,
+      child: Padding(
+        padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15.0),
+            color: Theme.of(context).colorScheme.onBackground,
+          ),
+          margin: const EdgeInsets.all(15.0),
+          child: ListView(
+            shrinkWrap: false,
+            children: this.buildOptions(context),
+          ),
+        ),
       ),
     );
   }
@@ -84,7 +94,6 @@ class HomePageView extends StatelessWidget {
   }
 
   Widget buildSignupButton(BuildContext context) {
-
     final sidePadding = MediaQuery.of(context).size.width * 0.1;
     final height = MediaQuery.of(context).size.width * 0.15;
 
@@ -118,7 +127,6 @@ class HomePageView extends StatelessWidget {
   }
 
   Widget buildLoginButton(BuildContext context) {
-
     final sidePadding = MediaQuery.of(context).size.width * 0.1;
     final height = MediaQuery.of(context).size.width * 0.15;
 
