@@ -70,6 +70,7 @@ class ProfilePage extends StatelessWidget {
                 HttpHeaders.contentTypeHeader: 'application/json',
       });
     };
+
     return ListView(
       children: <Widget>[
         buildImage(person, context, query),
@@ -205,12 +206,38 @@ class ProfilePage extends StatelessWidget {
 
 
   buildSocialMedia(KnownPerson person, BuildContext context, Size query) {
+    final Function(String, String) addSocialFunc = (socialID, newSocial) async {
+      final String profile =
+      StoreProvider.of<AppState>(context).state.content['user_id'];
+
+      final Map<String, String> body = {socialID: newSocial};
+      await http.post('${DotEnv().env['API_URL']}users/socials/$profile',
+          body: json.encode(body),
+          headers: {
+            HttpHeaders.contentTypeHeader: 'application/json',
+          });
+    };
+
+    final Function(String) delSocialFunc = (social) async {
+      final String profile =
+      StoreProvider.of<AppState>(context).state.content['user_id'];
+
+      final Map<String, String> body = {};
+      await http.post('${DotEnv().env['API_URL']}users/socials/$profile/$social',
+          body: json.encode(body),
+          headers: {
+            HttpHeaders.contentTypeHeader: 'application/json',
+          });
+    };
+
     return buildRowWithItem(
           context,
           Icons.person,
           SocialMediaColumn(
             person: person,
-            edit: edit
+            edit: edit,
+            adding: addSocialFunc,
+            removing: delSocialFunc,
           ),
           query);
   }
@@ -246,6 +273,7 @@ class ProfilePage extends StatelessWidget {
   
 
   Future<KnownPerson> getPerson(String profileId) async {
+    print('${DotEnv().env['API_URL']}users/$profileId');
     final response = await http
         .get('${DotEnv().env['API_URL']}users/$profileId');
     final map = json.decode(utf8.decode(response.bodyBytes));
