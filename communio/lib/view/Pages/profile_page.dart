@@ -5,6 +5,7 @@ import 'package:communio/model/app_state.dart';
 import 'package:communio/model/known_person.dart';
 import 'package:communio/view/Pages/general_page_view.dart';
 import 'package:communio/view/Pages/secondary_page_view.dart';
+import 'package:communio/view/Widgets/future_page_builder.dart';
 import 'package:communio/view/Widgets/photo_avatar.dart';
 import 'package:communio/view/Widgets/profile_interests.dart';
 import 'package:communio/view/Widgets/social_media_column.dart';
@@ -26,48 +27,42 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if(knownPerson != null){
-      return SecondaryPageView(
-        child: buildPerson(context, knownPerson),
-      );
+    if (knownPerson != null) {
+      return buildProfilePage(context, knownPerson);
     }
-    return GeneralPageView(
-        child: FutureBuilder<KnownPerson>(
-      future: person,
-      builder: (BuildContext context, AsyncSnapshot<KnownPerson> snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
-        } else if (snapshot.connectionState == ConnectionState.done &&
-            !snapshot.hasError) {
-          final person = snapshot.data;
-          return buildPerson(context, person);
-        }
-        return Container();
-      },
-    ));
+    return new FuturePageBuilder<KnownPerson>(
+      data: person,
+      func: this.buildProfilePage,);
+  }
+
+  buildProfilePage(BuildContext context, KnownPerson person){
+    if(edit){
+      return GeneralPageView(child: this.buildPerson(context, person),);
+    }
+    return SecondaryPageView(child: this.buildPerson(context, person),);
   }
 
   buildPerson(BuildContext context, KnownPerson person) {
     final query = MediaQuery.of(context).size;
     final Function(String, String) addingFunc = (interest, type) async {
       final String profile =
-        StoreProvider.of<AppState>(context).state.content['user_id'];
+          StoreProvider.of<AppState>(context).state.content['user_id'];
       final Map<String, String> body = {'$type': interest};
-          await http.put('${DotEnv().env['API_URL']}users/tags/$profile',
-              body: json.encode(body),
-              headers: {
-                HttpHeaders.contentTypeHeader: 'application/json',
-      });
+      await http.put('${DotEnv().env['API_URL']}users/tags/$profile',
+          body: json.encode(body),
+          headers: {
+            HttpHeaders.contentTypeHeader: 'application/json',
+          });
     };
     final Function(String, String) removeFunc = (interest, type) async {
       final String profile =
-        StoreProvider.of<AppState>(context).state.content['user_id'];
+          StoreProvider.of<AppState>(context).state.content['user_id'];
       final Map<String, String> body = {'$type': interest};
-          await http.post('${DotEnv().env['API_URL']}users/tags/$profile',
-              body: json.encode(body),
-              headers: {
-                HttpHeaders.contentTypeHeader: 'application/json',
-      });
+      await http.post('${DotEnv().env['API_URL']}users/tags/$profile',
+          body: json.encode(body),
+          headers: {
+            HttpHeaders.contentTypeHeader: 'application/json',
+          });
     };
     return ListView(
       children: <Widget>[
@@ -126,7 +121,6 @@ class ProfilePage extends StatelessWidget {
   }
 
   buildImage(BuildContext context, KnownPerson person, Size query) {
-
     final double _picRatio = 0.217;
 
     return padWidget(
@@ -177,24 +171,18 @@ class ProfilePage extends StatelessWidget {
   }
 
   buildSocialMedia(KnownPerson person, BuildContext context, Size query) {
-    return buildRowWithItem(
-          context,
-          Icons.person,
-          SocialMediaColumn(
-            person: person,
-            edit: edit
-          ),
-          query);
+    return buildRowWithItem(context, Icons.person,
+        SocialMediaColumn(person: person, edit: edit), query);
   }
 
   buildRowWithItem(
       BuildContext context, IconData iconData, Widget widget, Size query) {
     return Padding(
-        padding: EdgeInsets.only(
+      padding: EdgeInsets.only(
         top: query.height * 0.03,
         bottom: query.height * 0.03,
-        ),
-       child: Row(
+      ),
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
@@ -213,14 +201,13 @@ class ProfilePage extends StatelessWidget {
         ],
       ),
     );
-    }
-
-  
+  }
 
   Future<KnownPerson> getPerson(String profileId) async {
-    final response = await http
-        .get('${DotEnv().env['API_URL']}users/$profileId');
+    final response =
+        await http.get('${DotEnv().env['API_URL']}users/$profileId');
     final map = json.decode(utf8.decode(response.bodyBytes));
     return KnownPerson.fromJson(map);
   }
 }
+
