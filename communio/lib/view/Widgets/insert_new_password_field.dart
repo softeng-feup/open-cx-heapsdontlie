@@ -1,19 +1,19 @@
 import 'package:communio/view/Widgets/profile_text_field.dart';
 import 'package:flutter/material.dart';
 
-class InsertPasswordField extends StatefulWidget {
+class InsertNewPasswordField extends StatefulWidget {
   final TextEditingController controller;
-  InsertPasswordField(this.controller);
+  InsertNewPasswordField(this.controller);
 
   @override
   State<StatefulWidget> createState() {
-    return _InsertPasswordFieldState(this.controller);
+    return _InsertNewPasswordFieldState(this.controller);
   }
 }
 
-class _InsertPasswordFieldState extends State<InsertPasswordField> {
+class _InsertNewPasswordFieldState extends State<InsertNewPasswordField> {
   final TextEditingController controller;
-  _InsertPasswordFieldState(this.controller);
+  _InsertNewPasswordFieldState(this.controller);
 
   validationFirst(value) {
     if (value.trim().isEmpty) return 'Field is empty';
@@ -21,6 +21,7 @@ class _InsertPasswordFieldState extends State<InsertPasswordField> {
   }
 
   validationSecond(value) {
+    if (value.trim().isEmpty) return 'Field is empty';
     if (!(controller.text.trim() == value.trim()))
       return 'Passwords don\'t match!';
     return null;

@@ -24,7 +24,6 @@ class NavigationDrawerState extends State<NavigationDrawer> {
     "Settings", 
     "QRCode",
     "Profile",
-    "CreateProfile"
   ];
 
   getCurrentRoute() => ModalRoute.of(parentContext).settings.name == null
