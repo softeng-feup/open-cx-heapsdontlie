@@ -162,9 +162,8 @@ class _QRCodePage extends State<QRCodePage>
         return "Friend request sent successfully.";
       case 409:
         return "Friend request already sent.";
-        break;
       case 406:
-        return "You are already friends with that user";
+        return "You are already friends with that user.";
       case 404:
         return "User doesn't exist or you didn't scan a Commun.io qr code.";
       case 500:
