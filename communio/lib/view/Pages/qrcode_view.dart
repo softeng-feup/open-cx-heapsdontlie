@@ -162,7 +162,7 @@ class _QRCodePage extends State<QRCodePage>
         return "Friend request sent successfully.";
       case 400:
         return 
-        "There seems to be an error with the qr code. Try scanning it again";
+        "There seems to be an error with the QR code. Try scanning it again.";
       case 409:
         return "Friend request already sent.";
       case 406:
