@@ -82,7 +82,8 @@ class _ProfilePasswordFieldState extends State<ProfilePasswordField> {
                   ),
                 ),
                 suffixIcon: IconButton(
-                  icon: Icon(Icons.visibility,
+                  icon: Icon(
+                      _obscureText ? Icons.visibility : Icons.visibility_off,
                       color: Theme.of(context).colorScheme.primaryVariant,
                       size: 20),
                   onPressed: _toggle,

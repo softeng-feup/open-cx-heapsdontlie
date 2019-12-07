@@ -25,10 +25,12 @@ class CreateProfileFormState extends State<CreateProfileForm> {
     return Column(
       children: <Widget>[
         Padding(
-          padding: EdgeInsets.symmetric(vertical: 21),
+          padding: EdgeInsets.only(top: 25, bottom: 18),
           child: Text("Create an Account",
-              style:
-                  Theme.of(context).textTheme.body1.apply(fontWeightDelta: 3)),
+              style: Theme.of(context)
+                  .textTheme
+                  .body1
+                  .apply(fontSizeDelta: 1.5, fontWeightDelta: 3)),
         ),
         Form(
             key: _formKey,
@@ -48,12 +50,17 @@ class CreateProfileFormState extends State<CreateProfileForm> {
 
   buildTOSCheckbox() {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 15),
+      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
       child: GestureDetector(
           onTap: () => _setAgreedToTOS(!_agreedToTOS),
           child: Row(
             children: <Widget>[
-              Checkbox(value: _agreedToTOS, onChanged: _setAgreedToTOS),
+              Checkbox(
+                value: _agreedToTOS,
+                onChanged: _setAgreedToTOS,
+                checkColor: Theme.of(context).colorScheme.onPrimary,
+                activeColor: Theme.of(context).colorScheme.primary,
+              ),
               Flexible(
                   child: Text(
                       'I agree to the Terms of Service and Privacy Policy',
@@ -87,12 +94,13 @@ Test Password: $testPassword,""");
     final height = MediaQuery.of(context).size.width * 0.15;
 
     return Padding(
-        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+        padding: EdgeInsets.symmetric(vertical: 7, horizontal: 15),
         child: Center(
             child: ButtonTheme(
                 minWidth: MediaQuery.of(context).size.width,
                 height: height,
-                child: RaisedButton(
+                child: FlatButton(
+                  color: Theme.of(context).colorScheme.primary,
                   shape: RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(height * 0.25)),
                   textColor: Theme.of(context).canvasColor,
@@ -110,18 +118,21 @@ Test Password: $testPassword,""");
   }
 
   Widget buildLoginLink() {
-    return Center(
-      child: GestureDetector(
-        child: Text(
-          "Already have an account?",
-          style: Theme.of(context)
-              .textTheme
-              .body2
-              .apply(decoration: TextDecoration.underline, fontSizeDelta: -5),
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 10),
+      child: Center(
+        child: GestureDetector(
+          child: Text(
+            "Already have an account?",
+            style: Theme.of(context)
+                .textTheme
+                .body2
+                .apply(decoration: TextDecoration.underline, fontSizeDelta: -5),
+          ),
+          onTap: () {
+            Navigator.of(context).pushNamed('/Login');
+          },
         ),
-        onTap: () {
-          Navigator.of(context).pushNamed('/Login');
-        },
       ),
     );
   }

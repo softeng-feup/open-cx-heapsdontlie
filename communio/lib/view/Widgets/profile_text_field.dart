@@ -19,7 +19,7 @@ class ProfileTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 7),
           child: TextFormField(
             controller: this.controller,
             validator: (value) {

@@ -44,4 +44,5 @@ ThemeData applicationTheme = new ThemeData(
     button: TextStyle(fontSize: 25.0, color: whiteColor),
     overline: TextStyle(fontSize: 10.0, color: lighterCyanColor),
   ),
+  unselectedWidgetColor: cyanColor,
 );

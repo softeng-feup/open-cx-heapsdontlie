@@ -20,7 +20,9 @@ class _LoginFormState extends State<LoginForm> {
   @override
   Widget build(BuildContext context) {
     return Form(
-        key: _formKey,
+      key: _formKey,
+      child: Padding(
+        padding: EdgeInsets.only(top: 35),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
@@ -47,7 +49,9 @@ class _LoginFormState extends State<LoginForm> {
             buildSubmitButton(),
             buildSignupLink(),
           ],
-        ));
+        ),
+      ),
+    );
   }
 
   _setRememberMe(value) {
@@ -105,10 +109,11 @@ Test Password: $testPassword""");
             child: ButtonTheme(
           minWidth: MediaQuery.of(context).size.width,
           height: height,
-          child: RaisedButton(
+          child: FlatButton(
+            color: Theme.of(context).colorScheme.primary,
             shape: RoundedRectangleBorder(
                 borderRadius: new BorderRadius.circular(height * 0.25)),
-            textColor: Theme.of(context).canvasColor,
+            textColor: Theme.of(context).colorScheme.onPrimary,
             onPressed: () {
               submit();
             },
@@ -125,18 +130,21 @@ Test Password: $testPassword""");
   }
 
   Widget buildSignupLink() {
-    return Center(
-      child: GestureDetector(
-        child: Text(
-          "Don\'t have an account yet?",
-          style: Theme.of(context)
-              .textTheme
-              .body2
-              .apply(decoration: TextDecoration.underline, fontSizeDelta: -5),
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 10),
+      child: Center(
+        child: GestureDetector(
+          child: Text(
+            "Don\'t have an account yet?",
+            style: Theme.of(context)
+                .textTheme
+                .body2
+                .apply(decoration: TextDecoration.underline, fontSizeDelta: -5),
+          ),
+          onTap: () {
+            Navigator.of(context).pushNamed('/CreateProfile');
+          },
         ),
-        onTap: () {
-          Navigator.of(context).pushNamed('/CreateProfile');
-        },
       ),
     );
   }
