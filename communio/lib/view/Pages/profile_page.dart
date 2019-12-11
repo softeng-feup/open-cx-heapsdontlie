@@ -211,7 +211,7 @@ class ProfilePage extends StatelessWidget {
       StoreProvider.of<AppState>(context).state.content['user_id'];
 
       final Map<String, String> body = {socialID: newSocial};
-      await http.post('${DotEnv().env['API_URL']}users/socials/$profile',
+      await http.put('${DotEnv().env['API_URL']}users/socials/$profile',
           body: json.encode(body),
           headers: {
             HttpHeaders.contentTypeHeader: 'application/json',
@@ -222,9 +222,7 @@ class ProfilePage extends StatelessWidget {
       final String profile =
       StoreProvider.of<AppState>(context).state.content['user_id'];
 
-      final Map<String, String> body = {};
-      await http.post('${DotEnv().env['API_URL']}users/socials/$profile/$social',
-          body: json.encode(body),
+      await http.delete('${DotEnv().env['API_URL']}users/socials/$profile/$social',
           headers: {
             HttpHeaders.contentTypeHeader: 'application/json',
           });
@@ -254,7 +252,7 @@ class ProfilePage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Container(
-            width: query.width * 0.13,
+            width: query.width * 0.1,
             child: Center(
               child: Icon(
                 iconData,

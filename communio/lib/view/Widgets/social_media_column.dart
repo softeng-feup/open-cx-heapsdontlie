@@ -5,6 +5,7 @@ import 'package:communio/model/app_state.dart';
 import 'package:communio/model/known_person.dart';
 import 'package:communio/model/social_block.dart';
 import 'package:communio/view/theme.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -59,11 +60,15 @@ class _SocialMediaColumnState extends State<SocialMediaColumn> {
               top: query.height * 0.005, bottom: query.height * 0.002),
           child: buildExternalRow(context, query, socialMedia)));
     });
-    children.add(Container(
-        width: query.width * 0.75,
-        margin: EdgeInsets.only(
-            top: query.height * 0.005, bottom: query.height * 0.002),
-        child: buildAddingSocial(context, query, person, socialList)));
+
+    if(socialList.isNotEmpty){
+      children.add(Container(
+          width: query.width * 0.75,
+          margin: EdgeInsets.only(
+              top: query.height * 0.005, bottom: query.height * 0.002),
+          child: buildAddingSocial(context, query, person, socialList)));
+    }
+
     return children;
   }
 
@@ -89,7 +94,7 @@ class _SocialMediaColumnState extends State<SocialMediaColumn> {
           color: grayColor,
         ),
         onPressed: () {
-          if(removing != null){
+          if (removing != null) {
             removing(socialMedia.name);
           }
           setState(() {
@@ -107,7 +112,7 @@ class _SocialMediaColumnState extends State<SocialMediaColumn> {
       children: <Widget>[
         new Transform(
             alignment: Alignment.center,
-            transform: new Matrix4.identity()..scale(0.9, 0.9),
+            transform: new Matrix4.identity()..scale(0.6, 0.6),
             child: Container(
               margin: EdgeInsets.only(
                   top: query.height * 0.01, bottom: query.height * 0.01),
@@ -135,18 +140,12 @@ class _SocialMediaColumnState extends State<SocialMediaColumn> {
   buildAddingSocial(BuildContext context, Size query, KnownPerson person,
       List<String> remainingSocials) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        new Transform(
-            alignment: Alignment.centerLeft,
-            transform: new Matrix4.identity()..scale(0.9, 0.9),
-            child: Container(
-              margin: EdgeInsets.only(
-                  top: query.height * 0.01, bottom: query.height * 0.01),
-              child: SocialBlock.socialLogo['default'],
-            )),
         new SocialMediaForm(
-            callback: addSocial, remainingSocials: remainingSocials)
+            callback: addSocial,
+            query: query,
+            remainingSocials: remainingSocials),
       ],
     );
   }
@@ -155,8 +154,7 @@ class _SocialMediaColumnState extends State<SocialMediaColumn> {
     print(socialID);
     print(newSocial);
 
-    if(adding != null)
-      adding(socialID, newSocial);
+    if (adding != null) adding(socialID, newSocial);
     setState(() {
       person.socials.add(new SocialBlock(socialID, newSocial));
     });
@@ -166,75 +164,103 @@ class _SocialMediaColumnState extends State<SocialMediaColumn> {
 class SocialMediaForm extends StatefulWidget {
   final Function(String, String) callback;
   final List<String> remainingSocials;
+  final Size query;
 
   const SocialMediaForm(
-      {Key key, @required this.callback, @required this.remainingSocials})
+      {Key key,
+      @required this.callback,
+      @required this.query,
+      @required this.remainingSocials})
       : super(key: key);
 
   @override
   _SocialMediaFormState createState() =>
-      _SocialMediaFormState(callback, remainingSocials);
+      _SocialMediaFormState(callback, query, remainingSocials);
 }
 
 class _SocialMediaFormState extends State<SocialMediaForm> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController fieldController = TextEditingController();
   final List<String> remainingSocials;
+  final Size query;
   int index = 0;
 
   final Function(String, String) callback;
 
-  _SocialMediaFormState(this.callback, this.remainingSocials);
+  _SocialMediaFormState(this.callback, this.query, this.remainingSocials);
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: Container(
-        margin: EdgeInsets.only(top: 3, left: 15),
-        child: Row(
-          children: <Widget>[
-            buildTextField(context),
-            buildSocialDropdown(context, remainingSocials),
-            buildAddButton(context)
-          ],
+    return Row(
+      children: <Widget>[
+        Form(
+          key: _formKey,
+          child: Container(
+            width: query.width * 0.61,
+            color: Theme.of(context).colorScheme.primaryVariant,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                new Transform(
+                    alignment: Alignment.center,
+                    transform: new Matrix4.identity()..scale(0.6, 0.6),
+                    child: Container(
+                      margin: EdgeInsets.only(
+                          top: query.height * 0.01,
+                          bottom: query.height * 0.01),
+                      child: SocialBlock.socialLogo['default'],
+                    )),
+                buildTextField(context),
+                  new Container(
+                    alignment: Alignment.center,
+                    child: buildSocialDropdown(context, remainingSocials),
+                  )
+
+                //buildAddButton(context)
+              ],
+            ),
+          ),
         ),
-      ),
+        buildAddButton(context),
+      ],
     );
   }
 
   buildTextField(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width * 0.2,
+      width: query.width * 0.3,
       child: TextFormField(
+        style: Theme.of(context).textTheme.body1.apply(fontSizeDelta: -7),
         controller: fieldController,
       ),
     );
   }
 
   buildAddButton(BuildContext context) {
-    return IconButton(
-      icon: Icon(Icons.add),
-      onPressed: () {
-        if (_formKey.currentState.validate() &&
-            fieldController.text.isNotEmpty) {
-          callback(remainingSocials[index], fieldController.text);
-        }
-        fieldController.clear();
-      },
-    );
+    return Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+      IconButton(
+        icon: Icon(Icons.add),
+        onPressed: () {
+          if (_formKey.currentState.validate() &&
+              fieldController.text.isNotEmpty) {
+            callback(remainingSocials[index], fieldController.text);
+          }
+          fieldController.clear();
+        },
+      )
+    ]);
   }
 
   buildSocialDropdown(BuildContext context, List<String> remainingSocials) {
     return DropdownButton<String>(
       value: remainingSocials[index],
-      icon: Icon(Icons.arrow_downward),
-      iconSize: 24,
-      elevation: 16,
-      style: TextStyle(color: Colors.deepPurple),
+      iconSize: 0,
+      elevation: 0,
+      style: Theme.of(context).textTheme.body1.apply(fontSizeDelta: -10),
       underline: Container(
-        height: 2,
-        color: Colors.deepPurpleAccent,
+        height: 0,
       ),
       onChanged: (String newValue) {
         setState(() {
