@@ -6,7 +6,6 @@ import 'package:communio/model/known_person.dart';
 import 'package:communio/view/Pages/general_page_view.dart';
 import 'package:communio/view/Pages/secondary_page_view.dart';
 import 'package:communio/view/Widgets/editable_description.dart';
-import 'package:communio/view/Widgets/photo_avatar.dart';
 import 'package:communio/view/Widgets/profile_interests.dart';
 import 'package:communio/view/Widgets/social_media_column.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -248,11 +247,11 @@ class ProfilePage extends StatelessWidget {
         bottom: query.height * 0.03,
         ),
        child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Container(
-            width: query.width * 0.1,
+            width: query.width * 0.15,
             child: Center(
               child: Icon(
                 iconData,
@@ -271,7 +270,6 @@ class ProfilePage extends StatelessWidget {
   
 
   Future<KnownPerson> getPerson(String profileId) async {
-    print('${DotEnv().env['API_URL']}users/$profileId');
     final response = await http
         .get('${DotEnv().env['API_URL']}users/$profileId');
     final map = json.decode(utf8.decode(response.bodyBytes));

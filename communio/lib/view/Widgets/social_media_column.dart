@@ -1,16 +1,8 @@
-import 'dart:convert';
-import 'dart:io';
-
-import 'package:communio/model/app_state.dart';
 import 'package:communio/model/known_person.dart';
 import 'package:communio/model/social_block.dart';
 import 'package:communio/view/theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:http/http.dart' as http;
-
 class SocialMediaColumn extends StatefulWidget {
   final KnownPerson person;
   final bool edit;
@@ -61,7 +53,7 @@ class _SocialMediaColumnState extends State<SocialMediaColumn> {
           child: buildExternalRow(context, query, socialMedia)));
     });
 
-    if(socialList.isNotEmpty){
+    if (socialList.isNotEmpty) {
       children.add(Container(
           width: query.width * 0.75,
           margin: EdgeInsets.only(
@@ -108,14 +100,14 @@ class _SocialMediaColumnState extends State<SocialMediaColumn> {
 
   buildInternalRow(BuildContext context, Size query, SocialBlock socialMedia) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         new Transform(
             alignment: Alignment.center,
-            transform: new Matrix4.identity()..scale(0.6, 0.6),
+            transform: new Matrix4.identity()..scale(0.7, 0.7),
             child: Container(
               margin: EdgeInsets.only(
-                  top: query.height * 0.01, bottom: query.height * 0.01),
+                  top: query.height * 0.0, bottom: query.height * 0.0),
               child: socialMedia.logo,
             )),
         Container(
@@ -127,7 +119,7 @@ class _SocialMediaColumnState extends State<SocialMediaColumn> {
               softWrap: false,
             )),
         Container(
-            width: query.width * 0.1,
+            width: query.width * 0.15,
             child: Text(
               socialMedia.name[0].toUpperCase() + socialMedia.name.substring(1),
               style:
@@ -151,9 +143,6 @@ class _SocialMediaColumnState extends State<SocialMediaColumn> {
   }
 
   addSocial(String socialID, String newSocial) async {
-    print(socialID);
-    print(newSocial);
-
     if (adding != null) adding(socialID, newSocial);
     setState(() {
       person.socials.add(new SocialBlock(socialID, newSocial));
@@ -199,22 +188,21 @@ class _SocialMediaFormState extends State<SocialMediaForm> {
             width: query.width * 0.61,
             color: Theme.of(context).colorScheme.primaryVariant,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 new Transform(
                     alignment: Alignment.center,
-                    transform: new Matrix4.identity()..scale(0.6, 0.6),
+                    transform: new Matrix4.identity()..scale(0.7, 0.7),
                     child: Container(
                       margin: EdgeInsets.only(
-                          top: query.height * 0.01,
-                          bottom: query.height * 0.01),
+                          top: query.height * 0.0, bottom: query.height * 0.0),
                       child: SocialBlock.socialLogo['default'],
                     )),
                 buildTextField(context),
-                  new Container(
-                    alignment: Alignment.center,
-                    child: buildSocialDropdown(context, remainingSocials),
-                  )
+                new Container(
+                  alignment: Alignment.center,
+                  child: buildSocialDropdown(context, remainingSocials),
+                )
 
                 //buildAddButton(context)
               ],
@@ -240,22 +228,28 @@ class _SocialMediaFormState extends State<SocialMediaForm> {
     return Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-      IconButton(
-        icon: Icon(Icons.add),
-        onPressed: () {
-          if (_formKey.currentState.validate() &&
-              fieldController.text.isNotEmpty) {
-            callback(remainingSocials[index], fieldController.text);
-          }
-          fieldController.clear();
-        },
-      )
-    ]);
+          IconButton(
+            color: Theme.of(context).colorScheme.primary,
+            icon: Icon(Icons.add),
+            onPressed: () {
+              if (_formKey.currentState.validate() &&
+                  fieldController.text.isNotEmpty) {
+                callback(remainingSocials[index], fieldController.text);
+              }
+              fieldController.clear();
+            },
+          )
+        ]);
   }
 
   buildSocialDropdown(BuildContext context, List<String> remainingSocials) {
+    String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
+
+    final List<String> printableSocials =
+        remainingSocials.map((social) => capitalize(social)).toList();
+
     return DropdownButton<String>(
-      value: remainingSocials[index],
+      value: printableSocials[index],
       iconSize: 0,
       elevation: 0,
       style: Theme.of(context).textTheme.body1.apply(fontSizeDelta: -10),
@@ -264,10 +258,10 @@ class _SocialMediaFormState extends State<SocialMediaForm> {
       ),
       onChanged: (String newValue) {
         setState(() {
-          index = remainingSocials.indexOf(newValue);
+          index = printableSocials.indexOf(newValue);
         });
       },
-      items: remainingSocials.map<DropdownMenuItem<String>>((String value) {
+      items: printableSocials.map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
           child: Text(value),

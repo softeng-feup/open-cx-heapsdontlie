@@ -7,7 +7,6 @@ class EditableDescription extends StatefulWidget {
   final KnownPerson person;
   final bool edit;
   final Function(String) update;
-  _EditableDescriptionState state;
 
   EditableDescription({
     @required this.person,
@@ -17,8 +16,7 @@ class EditableDescription extends StatefulWidget {
 
   @override
   _EditableDescriptionState createState() {
-    this.state = _EditableDescriptionState(person, update);
-    return this.state;
+    return _EditableDescriptionState(person, update);
   }
 }
 

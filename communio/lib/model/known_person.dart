@@ -52,7 +52,9 @@ class KnownPerson {
 
   static List<SocialBlock> _createSocial(Map<String, dynamic> response) {
     final List<SocialBlock> socials = new List<SocialBlock>();
-    response.forEach((k, v) => socials.add(new SocialBlock(k, v)));
+    response.forEach((k, v) {
+      if(v != null) socials.add(new SocialBlock(k, v));
+    });
     return socials;
   }
 

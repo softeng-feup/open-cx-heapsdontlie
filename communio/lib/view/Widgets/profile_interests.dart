@@ -17,9 +17,9 @@ class ProfileInterests extends StatefulWidget {
       @required this.edit,
       @required this.name,
       this.adding,
-      this.removing
-      })
+      this.removing})
       : super(key: key);
+
   @override
   _ProfileInterestsState createState() =>
       _ProfileInterestsState(interests, type, edit, name, adding, removing);
@@ -51,9 +51,10 @@ class _ProfileInterestsState extends State<ProfileInterests> {
 
     if (interests.isNotEmpty) {
       children.add(Container(
-        padding: EdgeInsets.only(top: padding, bottom: padding),
+        padding:
+            EdgeInsets.symmetric(vertical: padding, horizontal: padding * 3.5),
         child: SizedBox(
-          height: Theme.of(context).textTheme.body2.fontSize + 25,
+          height: Theme.of(context).textTheme.body2.fontSize + 22,
           child: ListView(
             scrollDirection: Axis.horizontal,
             children: buildCurrentInterests(context),
@@ -63,17 +64,20 @@ class _ProfileInterestsState extends State<ProfileInterests> {
     }
 
     if (edit) {
-      children.add(TextFieldForm(
-        callback: addInterest,
-      ));
+      children.add(Container(
+          padding: EdgeInsets.only(bottom: 30),
+          child: TextFieldForm(
+            callback: addInterest,
+          )));
     }
+
     return children;
   }
 
   buildInterestTitle(BuildContext context) {
     return Container(
-        padding: EdgeInsets.only(
-            left: MediaQuery.of(context).size.width * 0.05, top: 10),
+        padding:
+            EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.065),
         child: Text(
           name,
           style: Theme.of(context).textTheme.body2,
@@ -86,8 +90,7 @@ class _ProfileInterestsState extends State<ProfileInterests> {
       interestsCards.add(FilterCard(
         filter: interest,
         removeFilter: () async {
-          if(removing != null)
-            removing(interest, type);
+          if (removing != null) removing(interest, type);
           setState(() {
             interests.remove(interest);
           });
@@ -98,8 +101,7 @@ class _ProfileInterestsState extends State<ProfileInterests> {
   }
 
   addInterest(String interest) async {
-    if(adding != null)
-      adding(interest, type);
+    if (adding != null) adding(interest, type);
     setState(() {
       interests.add(interest);
     });
