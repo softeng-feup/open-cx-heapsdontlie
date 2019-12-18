@@ -1,5 +1,5 @@
 import 'package:communio/model/app_state.dart';
-import 'package:communio/model/friend.dart';
+import 'package:communio/model/known_person.dart';
 import 'package:communio/model/person_found.dart';
 import 'package:logger/logger.dart';
 
@@ -34,8 +34,22 @@ class FoundPersonAction implements ReduceableAction {
   }
 }
 
+class RemovePersonAction implements ReduceableAction{
+  final String uuid;
+  RemovePersonAction(this.uuid);
+
+  @override
+  AppState reduceAction(AppState state) {
+    final Map<String, PersonFound> bluetoothDevices =
+    state.content['bluetooth_devices'];
+    bluetoothDevices.remove(uuid);
+    return state.cloneAndUpdateValue('bluetooth_devices', bluetoothDevices);
+  }
+
+}
+
 class QueriedFriendsAction implements ReduceableAction {
-  final Set<Friend> friends;
+  final Set<KnownPerson> friends;
   QueriedFriendsAction(this.friends);
 
   @override
@@ -61,5 +75,17 @@ class ActivateScanning implements ReduceableAction {
   @override
   reduceAction(AppState state) {
     return state.cloneAndUpdateValue('scanning_on', true);
+  }
+}
+
+class SelectActiveDevice implements ReduceableAction {
+  final String deviceId;
+
+  SelectActiveDevice(this.deviceId);
+
+  @override
+  AppState reduceAction(AppState state) {
+    Logger().i('Added $deviceId as new device');
+    return state.cloneAndUpdateValue('current_device', deviceId);
   }
 }

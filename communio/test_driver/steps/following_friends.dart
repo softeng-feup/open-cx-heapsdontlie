@@ -1,5 +1,5 @@
 import 'package:communio/model/app_state.dart';
-import 'package:communio/model/friend.dart';
+import 'package:communio/model/known_person.dart';
 import 'package:gherkin/gherkin.dart';
 import 'package:redux/redux.dart';
 
@@ -12,8 +12,8 @@ class GivenFollowingFriends extends Given1<Table>{
   @override
   Future<void> executeStep(Table input1) {
     final Iterable<Map<String,String>> columns = input1.asMap();
-    final Set<Friend> friends = columns.map((friend)=>
-    new Friend(
+    final Set<KnownPerson> friends = columns.map((friend)=>
+    new KnownPerson(
       uuid: friend['uuid'],
       name: friend['name'],
       photo: friend['photo'],

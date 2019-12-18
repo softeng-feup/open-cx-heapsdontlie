@@ -8,6 +8,7 @@ const Color lightCyanColor = Color.fromRGBO(128, 212, 218, 1.0);
 const Color lighterCyanColor = Color.fromRGBO(179, 229, 233, 1.0);
 const Color veryLightCyanColor = Color.fromRGBO(206, 235, 237, 1.0);
 const Color communRedColor = Color.fromRGBO(255, 95, 95, 1.0);
+const Color grayColor = Color.fromRGBO(204, 204, 204, 1.0);
 
 
 ThemeData applicationTheme = new ThemeData(

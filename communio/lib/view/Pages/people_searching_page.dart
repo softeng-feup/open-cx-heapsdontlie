@@ -1,3 +1,4 @@
+
 import 'package:communio/model/app_state.dart';
 import 'package:communio/model/person_found.dart';
 import 'package:communio/redux/action_creators.dart';
@@ -39,8 +40,7 @@ class PeopleSearchingPage extends StatelessWidget {
   getFilteredDevices(AppState state) {
     final storeContent = state.content;
     final Set<String> filters = storeContent['current_filters'];
-    final devices =
-        storeContent['bluetooth_devices'];
+    final devices = storeContent['bluetooth_devices'];
     final filteredDevices = Map.from(devices)
       ..removeWhere((key, value) => !value.interests.any((value) =>
           filters.toList().indexWhere(
@@ -50,7 +50,8 @@ class PeopleSearchingPage extends StatelessWidget {
     return filteredDevices;
   }
 
-  generatePersonCard(BuildContext context, PersonFound person, int i) {
+  generatePersonCard(BuildContext context, String device,
+   PersonFound person, int i) {
     return new Container(
         key: Key('person-card-$i'),
         padding: EdgeInsets.only(
@@ -69,24 +70,24 @@ class PeopleSearchingPage extends StatelessWidget {
               name: person.name,
               location: person.location,
             ),
-            this.generateConnectionButton(context, person)
+            this.generateConnectionButton(context, device, person)
           ],
         ));
   }
 
-  generateDevicesCards(
-      BuildContext context, devices) {
+  generateDevicesCards(BuildContext context, devices) {
     final List<Widget> devicesCards = List();
     devicesCards.add(new Filters());
     int i = 0;
     devices.forEach((device, person) {
-      devicesCards.add(this.generatePersonCard(context, person, i));
+      devicesCards.add(this.generatePersonCard(context, device, person, i));
       i++;
     });
     return devicesCards;
   }
 
-  generateConnectionButton(BuildContext context, person) {
+  generateConnectionButton(
+      BuildContext context, String device, PersonFound person) {
     return IconButton(
       icon: Icon(
         Icons.person_add,
@@ -94,7 +95,7 @@ class PeopleSearchingPage extends StatelessWidget {
         color: navyBlueColor,
       ),
       onPressed: () {
-        StoreProvider.of<AppState>(context).dispatch(connectToPerson(person));
+        StoreProvider.of<AppState>(context).dispatch(connectToPerson(device));
       },
     );
   }

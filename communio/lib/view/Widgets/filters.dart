@@ -1,4 +1,5 @@
 import 'package:communio/model/app_state.dart';
+import 'package:communio/redux/action_creators.dart';
 import 'package:communio/view/Widgets/filter_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -36,6 +37,9 @@ class Filters extends StatelessWidget {
     filters.forEach((filter) => currentFilters.add(
       FilterCard(
         filter: filter,
+        removeFilter: (){
+          StoreProvider.of<AppState>(context).dispatch(removeFilter(filter));
+        },
       )
     ));
     return currentFilters;

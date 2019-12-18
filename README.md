@@ -1,6 +1,18 @@
 # Commun.io
 Passively Networking
 
+## Development
+### Requirements
+Want to contribute to this project? Here are some requirements you will need!
+ - Flutter
+ - Dart
+ - OpenCX Server - you can use ours at https://open-cx-communio.herokuapp.com/
+
+Add a .env file at the root of the communio with the following information
+```
+API_URL=https://open-cx-communio.herokuapp.com/
+```
+
 ## Business Modeling
 ### Vision
 Our App aims to:
@@ -36,8 +48,21 @@ To check our current user stories, come to our [Trello](https://trello.com/b/Og2
 
 ### Domain Model
 <div align="center">
-  <img width="438" src="assets/domain-model.png">
+  <img width="600" src="assets/domain-model.png">
 </div>
+
+## Architecture and Design
+### Logical Architecture
+The application uses an Architecture of the well known architecture MVC mixed with a Redux implementation. This means the state transition is a bit more complicated than a traditional MVC, though it does compensate in keeping a global state of the App.
+<div align="center">
+  <img width="600" src="assets/component-diagram.png">
+</div>
+
+### Physical Architecture
+<div align="center">
+  <img width="600" src="assets/deployment-diagram.png">
+</div>
+
 
 ### Acceptance Tests
 The framework for automating the acceptance tests has not yet been implemented.
@@ -60,3 +85,15 @@ Therefore, the tests have been conceptualized, but not yet implemented.
   - Given a list of two people, both with interest in Big Data, and with a filter on Big Data in the app, then it shall display those two people.
   - Given a list of two people, one with interest in Big Data and another with interest in AI, and with a single filter on AI, only the person with interest on AI will be displayed  
   - Given a list of two people, one with interest in Big Data and another with interest in AI, and with a filter on AI and another on Big Data, both people will be displayed
+
+- Set Beacon
+ - Given a logged in user, when he presses to go to the settings, when he presses to use his phone, pressing continue, then he is redirected to the settings page with a message saying his phone is now the beacon.
+ - Given a logged in user, when he presses to go to the settings, when he presses to use an external beacon, pressing continue, then he is sent to a new page where he can select a new device, then being redirected to the settings page with a message saying he has selected a new beacon.
+
+  
+- Profile Page:
+     - Given a user that is already logged in, then it is possible for him to choose his profile page and check all information regarding himself.
+     - Given a user that is already logged in, when he's on his profile page, he can click on his interests text box and add a new one to the list
+     - Given a user that is already logged in, when he's on his profile page, he can click on his skills text box and add a new one to the list
+     - Given a user that is already logged in, when he's on his profile page, he can click on his programming languages text box and add a new one to the list
+     - Given a user that is already logged in, then he can access his friends on listing connected and select one of them and see their profiles.
