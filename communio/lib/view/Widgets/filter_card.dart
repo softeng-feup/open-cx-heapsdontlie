@@ -4,7 +4,10 @@ class FilterCard extends StatefulWidget {
   final String filter;
   final Function removeFilter;
 
-  FilterCard({@required this.filter, @required this.removeFilter});
+  FilterCard({
+    Key key,
+    @required this.filter,
+    @required this.removeFilter});
 
   @override
   _FilterCardState createState() => _FilterCardState(filter, removeFilter);

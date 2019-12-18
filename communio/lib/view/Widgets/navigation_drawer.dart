@@ -25,7 +25,7 @@ class NavigationDrawerState extends State<NavigationDrawer> {
     "QRCode",
     "Profile",
     "CreateProfile",
-    "Friend Requests"
+    "Friend-Requests"
   ];
 
   getCurrentRoute() => ModalRoute.of(parentContext).settings.name == null

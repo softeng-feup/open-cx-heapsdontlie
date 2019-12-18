@@ -6,8 +6,6 @@ class NumFriendsStep extends Then1WithWorld<int, FlutterWorld> {
   @override
   Future<void> executeStep(int input1) async {
     final find = driver.find;
-    await world.driver.tap(find.byTooltip("Open navigation menu"));
-    await world.driver.tap(find.byValueKey("ListConnected"));
     await FlutterDriverUtils.waitForFlutter(world.driver);
     for (int i = 0; i < input1; i++) {
       await FlutterDriverUtils.isPresent(

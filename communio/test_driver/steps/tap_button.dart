@@ -17,6 +17,4 @@ class TapButtonNTimesStep extends When2WithWorld<String, int, FlutterWorld>{
 
   @override
   RegExp get pattern => RegExp(r"I tap the {string} button {int} times");
-
-
 }

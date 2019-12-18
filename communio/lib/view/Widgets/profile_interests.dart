@@ -65,6 +65,7 @@ class _ProfileInterestsState extends State<ProfileInterests> {
     if (edit) {
       children.add(TextFieldForm(
         callback: addInterest,
+        type: type,
       ));
     }
     return children;
@@ -82,16 +83,20 @@ class _ProfileInterestsState extends State<ProfileInterests> {
 
   buildCurrentInterests(BuildContext context) {
     final List<Widget> interestsCards = List();
-    interests.forEach((interest) {
-      interestsCards.add(FilterCard(
-        filter: interest,
-        removeFilter: () async {
-          if(removing != null)
-            removing(interest, type);
-          setState(() {
-            interests.remove(interest);
-          });
-        },
+    interests.asMap().forEach((index, interest) {
+      interestsCards.add(Container(
+        key: Key('$type-$index'),
+        child:
+          FilterCard(
+            filter: interest,
+            removeFilter: () async {
+              if(removing != null)
+                removing(interest, type);
+              setState(() {
+                interests.remove(interest);
+              });
+            },
+          ),
       ));
     });
     return interestsCards;

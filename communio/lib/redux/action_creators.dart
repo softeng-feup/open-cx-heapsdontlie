@@ -55,8 +55,8 @@ ThunkAction<AppState> scanForDevices() {
 }
 
 ThunkAction<AppState> queryFriendsList(String profileId) {
-  final friendQueryUrl = DotEnv().env['API_URL'] + 'users/matches/$profileId';
   return (Store<AppState> store) async {
+    final friendQueryUrl = '${store.state.content['connected']}/$profileId';
     final Set<KnownPerson> friends = new Set<KnownPerson>();
     final response = await http.get(friendQueryUrl);
     if (response.statusCode == 200) {

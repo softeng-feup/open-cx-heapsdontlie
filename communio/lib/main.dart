@@ -22,30 +22,42 @@ import 'model/app_state.dart';
 import 'package:redux/redux.dart';
 import 'redux/reducers.dart';
 
-final Store<AppState> state = Store<AppState>(appReducers,
-    /* Function defined in the reducers file */
-    initialState: new AppState(null),
-    middleware: [generalMiddleware]);
+
 
 initialLoad() async {
   await DotEnv().load('.env');
+  final Store<AppState> state = Store<AppState>(appReducers,
+    /* Function defined in the reducers file */
+    initialState: new AppState(null),
+    middleware: [generalMiddleware]);
   setupNotifications(state.state.content['user_id']);
+  enableApp(state);
+}
+
+enableApp(Store<AppState> state){
+  runApp(new MyApp(state: state,));
 }
 
 void main() {
   initialLoad();
-  runApp(new MyApp());
 }
 
 class MyApp extends StatefulWidget {
+  final Store<AppState> state;
+
+  MyApp({@required this.state});
+  
   @override
   State<StatefulWidget> createState() {
-    return MyAppState();
+    return MyAppState(state);
   }
 }
 
 class MyAppState extends State<MyApp> {
   WidgetsBindingObserver lifeCycleEventHandler;
+  final Store<AppState> state;
+
+  MyAppState(this.state);
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +84,7 @@ class MyAppState extends State<MyApp> {
               case '/QRCode':
                 return MaterialPageRoute(
                     builder: (context) => QRCodePage(), settings: settings);
-              case '/Friend Requests':
+              case '/Friend-Requests':
                 return MaterialPageRoute(
                     builder: (context) => FriendRequestsPage(),
                     settings: settings);
