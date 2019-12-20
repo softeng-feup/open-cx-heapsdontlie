@@ -108,7 +108,7 @@ ThunkAction<AppState> connectToPerson(String person) {
   };
 }
 
-ThunkAction<AppState> selectNewDevice(String device) {
+ThunkAction<AppState> selectNewDevice(String device){
   //TO-DO Add request to server
   return (Store<AppState> store) {
     store.dispatch(SelectActiveDevice(device));
