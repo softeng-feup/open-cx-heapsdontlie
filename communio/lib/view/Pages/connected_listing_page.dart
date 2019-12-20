@@ -9,7 +9,8 @@ import 'package:flutter_redux/flutter_redux.dart';
 class ConnectedListingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    StoreProvider.of<AppState>(context).dispatch(queryFriendsList());
+    final store =StoreProvider.of<AppState>(context); 
+    store.dispatch(queryFriendsList(store.state.content['user_id']));
     return GeneralPageView(
       child: ClipRRect(
         borderRadius: BorderRadius.circular(15.0),

@@ -6,6 +6,7 @@ import 'package:communio/model/known_person.dart';
 import 'package:communio/view/Pages/general_page_view.dart';
 import 'package:communio/view/Pages/secondary_page_view.dart';
 import 'package:communio/view/Widgets/editable_description.dart';
+import 'package:communio/view/Widgets/future_page_builder.dart';
 import 'package:communio/view/Widgets/profile_interests.dart';
 import 'package:communio/view/Widgets/social_media_column.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -31,20 +32,16 @@ class ProfilePage extends StatelessWidget {
         child: buildPerson(context, knownPerson),
       );
     }
-    return GeneralPageView(
-        child: FutureBuilder<KnownPerson>(
-      future: person,
-      builder: (BuildContext context, AsyncSnapshot<KnownPerson> snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
-        } else if (snapshot.connectionState == ConnectionState.done &&
-            !snapshot.hasError) {
-          final person = snapshot.data;
-          return buildPerson(context, person);
-        }
-        return Container();
-      },
-    ));
+    return new FuturePageBuilder<KnownPerson>(
+      data: person,
+      func: this.buildProfilePage,);
+  }
+
+  buildProfilePage(BuildContext context, KnownPerson person){
+    if(edit){
+      return GeneralPageView(child: this.buildPerson(context, person),);
+    }
+    return SecondaryPageView(child: this.buildPerson(context, person),);
   }
 
   buildPerson(BuildContext context, KnownPerson person) {
@@ -128,7 +125,6 @@ class ProfilePage extends StatelessWidget {
 
   buildImage(KnownPerson person, BuildContext context, Size query) {
     final double _picRatio = (4.0 / 5.0) * (query.width / query.height);
-
     return padWidget(
         child: Align(
             alignment: Alignment.center,
@@ -233,7 +229,7 @@ class ProfilePage extends StatelessWidget {
         bottom: query.height * 0.03,
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Container(
@@ -260,3 +256,4 @@ class ProfilePage extends StatelessWidget {
     return KnownPerson.fromJson(map);
   }
 }
+

@@ -1,8 +1,8 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:communio/model/known_person.dart';
 import 'package:communio/model/person_found.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_blue/flutter_blue.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:logger/logger.dart';
 import 'package:redux_thunk/redux_thunk.dart';
@@ -23,33 +23,43 @@ ThunkAction<AppState> incrementCounter() {
 
 ThunkAction<AppState> scanForDevices() {
   return (Store<AppState> store) async {
-    if (!store.state.content['scanning_on']) {
-      final bluetooth = FlutterBlue.instance;
-      Logger().i('Starting to scan for devices...');
-      final personQueryUrl = store.state.content['person_query_url'];
-      final isAvailable = await bluetooth.isAvailable;
-      if (isAvailable) {
-        bluetooth
-            .scan(scanMode: ScanMode.balanced, timeout: Duration(minutes: 30))
-            .listen((scanResult) async {
-          final Map<String, PersonFound> bluetoothDevices =
-              store.state.content['bluetooth_devices'];
-          final device = scanResult.device;
-          final uuid = device.id.id;
-          if (!bluetoothDevices.containsKey(uuid)) {
-            final PersonFound person =
-                await PersonFound.fromNetwork("$personQueryUrl/$uuid");
-            store.dispatch(FoundPersonAction(uuid, person));
-          }
-        });
-        store.dispatch(ActivateScanning());
-      }
+    final response = await http.get(
+        '${DotEnv().env['API_URL']}users/matches/nomatched/${store.state.content['user_id']}');
+    if (response.statusCode == 200) {
+      final Iterable people = json.decode(utf8.decode(response.bodyBytes));
+      people.forEach((person) {
+        store.dispatch(
+            FoundPersonAction(person['_id'], PersonFound.fromJson(person)));
+      });
     }
+
+    // if (!store.state.content['scanning_on']) {
+    //   final bluetooth = FlutterBlue.instance;
+    //   Logger().i('Starting to scan for devices...');
+    //   final personQueryUrl = store.state.content['person_query_url'];
+    //   final isAvailable = await bluetooth.isAvailable;
+    //   if (isAvailable) {
+    //     bluetooth
+  //         .scan(scanMode: ScanMode.balanced, timeout: Duration(minutes: 30))
+    //         .listen((scanResult) async {
+    //       final Map<String, PersonFound> bluetoothDevices =
+    //           store.state.content['bluetooth_devices'];
+    //       final device = scanResult.device;
+    //       final uuid = device.id.id;
+    //       if (!bluetoothDevices.containsKey(uuid)) {
+    //         final PersonFound person =
+    //             await PersonFound.fromNetwork("$personQueryUrl/$uuid");
+    //         store.dispatch(FoundPersonAction(uuid, person));
+    //       }
+    //     });
+    //     store.dispatch(ActivateScanning());
+    //   }
+    // }
   };
 }
 
-ThunkAction<AppState> queryFriendsList() {
-  final friendQueryUrl = DotEnv().env['API_URL']+'users';
+ThunkAction<AppState> queryFriendsList(String profileId) {
+  final friendQueryUrl = DotEnv().env['API_URL'] + 'users/matches/$profileId';
   return (Store<AppState> store) async {
     final Set<KnownPerson> friends = new Set<KnownPerson>();
     final response = await http.get(friendQueryUrl);
@@ -90,21 +100,26 @@ ThunkAction<AppState> startBroadcastingBeacon() {
   };
 }
 
-ThunkAction<AppState> connectToPerson(PersonFound person) {
+ThunkAction<AppState> connectToPerson(String person) {
   return (Store<AppState> store) async {
-    Logger().w('Connect to person not yet implemented!');
+    final body = {"id": person, "user_id": store.state.content['user_id']};
+    await http.post('${DotEnv().env['API_URL']}users/matches/request',
+        body: json.encode(body),
+        headers: {
+          HttpHeaders.contentTypeHeader: 'application/json',
+        });
+    store.dispatch(RemovePersonAction(person));
   };
 }
 
 ThunkAction<AppState> selectNewDevice(String device){
-
   //TO-DO Add request to server
   return (Store<AppState> store) {
     store.dispatch(SelectActiveDevice(device));
   };
 }
 
-ThunkAction<AppState> selectOwnDevice(){
+ThunkAction<AppState> selectOwnDevice() {
   //TO-DO Add request to server
   return (Store<AppState> store) async {
     final platform = MethodChannel('pt.up.fe.communio');
