@@ -54,11 +54,16 @@ To check our current user stories, come to our [Trello](https://trello.com/b/Og2
 ## Architecture and Design
 ### Logical Architecture
 The application uses an Architecture of the well known architecture MVC mixed with a Redux implementation. This means the state transition is a bit more complicated than a traditional MVC, though it does compensate in keeping a global state of the App.
+
+
+### Physical Architecture
+
+#### Component Diagram
 <div align="center">
   <img width="600" src="assets/component-diagram.png">
 </div>
 
-### Physical Architecture
+#### Deployment Diagram
 <div align="center">
   <img width="600" src="assets/deployment-diagram.png">
 </div>
