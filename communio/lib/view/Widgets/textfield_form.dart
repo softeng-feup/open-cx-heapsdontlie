@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 
 class TextFieldForm extends StatefulWidget {
   final Function(String) callback;
+  final String type;
 
-  const TextFieldForm({Key key, @required this.callback}) : super(key: key);
+  const TextFieldForm({Key key, @required this.callback, this.type})
+      : super(key: key);
 
   @override
-  _TextFieldFormState createState() => _TextFieldFormState(callback);
+  _TextFieldFormState createState() => _TextFieldFormState(callback, type);
 }
 
 class _TextFieldFormState extends State<TextFieldForm> {
@@ -14,9 +16,9 @@ class _TextFieldFormState extends State<TextFieldForm> {
   final TextEditingController fieldController = TextEditingController();
 
   final Function(String) callback;
+  final String type;
 
-  _TextFieldFormState(this.callback);
-
+  _TextFieldFormState(this.callback, this.type);
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -38,6 +40,7 @@ class _TextFieldFormState extends State<TextFieldForm> {
       width: MediaQuery.of(context).size.width * 0.7,
       height: MediaQuery.of(context).size.height * 0.07,
       child: TextFormField(
+        key: Key('$type-field'),
         controller: fieldController,
       ),
     );
@@ -45,6 +48,7 @@ class _TextFieldFormState extends State<TextFieldForm> {
 
   buildAddButton(BuildContext context) {
     return IconButton(
+      key: Key('$type-button'),
       color: Theme.of(context).colorScheme.primary,
       icon: Icon(Icons.add),
       onPressed: () {

@@ -46,6 +46,7 @@ class _FilterFormState extends State<FilterForm> {
           margin: new EdgeInsets.all(50),
           child: Card(
             child: TextFormField(
+              key: Key('form-textfield'),
               controller: filterController,
               minLines: minLines,
               maxLines: maxLines,
@@ -63,6 +64,7 @@ class _FilterFormState extends State<FilterForm> {
   Widget getSubmitButton(BuildContext context) {
     return Container(
       child: RaisedButton(
+        key: Key('form-submit'),
         onPressed: () {
           if (_formKey.currentState.validate()) {
             StoreProvider.of<AppState>(context)

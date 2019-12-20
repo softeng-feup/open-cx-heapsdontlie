@@ -41,28 +41,29 @@ class _FriendRequestButtonState extends State<FriendRequestButton> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         buildIcon(
-          child: Icon(
-            Icons.check,
-            color: Colors.white,
-          ),
-          onPressed: () async {
-            final map = {"id": friendRequest.id};
-            await http.post('${DotEnv().env['API_URL']}users/matches/accept',
-                body: json.encode(map),
-                headers: {
-                  HttpHeaders.contentTypeHeader: 'application/json',
-                });
-            setState(() {
-              accepted = true;
-            });
-          },
-          fillColor: Theme.of(context).colorScheme.primary
-        ),
+            key: Key('${friendRequest.id}-accept'),
+            child: Icon(
+              Icons.check,
+              color: Colors.white,
+            ),
+            onPressed: () async {
+              final map = {"id": friendRequest.id};
+              await http.post('${DotEnv().env['API_URL']}users/matches/accept',
+                  body: json.encode(map),
+                  headers: {
+                    HttpHeaders.contentTypeHeader: 'application/json',
+                  });
+              setState(() {
+                accepted = true;
+              });
+            },
+            fillColor: Theme.of(context).colorScheme.primary),
         buildIcon(
+            key: Key('${friendRequest.id}-reject'),
             child: Icon(
               Icons.clear,
               color: Theme.of(context).colorScheme.primary,
-              ),
+            ),
             onPressed: () async {
               final map = {"id": friendRequest.id};
               await http.post('${DotEnv().env['API_URL']}users/matches/reject',
@@ -79,11 +80,13 @@ class _FriendRequestButtonState extends State<FriendRequestButton> {
     );
   }
 
-  buildIcon({@required child, @required onPressed, @required fillColor}) {
+  buildIcon(
+      {Key key, @required child, @required onPressed, @required fillColor}) {
     final size = MediaQuery.of(context).size;
     return Container(
-          margin: EdgeInsets.only(right: size.width * 0.03),
-          child: SizedBox(
+      key: key,
+      margin: EdgeInsets.only(right: size.width * 0.03),
+      child: SizedBox(
           width: size.width * 0.08,
           height: size.width * 0.08,
           child: RawMaterialButton(

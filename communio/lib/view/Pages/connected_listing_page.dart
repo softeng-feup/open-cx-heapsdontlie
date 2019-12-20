@@ -12,11 +12,9 @@ class ConnectedListingPage extends StatelessWidget {
     final store =StoreProvider.of<AppState>(context); 
     store.dispatch(queryFriendsList(store.state.content['user_id']));
     return GeneralPageView(
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(15.0),
-        child: this.buildFriends(context)
-      )
-    );
+        child: ClipRRect(
+            borderRadius: BorderRadius.circular(15.0),
+            child: this.buildFriends(context)));
   }
 
   Widget buildFriends(BuildContext context) {
@@ -32,7 +30,8 @@ class ConnectedListingPage extends StatelessWidget {
 
   generateFriendsCards(Set<KnownPerson> friends) {
     final List<Widget> friendsCards = List();
-    friends.forEach((friend) => friendsCards.add(FriendCard(friend: friend)));
+    friends.toList().asMap().forEach((index, friend) => friendsCards
+        .add(FriendCard(key: Key('friend-card-$index'), friend: friend)));
     return friendsCards;
   }
 }

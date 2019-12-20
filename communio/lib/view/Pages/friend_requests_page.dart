@@ -8,9 +8,9 @@ import 'package:communio/view/Widgets/friend_request_button.dart';
 import 'package:communio/view/Widgets/future_page_builder.dart';
 import 'package:communio/view/Widgets/photo_avatar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:http/http.dart' as http;
+import 'package:logger/logger.dart';
 
 class FriendRequestsPage extends StatelessWidget {
   final horizontalPadding = 15.0;
@@ -29,8 +29,11 @@ class FriendRequestsPage extends StatelessWidget {
   Future<Iterable<FriendRequest>> getPerson(BuildContext context) async {
     final String profile =
         StoreProvider.of<AppState>(context).state.content['user_id'];
+    final String url =
+        StoreProvider.of<AppState>(context).state.content['friend_request'];
+    Logger().i('$url/$profile');
     final response = await http
-        .get('${DotEnv().env['API_URL']}users/matches/requests/$profile');
+        .get('$url/$profile');
     final Iterable friendRequests =
         json.decode(utf8.decode(response.bodyBytes));
     final friends = friendRequests

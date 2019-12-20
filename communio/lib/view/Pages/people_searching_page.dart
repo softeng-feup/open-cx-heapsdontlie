@@ -50,8 +50,10 @@ class PeopleSearchingPage extends StatelessWidget {
     return filteredDevices;
   }
 
-  generatePersonCard(BuildContext context, String device, PersonFound person) {
+  generatePersonCard(BuildContext context, String device,
+   PersonFound person, int i) {
     return new Container(
+        key: Key('person-card-$i'),
         padding: EdgeInsets.only(
             right: horizontalPadding,
             left: horizontalPadding,
@@ -76,8 +78,10 @@ class PeopleSearchingPage extends StatelessWidget {
   generateDevicesCards(BuildContext context, devices) {
     final List<Widget> devicesCards = List();
     devicesCards.add(new Filters());
+    int i = 0;
     devices.forEach((device, person) {
-      devicesCards.add(this.generatePersonCard(context, device, person));
+      devicesCards.add(this.generatePersonCard(context, device, person, i));
+      i++;
     });
     return devicesCards;
   }

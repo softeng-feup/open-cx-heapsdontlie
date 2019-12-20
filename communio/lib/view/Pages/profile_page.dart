@@ -21,12 +21,12 @@ class ProfilePage extends StatelessWidget {
   final bool edit;
   static Future<KnownPerson> person;
 
-  ProfilePage({this.profileId, this.knownPerson, @required this.edit}) {
-    if (person == null) person = getPerson(profileId);
-  }
+  ProfilePage({this.profileId, this.knownPerson, @required this.edit});
 
   @override
   Widget build(BuildContext context) {
+    if (person == null) person = getPerson(context, profileId);
+
     if (knownPerson != null) {
       return SecondaryPageView(
         child: buildPerson(context, knownPerson),
@@ -68,6 +68,7 @@ class ProfilePage extends StatelessWidget {
     };
 
     return ListView(
+      key: Key('profile-page'),
       children: <Widget>[
         buildImage(person, context, query),
         buildName(person, context, query),
@@ -249,9 +250,11 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  Future<KnownPerson> getPerson(String profileId) async {
+  Future<KnownPerson> getPerson(BuildContext context,String profileId) async {
+    final profileUrl = StoreProvider.of<AppState>(context)
+          .state.content['profile'];
     final response =
-        await http.get('${DotEnv().env['API_URL']}users/$profileId');
+        await http.get('$profileUrl/$profileId');
     final map = json.decode(utf8.decode(response.bodyBytes));
     return KnownPerson.fromJson(map);
   }

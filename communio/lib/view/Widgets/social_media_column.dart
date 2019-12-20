@@ -45,8 +45,9 @@ class _SocialMediaColumnState extends State<SocialMediaColumn> {
                   .indexWhere((personSocial) => personSocial.name == key) !=
               -1 ||
           key == "default");
-    person.socials.forEach((socialMedia) {
+    person.socials.asMap().forEach((index, socialMedia) {
       children.add(Container(
+          key: Key('social-block-$index'),
           width: query.width * 0.75,
           margin: EdgeInsets.only(
               top: query.height * 0.005, bottom: query.height * 0.002),
@@ -81,6 +82,7 @@ class _SocialMediaColumnState extends State<SocialMediaColumn> {
 
     if (edit) {
       children.add(IconButton(
+        key: Key(socialMedia.name),
         icon: Icon(
           Icons.delete,
           color: grayColor,

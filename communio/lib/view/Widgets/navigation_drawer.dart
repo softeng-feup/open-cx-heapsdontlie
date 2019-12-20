@@ -25,7 +25,7 @@ class NavigationDrawerState extends State<NavigationDrawer> {
     "QRCode",
     "Profile",
     "CreateProfile",
-    "Friend Requests"
+    "Friend-Requests"
   ];
 
   getCurrentRoute() => ModalRoute.of(parentContext).settings.name == null
@@ -68,6 +68,7 @@ class NavigationDrawerState extends State<NavigationDrawer> {
 
   Widget createDrawerNavigationOption(String d, int i) {
     return new ListTile(
+      key: new Key(d),
       title: new Row(
         children: <Widget>[
           new Container(
@@ -91,20 +92,22 @@ class NavigationDrawerState extends State<NavigationDrawer> {
     }
 
     return new Drawer(
-        child: new Padding(
-      padding: EdgeInsets.all(20.0),
-      child: new Column(
-        children: <Widget>[
-          Flexible(
-            child: new ListView(
-              children: drawerOptions,
+      key: Key('drawer'),
+      child: new Padding(
+        padding: EdgeInsets.all(20.0),
+        child: new Column(
+          children: <Widget>[
+            Flexible(
+              child: new ListView(
+                children: drawerOptions,
+              ),
             ),
-          ),
-          Container(
-            child: createLogOutOption(),
-          ),
-        ],
-      ),
-    ));
+            Container(
+              child: createLogOutOption(),
+            ),
+          ],
+        ),
+      )
+    );
   }
 }

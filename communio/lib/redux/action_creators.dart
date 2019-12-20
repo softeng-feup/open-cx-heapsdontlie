@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:io';
 import 'package:communio/model/known_person.dart';
 import 'package:communio/model/person_found.dart';
@@ -14,10 +13,7 @@ import 'package:http/http.dart' as http;
 
 ThunkAction<AppState> incrementCounter() {
   return (Store<AppState> store) async {
-    final Future<int> futurIncrementCounter = Future.delayed(
-        Duration(seconds: 2), () => store.state.content['counter'] + 1);
-    final int incrementCounter = await futurIncrementCounter;
-    store.dispatch(IncrementCounterAction(incrementCounter));
+    store.dispatch(IncrementCounterAction(store.state.content['counter'] + 1));
   };
 }
 
@@ -59,8 +55,8 @@ ThunkAction<AppState> scanForDevices() {
 }
 
 ThunkAction<AppState> queryFriendsList(String profileId) {
-  final friendQueryUrl = DotEnv().env['API_URL'] + 'users/matches/$profileId';
   return (Store<AppState> store) async {
+    final friendQueryUrl = '${store.state.content['connected']}/$profileId';
     final Set<KnownPerson> friends = new Set<KnownPerson>();
     final response = await http.get(friendQueryUrl);
     if (response.statusCode == 200) {

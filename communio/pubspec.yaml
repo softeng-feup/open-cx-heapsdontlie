@@ -45,10 +45,14 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
+  flutter_driver:
+    sdk: flutter
   test: any
   flutter_launcher_icons: "^0.7.3"
   image_test_utils: ^1.0.0
   mockito: 3.0.0
+  flutter_gherkin: ^1.1.4
+  glob: ^1.2.0
 
 flutter_icons:
   android: true
