@@ -203,8 +203,6 @@ class _SocialMediaFormState extends State<SocialMediaForm> {
                   alignment: Alignment.center,
                   child: buildSocialDropdown(context, remainingSocials),
                 )
-
-                //buildAddButton(context)
               ],
             ),
           ),
