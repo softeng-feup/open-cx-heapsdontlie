@@ -14,10 +14,18 @@ class PersonFound {
   static Future<PersonFound> fromNetwork(String url) async {
     final response = await http.get(url);
     final responseJson = json.decode(utf8.decode(response.bodyBytes));
-    return PersonFound(
-        name: responseJson['name'],
-        photo: responseJson['photo'],
-        location: responseJson['location'],
-        interests: responseJson['interests']);
+    return PersonFound.fromJson(responseJson);
+  }
+
+  factory PersonFound.fromJson(Map<String, dynamic> json) {
+        final List interests = new List();
+        interests.addAll(json['tags']); 
+        interests.addAll(json['skills']); 
+        interests.addAll(json['programming_languages']); 
+        return PersonFound(
+        name: json['fullname'],
+        photo: json['photo'],
+        location: json['location'],
+        interests: interests);
   }
 }

@@ -34,6 +34,20 @@ class FoundPersonAction implements ReduceableAction {
   }
 }
 
+class RemovePersonAction implements ReduceableAction{
+  final String uuid;
+  RemovePersonAction(this.uuid);
+
+  @override
+  AppState reduceAction(AppState state) {
+    final Map<String, PersonFound> bluetoothDevices =
+    state.content['bluetooth_devices'];
+    bluetoothDevices.remove(uuid);
+    return state.cloneAndUpdateValue('bluetooth_devices', bluetoothDevices);
+  }
+
+}
+
 class QueriedFriendsAction implements ReduceableAction {
   final Set<KnownPerson> friends;
   QueriedFriendsAction(this.friends);
