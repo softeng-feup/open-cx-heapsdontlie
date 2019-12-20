@@ -68,37 +68,43 @@ The application uses an Architecture of the well known architecture MVC mixed wi
   <img width="600" src="assets/deployment-diagram.png">
 </div>
 
+#### Prototype
+Communio is an app that allows users to connect with each other and to share their social media information without the need for physical interaction.
 
-### Acceptance Tests
-The framework for automating the acceptance tests has not yet been implemented.
-Therefore, the tests have been conceptualized, but not yet implemented.
+The app allows you to connect to people using two different methods:
+- Locally search for those whose interests you are looking. User our permissive filters to make a more narrowed query and pin down the person you are looking for. Send them a friend request when you do find the right match.
+- Swap your information directly with a person you've met, by scanning their QR code.
 
-#### Features
-- Listing connections:
-  - Given a list of two friends, with three registered social network links, then two friends will be displayed on the screen, with three different icons.
-  - Given a list of three profiles, where two of them share their uuid, then two friends will be displayed, as profiles with the same unique id will be treated as being the same profile.
-  - Given an empty list of friends, no cards will be displayed.
-  - Given a list containing a profile with links to multiple profiles of the same social network, the different links will be display as separate icons of that social network.
-  - Given a list containing a profile with two
-    registered social networks and one unregistered,
-    it will display the respective icons for the
-    two registered social networks
-    and a default icon for the other. 
+In your profile page, you can make a personalized description of yourself that others will be able to see, when they connect with you. Furthermore, you can control the social media that others can access. Moreover,add tags to give a simple overview of your Interests, Programming Languages and Skills, so others can easily discover you when filtering.
 
-- Searching For Nearby People:
-  - Given a list of two people, both with interest in Big Data, and with no filters in the app, then it shall display those two people.
-  - Given a list of two people, both with interest in Big Data, and with a filter on Big Data in the app, then it shall display those two people.
-  - Given a list of two people, one with interest in Big Data and another with interest in AI, and with a single filter on AI, only the person with interest on AI will be displayed  
-  - Given a list of two people, one with interest in Big Data and another with interest in AI, and with a filter on AI and another on Big Data, both people will be displayed
 
-- Set Beacon
- - Given a logged in user, when he presses to go to the settings, when he presses to use his phone, pressing continue, then he is redirected to the settings page with a message saying his phone is now the beacon.
- - Given a logged in user, when he presses to go to the settings, when he presses to use an external beacon, pressing continue, then he is sent to a new page where he can select a new device, then being redirected to the settings page with a message saying he has selected a new beacon.
 
-  
-- Profile Page:
-     - Given a user that is already logged in, then it is possible for him to choose his profile page and check all information regarding himself.
-     - Given a user that is already logged in, when he's on his profile page, he can click on his interests text box and add a new one to the list
-     - Given a user that is already logged in, when he's on his profile page, he can click on his skills text box and add a new one to the list
-     - Given a user that is already logged in, when he's on his profile page, he can click on his programming languages text box and add a new one to the list
-     - Given a user that is already logged in, then he can access his friends on listing connected and select one of them and see their profiles.
+For the development of this application, these user stories were sucessfully concluded:
+- "As a speaker, I want to be able to access the people interested in trading ideas with me, so that I can further explore the topics approached in my talks." "As a job recruiter, I want to conveniently see the people I have connected with, so that I can better decide which people to pursue as potential hires."
+- "As a user I want to be able to see the people close to me during the conference and be able to connect with them."
+- "As a user, I want my theme to be used on all the pages I see in the application."
+- "As a user I want to be able to recap my profile information as well as adding/deleting new information regarding myself."
+- "As a user, I want to be able to select which device I use to broadcast my information, either an external device or my own phone."
+- "As a user, I want to be able to selectively connect with people I cross paths with, so that I can gain new connections while being able to control who has access to my information."
+- "As a user I want to be able to create my own profile with my personal information using a simple form."
+- "As a user I want my personal information to be real and portray the actions I take inside the application."
+- "As a user, I want the page where I create my profile for the first time to be more user-friendly and to truly create a profile."
+- "As a user, I want to be able to send a friend request to people I meet online, as well as receive friend requests."
+- "As a user I want all of the experience to provide me a real response regarding the world around me."
+- "As a user, I want my profile page to have a cleaner and simple design."
+
+
+
+### Test
+#### Test Plan
+In order to test this app, both [flutter gherkin](https://pub.dev/packages/flutter_gherkin) and [flutter_test](https://api.flutter.dev/flutter/flutter_test/flutter_test-library.html) are used to develop acceptance tests and unit tests respectively.
+
+Project must have test cases for each of the following feaures:
+- Connection to people locally
+- Handling Friend Requests
+- Editing your Profile.
+
+Tests for all of these features were implemented.
+#### Test Case Specification
+Acceptance Tests for all of the user stories were added to each User Story Card. They were implemented using [flutter gherkin](https://pub.dev/packages/flutter_gherkin). The implementation can be found in the `flutter_driver` folder. Furthermore, in the `test` folder, some unit tests can be found.
+
